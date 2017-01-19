@@ -142,7 +142,7 @@ VALUES
 	('YYD','Smithers Airport'),
 	('YYE','Fort Nelson Airport'),
 	('YYF','Penticton Tegional Airport'),
-	('YYJ','Victoria INternational Airport'),
+	('YYJ','Victoria International Airport'),
 	('YZP','Sandspit Airport'),
 	('YZT','Port Hardy Airport'),
 	('YZY','Mackenzie Airport'),
