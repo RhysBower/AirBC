@@ -166,6 +166,8 @@ CREATE TABLE `Customer` (
   `travel_document` varchar(50) DEFAULT '',
   `billing_address` tinytext,
   `phone_number` char(11) DEFAULT NULL,
+  `loyalty_member` tinyint(1) DEFAULT NULL,
+  `points` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `Account` FOREIGN KEY (`id`) REFERENCES `Account` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
