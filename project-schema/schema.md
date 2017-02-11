@@ -1,13 +1,20 @@
 Account(**id**: int, name: string, email: string, username: string, password: string)
+
 Primary Key: id
+
 
 Aircraft(**id**: string, type: string, first_class_seats: int, business_seats: int, economy_seats: int, purchase_date: date, status: enum)
+
 Primary Key: id
+
 
 Airport(**id**: string, name: string, location: string)
+
 Primary Key: id
 
+
 Customer(**id**: int, travel_document: string, billing_address: string, phone_number: string, seat_preference: string, payment_information: enum)
+
 Primary Key: id
 Foreign Key:
 - id references Account.id
