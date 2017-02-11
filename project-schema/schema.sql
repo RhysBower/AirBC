@@ -17,7 +17,7 @@ INSERT INTO `Account` (`id`, `name`, `email`, `username`, `password`)
 VALUES
 	(4194304,'Rhys Bower','rhys@airbc.ca','rbower','hashedpassword'),
 	(4194305,'Mandy Chen','mandy@airbc.ca','mchen','hashedpassword'),
-	(4194306,'Alison wu','alison@airbc.ca','awu','hashedpassword'),
+	(4194306,'Alison Wu','alison@airbc.ca','awu','hashedpassword'),
 	(4194307,'Harryson Hu','harryson@airbc.ca','hhu','hashedpassword');
 
 # Aircraft
