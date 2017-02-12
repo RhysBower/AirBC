@@ -1,6 +1,8 @@
 Staff(<u>id</u>: int, name: string, email: string, username: string, password: string, title: string)
 Primary Key: id
 
+Candidate Keys: id, email
+
 FDs:
 
 - id —> name, email, username, password, title
@@ -11,6 +13,8 @@ FDs:
 Customer(<u>id</u>: int, name: string, email: string, username: string, password: string, travel_document: string, billing_address: string, phone_number: string, seat_preference: string, payment_information: enum)
 Primary Key: id
 
+Candidate Keys: id, email, travel_document
+
 FDs:
 
 - id —> name, email, username, password, travel_document, billing_address, phone_number, seat_preference, payment_information
@@ -20,6 +24,9 @@ FDs:
 
 Loyalty_Member(<u>**id**</u>: int, points: int)
 Primary Key: id
+
+Candidate Key: id
+
 Foreign Key:
 
 - id references Customer.id
@@ -33,6 +40,9 @@ FDs:
 
 Ticket(<u>id</u>: int, seat_type: enum, price: int, **flightId**: int, **customerId**: int)
 Primary Key: id
+
+Candidate Keys: id, (flightId, customerId)
+
 Foreign Keys:
 
 - flightId references Flight.id
@@ -48,6 +58,8 @@ FDs:
 Aircraft(<u>id</u>: string, type: string, first_class_seats: int, business_seats: int, economy_seats: int, purchase_date: date, status: enum)
 Primary Key: id
 
+Candidate Key: id
+
 FDs:
 - id —> type
 - type —> first_class_seats, business_seats, economy_seats
@@ -58,6 +70,8 @@ FDs:
 Airport(<u>id</u>: string, name: string, location: string)
 Primary Key: id
 
+Candidate Keys: id, location, name
+
 FDs:
 - id —> name, location
   An airport's id code (e.g. YVR) can be used to determine its full name, and the location of the airport
@@ -67,6 +81,9 @@ FDs:
 
 Flight(<u>id</u>: int, date_time: date, **assigned**: string, **arrival**: string, **departure**: string)
 Primary Key: id
+
+Candidate Keys: id, assigned, (arrival, departure)
+
 Foreign Keys:
 
 - assigned references Aircraft.id
@@ -82,7 +99,10 @@ FDs:
 
 Route(<u>**departure**</u>: string, <u>**arrival**</u>: string, first_class: int, business: int, economy: int)
 Primary Key: (departure, arrival)
-Foreign Key:
+
+Candidate Key: (departure, arrival)
+
+Foreign Keys:
 
 - arrival references Airport.id
 - departure references Airport.id
