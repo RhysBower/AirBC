@@ -109,16 +109,16 @@ VALUES
 	('C-GPTR','Ornithopter',10,20,200,'2017-01-01','OK'),
 	('C-GZCH','Sikorsky S-92A',10,20,200,'2017-01-01','OK'),
 	('CF-CPC','Douglas DC-4',10,20,200,'2017-01-01','OK'),
-	('CF-CPK','Douglas DC-8-43',10,20,200,'2017-01-01','OK'),
+	('CF-CPK','Douglas DC-8-43',10,20,200,'2017-01-01','REPAIR'),
 	('CF-CUA','Douglas DC-3',10,20,200,'2017-01-01','OK'),
 	('CF-CUQ','Douglas DC-6B',10,20,200,'2017-01-01','OK'),
 	('CF-CZB','Bristol Britannia 314',10,20,200,'2017-01-01','OK'),
 	('CF-EDN','Douglas C-54 Skymaster',10,20,200,'2017-01-01','OK'),
-	('CF-TFD','Canadair North Star',10,20,200,'2017-01-01','OK'),
+	('CF-TFD','Canadair North Star',10,20,200,'2017-01-01','REPAIR'),
 	('CF-TGR','Vickers Viscount',10,20,200,'2017-01-01','OK'),
 	('CF-TIW','McDonnell Douglas DC-8-63',10,20,200,'2017-01-01','OK'),
 	('CF-TJN','Douglas DC-8',10,20,200,'2017-01-01','OK'),
-	('F-FKFY','Convair CV-580 Airtanker',10,20,200,'2017-01-01','OK');
+	('F-FKFY','Convair CV-580 Airtanker',10,20,200,'2017-01-01','REPAIR');
 
 # Airport
 # ------------------------------------------------------------
