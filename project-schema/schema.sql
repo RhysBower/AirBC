@@ -1,7 +1,7 @@
-# Account
+# Staff
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `Account`;
+DROP TABLE IF EXISTS `Staff`;
 
 CREATE TABLE `Account` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -9,16 +9,50 @@ CREATE TABLE `Account` (
   `email` varchar(50) NOT NULL DEFAULT '',
   `username` varchar(50) NOT NULL DEFAULT '',
   `password` char(50) NOT NULL DEFAULT '',
+  `title` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `Account` (`id`, `name`, `email`, `username`, `password`)
+INSERT INTO `Staff` (`id`, `name`, `email`, `username`, `password`)
 VALUES
-	(4194304,'Rhys Bower','rhys@airbc.ca','rbower','hashedpassword'),
-	(4194305,'Mandy Chen','mandy@airbc.ca','mchen','hashedpassword'),
-	(4194306,'Alison Wu','alison@airbc.ca','awu','hashedpassword'),
-	(4194307,'Harryson Hu','harryson@airbc.ca','hhu','hashedpassword');
+	(4194304,'Rhys Bower','rhys@airbc.ca','rbower','hashedpassword', 'Software Engineer'),
+	(4194305,'Mandy Chen','mandy@airbc.ca','mchen','hashedpassword', 'Software Engineer'),
+	(4194306,'Alison Wu','alison@airbc.ca','awu','hashedpassword', 'Software Engineer'),
+	(4194307,'Harryson Hu','harryson@airbc.ca','hhu','hashedpassword', 'Software Engineer');
+
+# Customer
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `Customer`;
+
+CREATE TABLE `Customer` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `email` varchar(50) NOT NULL DEFAULT '',
+  `username` varchar(50) NOT NULL DEFAULT '',
+  `password` char(50) NOT NULL DEFAULT '',
+  `travel_document` varchar(50) NOT NULL DEFAULT '',
+  `billing_address` varchar(50) NOT NULL DEFAULT '',
+  `phone_number` varchar(50) NOT NULL DEFAULT '',
+  `seat_preference` varchar(50) NOT NULL DEFAULT '',
+  `payment_information` varchar(50) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+# Loyalty_Member
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `Loyalty_Member`;
+
+CREATE TABLE `Loyalty_Member` (
+  `id` int(11) unsigned NOT NULL,
+  `points` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `Loyalty_Member` FOREIGN KEY (`id`) REFERENCES `Customer` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 # Aircraft
 # ------------------------------------------------------------
@@ -73,6 +107,7 @@ DROP TABLE IF EXISTS `Airport`;
 CREATE TABLE `Airport` (
   `id` char(3) NOT NULL DEFAULT '',
   `name` varchar(100) NOT NULL DEFAULT '',
+  `location` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -156,22 +191,6 @@ VALUES
 	('ZSW','Prince Rupert/Seal Cover Water Airport'),
 	('ZTS','Tahsis Water Aerodrome');
 
-# Customer
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `Customer`;
-
-CREATE TABLE `Customer` (
-  `id` int(11) unsigned NOT NULL,
-  `travel_document` varchar(50) DEFAULT '',
-  `billing_address` tinytext,
-  `phone_number` char(11) DEFAULT NULL,
-  `loyalty_member` tinyint(1) DEFAULT NULL,
-  `points` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `Account` FOREIGN KEY (`id`) REFERENCES `Account` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 # Flight
 # ------------------------------------------------------------
 
@@ -203,28 +222,9 @@ CREATE TABLE `Route` (
   `economy` int(11) NOT NULL,
   PRIMARY KEY (`arrival`,`departure`),
   KEY `Departure` (`departure`),
-  CONSTRAINT `Arrival` FOREIGN KEY (`arrival`) REFERENCES `Airport` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `Departure` FOREIGN KEY (`departure`) REFERENCES `Airport` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `Departure` FOREIGN KEY (`departure`) REFERENCES `Airport` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Arrival` FOREIGN KEY (`arrival`) REFERENCES `Airport` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-# Staff
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `Staff`;
-
-CREATE TABLE `Staff` (
-  `id` int(11) unsigned NOT NULL,
-  `title` varchar(50) DEFAULT '',
-  PRIMARY KEY (`id`),
-  CONSTRAINT `MainAccount` FOREIGN KEY (`id`) REFERENCES `Account` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO `Staff` (`id`, `title`)
-VALUES
-	(4194304,'Software Engineer'),
-	(4194305,'Software Engineer'),
-	(4194306,'Software Engineer'),
-	(4194307,'Software Engineer');
 
 # Ticket
 # ------------------------------------------------------------
@@ -234,6 +234,9 @@ DROP TABLE IF EXISTS `Ticket`;
 CREATE TABLE `Ticket` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `seat_type` enum('FIRST','BUSINESS','ECONOMY') NOT NULL DEFAULT 'ECONOMY',
-  `flight` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `flightId` int(11) DEFAULT NULL,
+  `customerId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`flightId`, `customerId`),
+  CONSTRAINT `Flight` FOREIGN KEY (`flightId`) REFERENCES `Flight` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Customer` FOREIGN KEY (`customerId`) REFERENCES `Customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
