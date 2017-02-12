@@ -3,7 +3,7 @@
 
 DROP TABLE IF EXISTS `Staff`;
 
-CREATE TABLE `Account` (
+CREATE TABLE `Staff` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL DEFAULT '',
   `email` varchar(50) NOT NULL DEFAULT '',
@@ -14,7 +14,7 @@ CREATE TABLE `Account` (
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `Staff` (`id`, `name`, `email`, `username`, `password`)
+INSERT INTO `Staff` (`id`, `name`, `email`, `username`, `password`, `title`)
 VALUES
 	(4194304,'Rhys Bower','rhys@airbc.ca','rbower','hashedpassword', 'Software Engineer'),
 	(4194305,'Mandy Chen','mandy@airbc.ca','mchen','hashedpassword', 'Software Engineer'),
@@ -35,7 +35,7 @@ CREATE TABLE `Customer` (
   `travel_document` varchar(50) NOT NULL DEFAULT '',
   `billing_address` varchar(50) NOT NULL DEFAULT '',
   `phone_number` varchar(50) NOT NULL DEFAULT '',
-  `seat_preference` varchar(50) NOT NULL DEFAULT '',
+  `seat_preference` enum('FIRST','BUSINESS', 'ECONOMY') NOT NULL DEFAULT 'ECONOMY',
   `payment_information` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
@@ -50,7 +50,7 @@ CREATE TABLE `Loyalty_Member` (
   `id` int(11) unsigned NOT NULL,
   `points` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `Loyalty_Member` FOREIGN KEY (`id`) REFERENCES `Customer` (`id`)
+  CONSTRAINT `Loyalty_Member` FOREIGN KEY (`id`) REFERENCES `Customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -191,6 +191,23 @@ VALUES
 	('ZSW','Prince Rupert/Seal Cover Water Airport'),
 	('ZTS','Tahsis Water Aerodrome');
 
+# Route
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `Route`;
+
+CREATE TABLE `Route` (
+  `departure` char(3) NOT NULL DEFAULT '',
+  `arrival` char(3) NOT NULL DEFAULT '',
+  `first_class` int(11) NOT NULL,
+  `business` int(11) NOT NULL,
+  `economy` int(11) NOT NULL,
+  PRIMARY KEY (`arrival`,`departure`),
+  KEY `Departure` (`departure`),
+  CONSTRAINT `Departure` FOREIGN KEY (`departure`) REFERENCES `Airport` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Arrival` FOREIGN KEY (`arrival`) REFERENCES `Airport` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 # Flight
 # ------------------------------------------------------------
 
@@ -209,23 +226,6 @@ CREATE TABLE `Flight` (
   CONSTRAINT `Route` FOREIGN KEY (`arrival`, `departure`) REFERENCES `Route` (`arrival`, `departure`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-# Route
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `Route`;
-
-CREATE TABLE `Route` (
-  `departure` char(3) NOT NULL DEFAULT '',
-  `arrival` char(3) NOT NULL DEFAULT '',
-  `first_class` int(11) NOT NULL,
-  `business` int(11) NOT NULL,
-  `economy` int(11) NOT NULL,
-  PRIMARY KEY (`arrival`,`departure`),
-  KEY `Departure` (`departure`),
-  CONSTRAINT `Departure` FOREIGN KEY (`departure`) REFERENCES `Airport` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `Arrival` FOREIGN KEY (`arrival`) REFERENCES `Airport` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 # Ticket
 # ------------------------------------------------------------
 
@@ -234,9 +234,9 @@ DROP TABLE IF EXISTS `Ticket`;
 CREATE TABLE `Ticket` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `seat_type` enum('FIRST','BUSINESS','ECONOMY') NOT NULL DEFAULT 'ECONOMY',
-  `flightId` int(11) DEFAULT NULL,
-  `customerId` int(11) DEFAULT NULL,
-  PRIMARY KEY (`flightId`, `customerId`),
+  `flightId` int(11) unsigned NOT NULL,
+  `customerId` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
   CONSTRAINT `Flight` FOREIGN KEY (`flightId`) REFERENCES `Flight` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Customer` FOREIGN KEY (`customerId`) REFERENCES `Customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
