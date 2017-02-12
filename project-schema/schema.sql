@@ -8,7 +8,7 @@ CREATE TABLE `Staff` (
   `name` varchar(50) NOT NULL DEFAULT '',
   `email` varchar(50) NOT NULL DEFAULT '',
   `username` varchar(50) NOT NULL DEFAULT '',
-  `password` char(50) NOT NULL DEFAULT '',
+  `password` char(64) NOT NULL DEFAULT '',
   `title` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
@@ -16,10 +16,11 @@ CREATE TABLE `Staff` (
 
 INSERT INTO `Staff` (`id`, `name`, `email`, `username`, `password`, `title`)
 VALUES
-	(4194304,'Rhys Bower','rhys@airbc.ca','rbower','hashedpassword', 'Software Engineer'),
-	(4194305,'Mandy Chen','mandy@airbc.ca','mchen','hashedpassword', 'Software Engineer'),
-	(4194306,'Alison Wu','alison@airbc.ca','awu','hashedpassword', 'Software Engineer'),
-	(4194307,'Harryson Hu','harryson@airbc.ca','hhu','hashedpassword', 'Software Engineer');
+	(1,'Rhys Bower','rhys@airbc.ca','rbower','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8','Software Engineer'),
+	(2,'Mandy Chen','mandy@airbc.ca','mchen','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8','Software Engineer'),
+	(3,'Alison Wu','alison@airbc.ca','awu','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8','Software Engineer'),
+	(4,'Harryson Hu','harryson@airbc.ca','hhu','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8','Software Engineer'),
+  (5,'Boss','boss@airbc.ca','boss','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8','CEO');
 
 # Customer
 # ------------------------------------------------------------
@@ -31,7 +32,7 @@ CREATE TABLE `Customer` (
   `name` varchar(50) NOT NULL DEFAULT '',
   `email` varchar(50) NOT NULL DEFAULT '',
   `username` varchar(50) NOT NULL DEFAULT '',
-  `password` char(50) NOT NULL DEFAULT '',
+  `password` char(64) NOT NULL DEFAULT '',
   `travel_document` varchar(50) NOT NULL DEFAULT '',
   `billing_address` varchar(50) NOT NULL DEFAULT '',
   `phone_number` varchar(50) NOT NULL DEFAULT '',
@@ -40,6 +41,19 @@ CREATE TABLE `Customer` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `Customer` (`id`, `name`, `email`, `username`, `password`, `travel_document`, `billing_address`, `phone_number`, `seat_preference`, `payment_information`)
+VALUES
+	(1,'Adam','adam@customer.ca','adam','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Passport:111','111 Adam Dr. Vancouver BC, Canada','111-222-3333','ECONOMY', 'Visa:1111-1111-1111-1111'),
+  (2,'Bailey','bailey@customer.ca','bailey','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Passport:222','222 Bailey Dr. Vancouver BC, Canada','222-222-3333','ECONOMY', 'Visa:2222-2222-2222-2222'),
+  (3,'Carlos','carlos@customer.ca','carlos','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Passport:333','333 Carlos Dr. Vancouver BC, Canada','333-222-3333','FIRST', 'Visa:3333-3333-3333-3333'),
+  (4,'Darcy','darcy@customer.ca','darcy','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Passport:444','444 Darcy Dr. Vancouver BC, Canada','444-222-3333','BUSINESS', 'Visa:4444-4444-4444-4444'),
+  (5,'Eli','eli@customer.ca','eli','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Passport:555','555 Eli Dr. Vancouver BC, Canada','555-222-3333','ECONOMY', 'Visa:5555-5555-5555-5555'),
+  (6,'Florence','florence@customer.ca','florence','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Passport:666','666 Florence Dr. Vancouver BC, Canada','666-222-3333','FIRST', 'Visa:6666-6666-6666-6666'),
+  (7,'Grant','grant@customer.ca','grant','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Passport:777','777 Grant Dr. Vancouver BC, Canada','777-222-3333','ECONOMY', 'Visa:7777-7777-7777-7777'),
+  (8,'Hana','hana@customer.ca','hana','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Passport:888','888 Hana Dr. Vancouver BC, Canada','888-222-3333','BUSINESS', 'Visa:8888-8888-8888-8888'),
+  (9,'Issac','issac@customer.ca','issac','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Passport:999','999 Issac Dr. Vancouver BC, Canada','999-222-3333','ECONOMY', 'Visa:9999-9999-9999-9999'),
+  (10,'Jane','jane@customer.ca','jane','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Passport:000','000 Jane Dr. Vancouver BC, Canada','000-222-3333','BUSINESS', 'Visa:0000-0000-0000-0000');
 
 # Loyalty_Member
 # ------------------------------------------------------------
@@ -53,6 +67,13 @@ CREATE TABLE `Loyalty_Member` (
   CONSTRAINT `Loyalty_Member` FOREIGN KEY (`id`) REFERENCES `Customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `Loyalty_Member` (`id`, `points`)
+VALUES
+	(1,0),
+  (3,1500),
+  (5,950),
+  (7,25),
+  (9,1150);
 
 # Aircraft
 # ------------------------------------------------------------
@@ -111,85 +132,50 @@ CREATE TABLE `Airport` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `Airport` (`id`, `name`)
+INSERT INTO `Airport` (`id`, `name`, `location`)
 VALUES
-	('CJH','Chilko Lake (Tsylos Park Lodge) Aerodrome'),
-	('CXH','Vancouver Harbour Water Airport'),
-	('DUQ','Duncan Airport'),
-	('WPL','Powell Lake Water Aerodrome'),
-	('XQU','Qualicum Beach Airport'),
-	('YAA','Anahim Lake Airport'),
-	('YAL','Alert Bay Airport'),
-	('YAZ','Tofino/Long Beach Airport'),
-	('YBD','Bella Coola Airport'),
-	('YBL','Campbell River Airport'),
-	('YBO','Bob Quinn Lake Airport'),
-	('YCA','Courtenay Airpark'),
-	('YCD','Nanaimo Airport'),
-	('YCF','Cortes Island Aerodome'),
-	('YCG','Castlegar Airport'),
-	('YCP','Blue River Airport'),
-	('YCQ','Chetwynd Airport'),
-	('YCW','Chiliwack Airport'),
-	('YCZ','Fairmont Hot Springs Airport'),
-	('YDL','Dease Lake Airport'),
-	('YDQ','Bawson Creek Airport'),
-	('YDT','Boundary Bay Airport'),
-	('YGB','Texada/Gilies Bay Airport'),
-	('YGE','Golden Airport'),
-	('YGG','Ganges Water Aerodrome'),
-	('YHE','Hope Aerodrome'),
-	('YJM','Fort St. James (Perison) Airport'),
-	('YKA','Kamloops Airport'),
-	('YKK','Kikatla Water Aerodrome'),
-	('YLW','Kelowna International Airport'),
-	('YMB','Merritt Airport (Saunders Field)'),
-	('YMP','Port McNeill Airport'),
-	('YNH','Hundon\'s Hope Airport'),
-	('YNJ','Langley Regional Airport'),
-	('YPB','Port Alberni (Alberni Valley Regional) Airport'),
-	('YPI','Port Simpson Water Aerodrome'),
-	('YPK','Pitt Meadows Airport'),
-	('YPR','Prince Rupert Airport'),
-	('YPT','Pender Harbour Water Aerodrome'),
-	('YPU','Puntzi Mountain Airport'),
-	('YPW','Powell River Airport'),
-	('YPZ','Burns Lake Airport'),
-	('YQQ','CFB Comox (Comox Airport)'),
-	('YQZ','Quesnel Airport'),
-	('YRN','Rivers Inlet Water Aerodrome'),
-	('YRV','Revelstoke Airport'),
-	('YSE','Squamish Airport'),
-	('YSN','Salmon Arm Airport'),
-	('YSX','Bella Bella/Shearwater Water Aerodrome'),
-	('YTB','Hartley Bay Water Aerodrome'),
-	('YTG','Sulivan Bay Water Aerodrome'),
-	('YVE','Vernon Regional Airport'),
-	('YVR','Vancouver International Airport'),
-	('YWH','Victoria Inner Harbour Airport (Victoria Harbour Water Airport)'),
-	('YWL','Williams Lake Airport'),
-	('YWS','Whistler/Green Lake Water Aerodrome'),
-	('YXC','Cranbrook/Canadian Rockies International Airport'),
-	('YXJ','Fort St. John Airport (North Peace Airport)'),
-	('YXS','Prince George Airport'),
-	('YXT','Northwest Regional Airport Terrace-Kitimat (Terrace Airport)'),
-	('YXX','Abbotsford International Airport'),
-	('YYD','Smithers Airport'),
-	('YYE','Fort Nelson Airport'),
-	('YYF','Penticton Tegional Airport'),
-	('YYJ','Victoria International Airport'),
-	('YZP','Sandspit Airport'),
-	('YZT','Port Hardy Airport'),
-	('YZY','Mackenzie Airport'),
-	('ZEL','Denny Island Aerodrome'),
-	('ZGF','Grand Forks Airport'),
-	('ZMH','South Cariboo Rebional Airport (108 Mile Ranch Airport)'),
-	('ZMT','Masset Airport'),
-	('ZNA','Ocean Falls Water Aerodrome'),
-	('ZOF','Ocean Falls Water Aerodrome'),
-	('ZST','Stewart Awrodrome'),
-	('ZSW','Prince Rupert/Seal Cover Water Airport'),
-	('ZTS','Tahsis Water Aerodrome');
+	('CXH','Vancouver Harbour Water Airport','1055 Canada Place, Vancouver, BC V6C 3T4'),
+	('DUQ','Duncan Airport','5100 Langtry Rd, Duncan, BC V9L 6R8'),
+	('YAL','Alert Bay Airport','101 Alder Rd, Alert Bay, BC V0N 1A0'),
+	('YBD','Bella Coola Airport','1685 Airport Road, Hagensborg, BC V0T 1H0'),
+	('YBL','Campbell River Airport','2000 Jubilee Pkwy, Campbell River, BC V9H 1T5'),
+	('YCA','Courtenay Airpark','1250 Knight Rd, Comox, BC V9M 4H2'),
+	('YCD','Nanaimo Airport','3350 Spitfire Rd, Cassidy, BC V0R 1H0'),
+	('YCW','Chilliwack Airport','46244 Airport Rd, Chilliwack, BC V2P 1A5'),
+	('YCZ','Fairmont Hot Springs Airport','5192 Fairmont Airport Rd, Fairmont Hot Springs, BC V0B 1L1'),
+	('YDQ','Dawson Creek Airport','80 Vic Turner Airport Rd, Pouce Coupe, BC V0C 2C0'),
+	('YDT','Boundary Bay Airport','7800 Alpha Way, Delta, BC V4K 0A7'),
+	('YGE','Golden Airport','214 Fisher Rd, Golden, BC V0A 1H0'),
+	('YGG','Ganges Water Aerodrome','Ganges Harbor, BC V8K 2S3'),
+	('YHE','Hope Aerodrome','62720 Airport Rd, Hope, BC V0X 1L2'),
+	('YJM','Fort St. James (Perison) Airport','Airport Rd, Fort Saint James, BC V0J 1P0'),
+	('YKA','Kamloops Airport','3035 Airport Rd, Kamloops, BC V2B 7X1'),
+	('YLW','Kelowna International Airport','5533 Airport Way, Kelowna, BC V1V 1S1'),
+	('YMP','Port McNeill Airport','1001 Airport Rd, Port McNeill, BC V0N 2R0'),
+	('YNH','Hudson\'s Hope Airport','4142 Summer Rd, Hudson\'s Hope, BC V0C 1V0'),
+	('YNJ','Langley Regional Airport','5385 216 St, Langley, BC V2Y 2N3'),
+	('YPB','Port Alberni (Alberni Valley Regional) Airport','7400 Airport Rd, Port Alberni, BC V9Y 8Y9'),
+	('YPK','Pitt Meadows Airport','18799 Airport Way, Pitt Meadows, BC V3Y 0A7'),
+	('YPR','Prince Rupert Airport','Bag 4000, Prince Rupert, BC V8J 3S3'),
+	('YQZ','Quesnel Airport','651 Airport Rd, Quesnel, BC V2J 6W6'),
+	('YRV','Revelstoke Airport','2931 Airport Way, Revelstoke, BC V0E 2S1'),
+	('YVE','Vernon Regional Airport',' 6300 Tronson Rd, Vernon, BC V1H 1N5'),
+	('YVR','Vancouver International Airport','3211 Grant McConachie Way, Richmond, BC V7B 0A4'),
+	('YWL','Williams Lake Airport','3000 Airport Rd, Williams Lake, BC V2G 5M1'),
+	('YWS','Whistler/Green Lake Water Aerodrome','8069 Nicklaus N Blvd, Whistler, BC V0N 1B8'),
+	('YXC','Cranbrook/Canadian Rockies International Airport','1-9370 Airport Access Rd, Cranbrook, BC V1C 7E4'),
+	('YXJ','Fort St. John Airport (North Peace Airport)','9919 Terminal Rd, Fort St John, BC V1J 4H9'),
+	('YXS','Prince George Airport','10, 4141 Airport Rd, Prince George, BC V2N 4M6'),
+	('YXT','Northwest Regional Airport Terrace-Kitimat (Terrace Airport)','4401 Bristol road, Terrace, BC V8G 0E9'),
+	('YXX','Abbotsford International Airport','30440 Liberator Ave, Abbotsford, BC V2T 6H5'),
+	('YYD','Smithers Airport','6421 Airport Rd #1, Smithers, BC V0J 2N5'),
+	('YYE','Fort Nelson Airport','Piper Rd, Fort Nelson, BC V0C 1R0'),
+	('YYF','Penticton Regional Airport','3000 Airport Rd #109, Penticton, BC V2A 8X1'),
+	('YYJ','Victoria International Airport','1640 Electra Blvd, Sidney, BC V8L 5V4'),
+	('YZP','Sandspit Airport','1 Airport Rd, Sandspit, BC V0T 1T0'),
+	('YZT','Port Hardy Airport','3675 Byng Rd, Port Hardy, BC V0N 2P0'),
+	('ZMH','South Cariboo Regional Airport (108 Mile Ranch Airport)','Telqua Dr, 108 Mile Ranch, BC V0K 2Z0'),
+	('ZMT','Masset Airport','1900 Towhill Rd, Masset, BC V0T 1M0');
 
 # Route
 # ------------------------------------------------------------
@@ -203,10 +189,18 @@ CREATE TABLE `Route` (
   `business` int(11) NOT NULL,
   `economy` int(11) NOT NULL,
   PRIMARY KEY (`arrival`,`departure`),
-  KEY `Departure` (`departure`),
   CONSTRAINT `Departure` FOREIGN KEY (`departure`) REFERENCES `Airport` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Arrival` FOREIGN KEY (`arrival`) REFERENCES `Airport` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `Route` (`departure`, `arrival`, `first_class`, `business`, `economy`)
+VALUES
+	('YVR','YYJ',500,300,200),
+  ('YYJ','YVR',500,300,200),
+  ('YVR','YXS',600,400,300),
+  ('YXS','YVR',600,400,300),
+  ('YYJ','YXS',650,450,350),
+  ('YXS','YYJ',650,450,350);
 
 # Flight
 # ------------------------------------------------------------
@@ -226,6 +220,15 @@ CREATE TABLE `Flight` (
   CONSTRAINT `Route` FOREIGN KEY (`arrival`, `departure`) REFERENCES `Route` (`arrival`, `departure`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `Flight` (`id`, `date_time`, `assigned`, `arrival`, `departure`)
+VALUES
+	(1,'2017-02-13 04:00:00','C-FONF','YVR','YYJ'),
+  (2,'2017-02-13 07:00:00','C-FONF','YYJ','YVR'),
+  (3,'2017-02-13 08:00:00','C-FQWL','YVR','YXS'),
+  (4,'2017-02-13 12:00:00','C-FSKI','YVR','YXS'),
+  (5,'2017-02-13 13:00:00','C-FTJP','YYJ','YXS'),
+  (6,'2017-02-13 13:00:00','C-FTLU','YXS','YYJ');
+
 # Ticket
 # ------------------------------------------------------------
 
@@ -240,3 +243,12 @@ CREATE TABLE `Ticket` (
   CONSTRAINT `Flight` FOREIGN KEY (`flightId`) REFERENCES `Flight` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Customer` FOREIGN KEY (`customerId`) REFERENCES `Customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `Ticket` (`id`, `seat_type`, `flightId`, `customerId`)
+VALUES
+	(1,'ECONOMY',1,1),
+  (2,'BUSINESS',1,2),
+  (3,'FIRST',2,3),
+  (4,'ECONOMY',2,3),
+  (5,'ECONOMY',3,3),
+  (6,'ECONOMY',4,4);
