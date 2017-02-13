@@ -75,7 +75,7 @@ FDs:
 
 Normalization (BCNF):
 
-Type(type: string, first_class_seats: int, business_seats: int, economy_seats: int)
+Type(<u>type</u>: string, first_class_seats: int, business_seats: int, economy_seats: int)
 
 Aircraft(<u>id</u>: string, type: string, purchase_date: date, status: enum)
 
