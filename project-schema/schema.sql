@@ -75,6 +75,47 @@ VALUES
   (7,25),
   (9,1150);
 
+# Type
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `Type`;
+
+CREATE TABLE `Type` (
+  `type` varchar(50) NOT NULL DEFAULT '',
+  `first_class_seats` int(11) NOT NULL,
+  `business_seats` int(11) NOT NULL,
+  `economy_seats` int(11) NOT NULL,
+  PRIMARY KEY (`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `Type` (`type`, `first_class_seats`, `business_seats`, `economy_seats`)
+VALUES
+	('Fokker F28-1000',10,20,200),
+	('Boeing 737',10,20,200),
+	('Fairchild F-27',10,20,200),
+	('Canadair CL-600-2B19 (RJ100ER) Regional Jet',10,20,200),
+	('Boeing 737-800',10,20,200),
+	('Airbus A320',10,20,200),
+	('McDonnell Douglas DC-9-32',10,20,200),
+	('Boeing 767-233',10,20,200),
+	('Airbus A330-243',10,20,200),
+	('Douglas DC-8-61',10,20,200),
+	('Boeing 737-200',10,20,200),
+	('Airbus A310-308',10,20,200),
+	('Ornithopter',10,20,200),
+	('Sikorsky S-92A',10,20,200),
+	('Douglas DC-4',10,20,200),
+	('Douglas DC-8-43',10,20,200),
+	('Douglas DC-3',10,20,200),
+	('Douglas DC-6B',10,20,200),
+	('Bristol Britannia 314',10,20,200),
+	('Douglas C-54 Skymaster',10,20,200),
+	('Canadair North Star',10,20,200),
+	('Vickers Viscount',10,20,200),
+	('McDonnell Douglas DC-8-63',10,20,200),
+	('Douglas DC-8',10,20,200),
+	('Convair CV-580 Airtanker',10,20,200);
+
 # Aircraft
 # ------------------------------------------------------------
 
@@ -88,37 +129,38 @@ CREATE TABLE `Aircraft` (
   `economy_seats` int(11) NOT NULL,
   `purchase_date` date NOT NULL,
   `status` enum('OK','REPAIR') NOT NULL DEFAULT 'OK',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  CONSTRAINT `Type` FOREIGN KEY (`type`) REFERENCES `Type` (`type`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `Aircraft` (`id`, `type`, `first_class_seats`, `business_seats`, `economy_seats`, `purchase_date`, `status`)
+INSERT INTO `Aircraft` (`id`, `type`, `purchase_date`, `status`)
 VALUES
-	('C-FONF','Fokker F28-1000',10,20,200,'2017-01-01','OK'),
-	('C-FPWC','Boeing 737',10,20,200,'2017-01-01','OK'),
-	('C-FQWL','Fairchild F-27',10,20,200,'2017-01-01','OK'),
-	('C-FSKI','Canadair CL-600-2B19 (RJ100ER) Regional Jet',10,20,200,'2017-01-01','OK'),
-	('C-FTCZ','Boeing 737-800',10,20,200,'2017-01-01','OK'),
-	('C-FTJP','Airbus A320',10,20,200,'2017-01-01','OK'),
-	('C-FTLU','McDonnell Douglas DC-9-32',10,20,200,'2017-01-01','OK'),
-	('C-FTLV','McDonnell Douglas DC-9-32',10,20,200,'2017-01-01','OK'),
-	('C-GAUN','Boeing 767-233',10,20,200,'2017-01-01','OK'),
-	('C-GITS','Airbus A330-243',10,20,200,'2017-01-01','OK'),
-	('C-GMXQ','Douglas DC-8-61',10,20,200,'2017-01-01','OK'),
-	('C-GNWN','Boeing 737-200',10,20,200,'2017-01-01','OK'),
-	('C-GPAT','Airbus A310-308',10,20,200,'2017-01-01','OK'),
-	('C-GPTR','Ornithopter',10,20,200,'2017-01-01','OK'),
-	('C-GZCH','Sikorsky S-92A',10,20,200,'2017-01-01','OK'),
-	('CF-CPC','Douglas DC-4',10,20,200,'2017-01-01','OK'),
-	('CF-CPK','Douglas DC-8-43',10,20,200,'2017-01-01','REPAIR'),
-	('CF-CUA','Douglas DC-3',10,20,200,'2017-01-01','OK'),
-	('CF-CUQ','Douglas DC-6B',10,20,200,'2017-01-01','OK'),
-	('CF-CZB','Bristol Britannia 314',10,20,200,'2017-01-01','OK'),
-	('CF-EDN','Douglas C-54 Skymaster',10,20,200,'2017-01-01','OK'),
-	('CF-TFD','Canadair North Star',10,20,200,'2017-01-01','REPAIR'),
-	('CF-TGR','Vickers Viscount',10,20,200,'2017-01-01','OK'),
-	('CF-TIW','McDonnell Douglas DC-8-63',10,20,200,'2017-01-01','OK'),
-	('CF-TJN','Douglas DC-8',10,20,200,'2017-01-01','OK'),
-	('F-FKFY','Convair CV-580 Airtanker',10,20,200,'2017-01-01','REPAIR');
+	('C-FONF','Fokker F28-1000','2017-01-01','OK'),
+	('C-FPWC','Boeing 737','2017-01-01','OK'),
+	('C-FQWL','Fairchild F-27','2017-01-01','OK'),
+	('C-FSKI','Canadair CL-600-2B19 (RJ100ER) Regional Jet','2017-01-01','OK'),
+	('C-FTCZ','Boeing 737-800','2017-01-01','OK'),
+	('C-FTJP','Airbus A320','2017-01-01','OK'),
+	('C-FTLU','McDonnell Douglas DC-9-32','2017-01-01','OK'),
+	('C-FTLV','McDonnell Douglas DC-9-32','2017-01-01','OK'),
+	('C-GAUN','Boeing 767-233','2017-01-01','OK'),
+	('C-GITS','Airbus A330-243','2017-01-01','OK'),
+	('C-GMXQ','Douglas DC-8-61','2017-01-01','OK'),
+	('C-GNWN','Boeing 737-200','2017-01-01','OK'),
+	('C-GPAT','Airbus A310-308','2017-01-01','OK'),
+	('C-GPTR','Ornithopter','2017-01-01','OK'),
+	('C-GZCH','Sikorsky S-92A','2017-01-01','OK'),
+	('CF-CPC','Douglas DC-4','2017-01-01','OK'),
+	('CF-CPK','Douglas DC-8-43','2017-01-01','REPAIR'),
+	('CF-CUA','Douglas DC-3','2017-01-01','OK'),
+	('CF-CUQ','Douglas DC-6B','2017-01-01','OK'),
+	('CF-CZB','Bristol Britannia 314','2017-01-01','OK'),
+	('CF-EDN','Douglas C-54 Skymaster','2017-01-01','OK'),
+	('CF-TFD','Canadair North Star','2017-01-01','REPAIR'),
+	('CF-TGR','Vickers Viscount','2017-01-01','OK'),
+	('CF-TIW','McDonnell Douglas DC-8-63','2017-01-01','OK'),
+	('CF-TJN','Douglas DC-8','2017-01-01','OK'),
+	('F-FKFY','Convair CV-580 Airtanker','2017-01-01','REPAIR');
 
 # Airport
 # ------------------------------------------------------------
