@@ -61,7 +61,7 @@ Primary Key: id
 Candidate Key: id
 
 FDs:
-- id —> type
+- id —> type, purchase_date, status
 - type —> first_class_seats, business_seats, economy_seats
   The aircraft id can be used to determine its type. Then the type of aircraft can be used to determine the arrangement of seats.
 
