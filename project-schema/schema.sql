@@ -1,7 +1,9 @@
+DROP TABLE if EXISTS `loyalty_member`, `staff`, `ticket`;
+DROP TABLE if EXISTS `customer`, `flight`, `route`;
+DROP TABLE if EXISTS `aircraft`, `airport`, `type`;
+
 # Staff
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `Staff`;
 
 CREATE TABLE `Staff` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -24,8 +26,6 @@ VALUES
 
 # Customer
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `Customer`;
 
 CREATE TABLE `Customer` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -58,8 +58,6 @@ VALUES
 # Loyalty_Member
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `Loyalty_Member`;
-
 CREATE TABLE `Loyalty_Member` (
   `id` int(11) unsigned NOT NULL,
   `points` int(11) DEFAULT NULL,
@@ -77,8 +75,6 @@ VALUES
 
 # Type
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `Type`;
 
 CREATE TABLE `Type` (
   `type` varchar(50) NOT NULL DEFAULT '',
@@ -119,14 +115,9 @@ VALUES
 # Aircraft
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `Aircraft`;
-
 CREATE TABLE `Aircraft` (
   `id` char(7) NOT NULL DEFAULT '',
   `type` varchar(50) NOT NULL DEFAULT '',
-  `first_class_seats` int(11) NOT NULL,
-  `business_seats` int(11) NOT NULL,
-  `economy_seats` int(11) NOT NULL,
   `purchase_date` date NOT NULL,
   `status` enum('OK','REPAIR') NOT NULL DEFAULT 'OK',
   PRIMARY KEY (`id`),
@@ -164,8 +155,6 @@ VALUES
 
 # Airport
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `Airport`;
 
 CREATE TABLE `Airport` (
   `id` char(3) NOT NULL DEFAULT '',
@@ -222,8 +211,6 @@ VALUES
 # Route
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `Route`;
-
 CREATE TABLE `Route` (
   `departure` char(3) NOT NULL DEFAULT '',
   `arrival` char(3) NOT NULL DEFAULT '',
@@ -246,8 +233,6 @@ VALUES
 
 # Flight
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `Flight`;
 
 CREATE TABLE `Flight` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -273,8 +258,6 @@ VALUES
 
 # Ticket
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `Ticket`;
 
 CREATE TABLE `Ticket` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
