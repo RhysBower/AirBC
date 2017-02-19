@@ -12,7 +12,7 @@ Already in BCNF.
 
 -----
 
-Customer(<u>id</u>: int, name: string, email: string, username: string, password: string, travel_document: string, billing_address: string, phone_number: string, seat_preference: string, payment_information: enum)
+Customer(<u>id</u>: int, name: string, email: string, username: string, password: string, travel_document: string, billing_address: string, phone_number: string, seat_preference: enum, payment_information: string)
 Primary Key: id
 
 Candidate Keys: id, email, username, travel_document
