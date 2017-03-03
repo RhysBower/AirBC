@@ -5,6 +5,39 @@ DROP TABLE if EXISTS `aircraft`, `airport`, `type`;
 # Staff
 # ------------------------------------------------------------
 
+CREATE TABLE `Account` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `email` varchar(50) NOT NULL DEFAULT '',
+  `username` varchar(50) NOT NULL DEFAULT '',
+  `password` char(64) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `Account` (`id`, `name`, `email`, `username`, `password`)
+VALUES
+	(1,'Rhys Bower','rhys@airbc.ca','rbower','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+	(2,'Mandy Chen','mandy@airbc.ca','mchen','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+	(3,'Alison Wu','alison@airbc.ca','awu','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+	(4,'Harryson Hu','harryson@airbc.ca','hhu','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  (5,'Boss','boss@airbc.ca','boss','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+
+  (1,'Adam','adam@customer.ca','adam','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  (2,'Bailey','bailey@customer.ca','bailey','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  (3,'Carlos','carlos@customer.ca','carlos','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  (4,'Darcy','darcy@customer.ca','darcy','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  (5,'Eli','eli@customer.ca','eli','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  (6,'Florence','florence@customer.ca','florence','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  (7,'Grant','grant@customer.ca','grant','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  (8,'Hana','hana@customer.ca','hana','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  (9,'Issac','issac@customer.ca','issac','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  (10,'Jane','jane@customer.ca','jane','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8');
+
+
+# Staff
+# ------------------------------------------------------------
+
 CREATE TABLE `Staff` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL DEFAULT '',
@@ -277,3 +310,13 @@ VALUES
   (4,'ECONOMY',2,3),
   (5,'ECONOMY',3,3),
   (6,'ECONOMY',4,4);
+
+# Views
+# ------------------------------------------------------------
+CREATE VIEW `Account` AS
+  SELECT `id`, `name`, `email`, `username`, `password` from Staff UNION
+  SELECT `id`, `name`, `email`, `username`, `password` from Customer;
+
+CREATE VIEW `AircraftJoin` AS
+  SELECT id, Aircraft.type, purchase_date, status, first_class_seats, business_seats, economy_seats
+  	from Aircraft JOIN Type WHERE Aircraft.type=Type.type;
