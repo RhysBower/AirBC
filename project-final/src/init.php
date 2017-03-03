@@ -9,6 +9,7 @@ require  __DIR__ . '/../vendor/autoload.php';
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+
 $logger = new Logger('Airbc');
 $logger->pushHandler(new StreamHandler(__DIR__.'/../logs/airbc.log', Logger::DEBUG));
 $logger->info('Load page: ' . $_SERVER['REQUEST_URI']);

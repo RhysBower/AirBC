@@ -3,16 +3,18 @@
 use PHPUnit\Framework\TestCase;
 use Airbc\Object;
 
-final class ObjectTest extends TestCase {
-
-    public function testCannotWriteInaccessibleProperty(): void {
+final class ObjectTest extends TestCase
+{
+    public function testCannotWriteInaccessibleProperty(): void
+    {
         $this->expectException(DomainException::class);
 
         $object = new Object();
         $object->invalid = "property";
     }
 
-    public function testCannotReadInaccessibleProperty(): void {
+    public function testCannotReadInaccessibleProperty(): void
+    {
         $this->expectException(DomainException::class);
 
         $object = new Object();
