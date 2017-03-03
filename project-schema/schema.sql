@@ -1,3 +1,4 @@
+DROP VIEW if EXISTS `aircraftjoin`;
 DROP TABLE if EXISTS `loyalty_member`, `staff`, `ticket`;
 DROP TABLE if EXISTS `customer`, `flight`, `route`;
 DROP TABLE if EXISTS `aircraft`, `airport`, `type`, `account`;
@@ -183,7 +184,7 @@ VALUES
 CREATE TABLE `Airport` (
   `id` char(3) NOT NULL DEFAULT '',
   `name` varchar(100) NOT NULL DEFAULT '',
-  `location` varchar(50) NOT NULL DEFAULT '',
+  `location` varchar(100) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
