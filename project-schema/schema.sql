@@ -266,8 +266,6 @@ CREATE TABLE Flight (
   arrival char(3) NOT NULL DEFAULT '',
   departure char(3) NOT NULL DEFAULT '',
   PRIMARY KEY (id),
-  KEY Route (arrival,departure),
-  KEY Aircraft (assigned),
   FOREIGN KEY (assigned) REFERENCES Aircraft (id),
   FOREIGN KEY (arrival, departure) REFERENCES Route (arrival, departure) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
