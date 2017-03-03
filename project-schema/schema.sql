@@ -7,10 +7,10 @@ DROP TABLE if EXISTS Aircraft, Airport, Type, Account;
 # ------------------------------------------------------------
 CREATE TABLE Account (
   id int(11) unsigned NOT NULL AUTO_INCREMENT,
-  name varchar(50) NOT NULL DEFAULT '',
-  email varchar(50) NOT NULL DEFAULT '',
-  username varchar(50) NOT NULL DEFAULT '',
-  password char(255) NOT NULL DEFAULT '',
+  name varchar(50) NOT NULL,
+  email varchar(50) NOT NULL,
+  username varchar(50) NOT NULL,
+  password char(255) NOT NULL,
   PRIMARY KEY (id),
   UNIQUE (username)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -39,7 +39,7 @@ VALUES
 
 CREATE TABLE Staff (
   id int(11) unsigned NOT NULL AUTO_INCREMENT,
-  title varchar(50) NOT NULL DEFAULT '',
+  title varchar(50) NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (id) REFERENCES Account (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -57,7 +57,7 @@ VALUES
 
 CREATE TABLE Customer (
   id int(11) unsigned NOT NULL AUTO_INCREMENT,
-  travel_document varchar(50) NOT NULL DEFAULT '',
+  travel_document varchar(50) NOT NULL,
   billing_address varchar(50) NOT NULL DEFAULT '',
   phone_number varchar(50) NOT NULL DEFAULT '',
   seat_preference enum('FIRST','BUSINESS', 'ECONOMY') NOT NULL DEFAULT 'ECONOMY',
@@ -101,7 +101,7 @@ VALUES
 # ------------------------------------------------------------
 
 CREATE TABLE Type (
-  type varchar(50) NOT NULL DEFAULT '',
+  type varchar(50) NOT NULL,
   first_class_seats int(11) NOT NULL,
   business_seats int(11) NOT NULL,
   economy_seats int(11) NOT NULL,
@@ -140,8 +140,8 @@ VALUES
 # ------------------------------------------------------------
 
 CREATE TABLE Aircraft (
-  id char(7) NOT NULL DEFAULT '',
-  type varchar(50) NOT NULL DEFAULT '',
+  id char(7) NOT NULL,
+  type varchar(50) NOT NULL,
   purchase_date date NOT NULL,
   status enum('OK','REPAIR') NOT NULL DEFAULT 'OK',
   PRIMARY KEY (id),
@@ -181,9 +181,9 @@ VALUES
 # ------------------------------------------------------------
 
 CREATE TABLE Airport (
-  id char(3) NOT NULL DEFAULT '',
-  name varchar(100) NOT NULL DEFAULT '',
-  location varchar(100) NOT NULL DEFAULT '',
+  id char(3) NOT NULL,
+  name varchar(100) NOT NULL,
+  location varchar(100) NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -236,8 +236,8 @@ VALUES
 # ------------------------------------------------------------
 
 CREATE TABLE Route (
-  departure char(3) NOT NULL DEFAULT '',
-  arrival char(3) NOT NULL DEFAULT '',
+  departure char(3) NOT NULL,
+  arrival char(3) NOT NULL,
   first_class int(11) NOT NULL,
   business int(11) NOT NULL,
   economy int(11) NOT NULL,
@@ -261,9 +261,9 @@ VALUES
 CREATE TABLE Flight (
   id int(11) unsigned NOT NULL AUTO_INCREMENT,
   date_time datetime NOT NULL,
-  assigned char(7) NOT NULL DEFAULT '',
-  arrival char(3) NOT NULL DEFAULT '',
-  departure char(3) NOT NULL DEFAULT '',
+  assigned char(7) NOT NULL,
+  arrival char(3) NOT NULL,
+  departure char(3) NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (assigned) REFERENCES Aircraft (id),
   FOREIGN KEY (arrival, departure) REFERENCES Route (arrival, departure) ON DELETE CASCADE ON UPDATE CASCADE
