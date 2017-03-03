@@ -1,0 +1,14 @@
+{
+    "name": "airbc/web",
+    "description": "CPSC 304 project.",
+    "type": "project",
+    "minimum-stability": "stable",
+    "require": {
+      "psr/log": "^1.0",
+      "monolog/monolog": "^1.0",
+      "twig/twig": "~1.0"
+    },
+    "autoload": {
+        "psr-4": {"Airbc\\": "src/Airbc/"}
+    }
+}
