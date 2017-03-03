@@ -1,6 +1,6 @@
 DROP TABLE if EXISTS `loyalty_member`, `staff`, `ticket`;
 DROP TABLE if EXISTS `customer`, `flight`, `route`;
-DROP TABLE if EXISTS `aircraft`, `airport`, `type`;
+DROP TABLE if EXISTS `aircraft`, `airport`, `type`, `account`;
 
 # Staff
 # ------------------------------------------------------------
@@ -22,17 +22,16 @@ VALUES
 	(3,'Alison Wu','alison@airbc.ca','awu','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
 	(4,'Harryson Hu','harryson@airbc.ca','hhu','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
   (5,'Boss','boss@airbc.ca','boss','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-
-  (1,'Adam','adam@customer.ca','adam','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (2,'Bailey','bailey@customer.ca','bailey','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (3,'Carlos','carlos@customer.ca','carlos','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (4,'Darcy','darcy@customer.ca','darcy','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (5,'Eli','eli@customer.ca','eli','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (6,'Florence','florence@customer.ca','florence','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (7,'Grant','grant@customer.ca','grant','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (8,'Hana','hana@customer.ca','hana','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (9,'Issac','issac@customer.ca','issac','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (10,'Jane','jane@customer.ca','jane','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8');
+  (6,'Adam','adam@customer.ca','adam','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  (7,'Bailey','bailey@customer.ca','bailey','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  (8,'Carlos','carlos@customer.ca','carlos','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  (9,'Darcy','darcy@customer.ca','darcy','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  (10,'Eli','eli@customer.ca','eli','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  (11,'Florence','florence@customer.ca','florence','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  (12,'Grant','grant@customer.ca','grant','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  (13,'Hana','hana@customer.ca','hana','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  (14,'Issac','issac@customer.ca','issac','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  (15,'Jane','jane@customer.ca','jane','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8');
 
 
 # Staff
@@ -40,53 +39,45 @@ VALUES
 
 CREATE TABLE `Staff` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL DEFAULT '',
-  `email` varchar(50) NOT NULL DEFAULT '',
-  `username` varchar(50) NOT NULL DEFAULT '',
-  `password` char(64) NOT NULL DEFAULT '',
   `title` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`)
+  CONSTRAINT `Account` FOREIGN KEY (`id`) REFERENCES `Account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `Staff` (`id`, `name`, `email`, `username`, `password`, `title`)
+INSERT INTO `Staff` (`id`, `title`)
 VALUES
-	(1,'Rhys Bower','rhys@airbc.ca','rbower','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8','Software Engineer'),
-	(2,'Mandy Chen','mandy@airbc.ca','mchen','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8','Software Engineer'),
-	(3,'Alison Wu','alison@airbc.ca','awu','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8','Software Engineer'),
-	(4,'Harryson Hu','harryson@airbc.ca','hhu','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8','Software Engineer'),
-  (5,'Boss','boss@airbc.ca','boss','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8','CEO');
+	(1,'Software Engineer'),
+	(2,'Software Engineer'),
+	(3,'Software Engineer'),
+	(4,'Software Engineer'),
+  (5,'CEO');
 
 # Customer
 # ------------------------------------------------------------
 
 CREATE TABLE `Customer` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL DEFAULT '',
-  `email` varchar(50) NOT NULL DEFAULT '',
-  `username` varchar(50) NOT NULL DEFAULT '',
-  `password` char(64) NOT NULL DEFAULT '',
   `travel_document` varchar(50) NOT NULL DEFAULT '',
   `billing_address` varchar(50) NOT NULL DEFAULT '',
   `phone_number` varchar(50) NOT NULL DEFAULT '',
   `seat_preference` enum('FIRST','BUSINESS', 'ECONOMY') NOT NULL DEFAULT 'ECONOMY',
   `payment_information` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`)
+  CONSTRAINT `CustomerAccount` FOREIGN KEY (`id`) REFERENCES `Account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `Customer` (`id`, `name`, `email`, `username`, `password`, `travel_document`, `billing_address`, `phone_number`, `seat_preference`, `payment_information`)
+INSERT INTO `Customer` (`id`, `travel_document`, `billing_address`, `phone_number`, `seat_preference`, `payment_information`)
 VALUES
-	(1,'Adam','adam@customer.ca','adam','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Passport:111','111 Adam Dr. Vancouver BC, Canada','111-222-3333','ECONOMY', 'Visa:1111-1111-1111-1111'),
-  (2,'Bailey','bailey@customer.ca','bailey','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Passport:222','222 Bailey Dr. Vancouver BC, Canada','222-222-3333','ECONOMY', 'Visa:2222-2222-2222-2222'),
-  (3,'Carlos','carlos@customer.ca','carlos','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Passport:333','333 Carlos Dr. Vancouver BC, Canada','333-222-3333','FIRST', 'Visa:3333-3333-3333-3333'),
-  (4,'Darcy','darcy@customer.ca','darcy','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Passport:444','444 Darcy Dr. Vancouver BC, Canada','444-222-3333','BUSINESS', 'Visa:4444-4444-4444-4444'),
-  (5,'Eli','eli@customer.ca','eli','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Passport:555','555 Eli Dr. Vancouver BC, Canada','555-222-3333','ECONOMY', 'Visa:5555-5555-5555-5555'),
-  (6,'Florence','florence@customer.ca','florence','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Passport:666','666 Florence Dr. Vancouver BC, Canada','666-222-3333','FIRST', 'Visa:6666-6666-6666-6666'),
-  (7,'Grant','grant@customer.ca','grant','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Passport:777','777 Grant Dr. Vancouver BC, Canada','777-222-3333','ECONOMY', 'Visa:7777-7777-7777-7777'),
-  (8,'Hana','hana@customer.ca','hana','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Passport:888','888 Hana Dr. Vancouver BC, Canada','888-222-3333','BUSINESS', 'Visa:8888-8888-8888-8888'),
-  (9,'Issac','issac@customer.ca','issac','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Passport:999','999 Issac Dr. Vancouver BC, Canada','999-222-3333','ECONOMY', 'Visa:9999-9999-9999-9999'),
-  (10,'Jane','jane@customer.ca','jane','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Passport:000','000 Jane Dr. Vancouver BC, Canada','000-222-3333','BUSINESS', 'Visa:0000-0000-0000-0000');
+	(6,'Passport:111','111 Adam Dr. Vancouver BC, Canada','111-222-3333','ECONOMY', 'Visa:1111-1111-1111-1111'),
+  (7,'Passport:222','222 Bailey Dr. Vancouver BC, Canada','222-222-3333','ECONOMY', 'Visa:2222-2222-2222-2222'),
+  (8,'Passport:333','333 Carlos Dr. Vancouver BC, Canada','333-222-3333','FIRST', 'Visa:3333-3333-3333-3333'),
+  (9,'Passport:444','444 Darcy Dr. Vancouver BC, Canada','444-222-3333','BUSINESS', 'Visa:4444-4444-4444-4444'),
+  (10,'Passport:555','555 Eli Dr. Vancouver BC, Canada','555-222-3333','ECONOMY', 'Visa:5555-5555-5555-5555'),
+  (11,'Passport:666','666 Florence Dr. Vancouver BC, Canada','666-222-3333','FIRST', 'Visa:6666-6666-6666-6666'),
+  (12,'Passport:777','777 Grant Dr. Vancouver BC, Canada','777-222-3333','ECONOMY', 'Visa:7777-7777-7777-7777'),
+  (13,'Passport:888','888 Hana Dr. Vancouver BC, Canada','888-222-3333','BUSINESS', 'Visa:8888-8888-8888-8888'),
+  (14,'Passport:999','999 Issac Dr. Vancouver BC, Canada','999-222-3333','ECONOMY', 'Visa:9999-9999-9999-9999'),
+  (15,'Passport:000','000 Jane Dr. Vancouver BC, Canada','000-222-3333','BUSINESS', 'Visa:0000-0000-0000-0000');
 
 # Loyalty_Member
 # ------------------------------------------------------------
@@ -100,11 +91,11 @@ CREATE TABLE `Loyalty_Member` (
 
 INSERT INTO `Loyalty_Member` (`id`, `points`)
 VALUES
-	(1,0),
-  (3,1500),
-  (5,950),
-  (7,25),
-  (9,1150);
+	(6,0),
+  (8,1500),
+  (10,950),
+  (12,25),
+  (14,1150);
 
 # Type
 # ------------------------------------------------------------
@@ -304,19 +295,15 @@ CREATE TABLE `Ticket` (
 
 INSERT INTO `Ticket` (`id`, `seat_type`, `flightId`, `customerId`)
 VALUES
-	(1,'ECONOMY',1,1),
-  (2,'BUSINESS',1,2),
-  (3,'FIRST',2,3),
-  (4,'ECONOMY',2,3),
-  (5,'ECONOMY',3,3),
-  (6,'ECONOMY',4,4);
+	(1,'ECONOMY',1,6),
+  (2,'BUSINESS',1,7),
+  (3,'FIRST',2,8),
+  (4,'ECONOMY',2,8),
+  (5,'ECONOMY',3,8),
+  (6,'ECONOMY',4,9);
 
 # Views
 # ------------------------------------------------------------
-CREATE VIEW `Account` AS
-  SELECT `id`, `name`, `email`, `username`, `password` from Staff UNION
-  SELECT `id`, `name`, `email`, `username`, `password` from Customer;
-
 CREATE VIEW `AircraftJoin` AS
   SELECT id, Aircraft.type, purchase_date, status, first_class_seats, business_seats, economy_seats
   	from Aircraft JOIN Type WHERE Aircraft.type=Type.type;
