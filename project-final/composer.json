@@ -2,13 +2,39 @@
     "name": "airbc/web",
     "description": "CPSC 304 project.",
     "type": "project",
-    "minimum-stability": "stable",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Rhys Bower",
+            "email": "rhys.bower@alumni.ubc.ca"
+        },
+        {
+            "name": "Mandy Chen",
+            "email": "mandychen@alumni.ubc.ca"
+        },
+        {
+            "name": "Alison Wu",
+            "email": "arwu@alumni.ubc.ca"
+        },
+        {
+            "name": "Harryson Hu",
+            "email": "harrysonhu@gmail.com"
+        }
+    ],
     "require": {
       "psr/log": "^1.0",
       "monolog/monolog": "^1.0",
       "twig/twig": "^2.0"
     },
+
+    "require-dev": {
+        "phpunit/phpunit": "^6.0"
+    },
     "autoload": {
         "psr-4": {"Airbc\\": "src/Airbc/"}
+    },
+    "minimum-stability": "stable",
+    "scripts": {
+        "test": "phpunit --colors=always tests"
     }
 }
