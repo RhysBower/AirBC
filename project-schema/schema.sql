@@ -1,116 +1,115 @@
-DROP VIEW if EXISTS `aircraftjoin`;
-DROP TABLE if EXISTS `loyalty_member`, `staff`, `ticket`;
-DROP TABLE if EXISTS `customer`, `flight`, `route`;
-DROP TABLE if EXISTS `aircraft`, `airport`, `type`, `account`;
+DROP VIEW if EXISTS AircraftJoin;
+DROP TABLE if EXISTS Loyalty_Member, Staff, Ticket;
+DROP TABLE if EXISTS Customer, Flight, Route;
+DROP TABLE if EXISTS Aircraft, Airport, Type, Account;
 
 # Staff
 # ------------------------------------------------------------
 
-CREATE TABLE `Account` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `password` char(64) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`),
-  UNIQUE KEY `email` (`email`)
+CREATE TABLE Account (
+  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  name varchar(50) NOT NULL DEFAULT '',
+  email varchar(50) NOT NULL DEFAULT '',
+  username varchar(50) NOT NULL DEFAULT '',
+  password char(64) NOT NULL DEFAULT '',
+  PRIMARY KEY (id),
+  UNIQUE (username)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `Account` (`id`, `name`, `email`, `username`, `password`)
+INSERT INTO Account (id, name, email, username, password)
 VALUES
 	(1,'Rhys Bower','rhys@airbc.ca','rbower','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
 	(2,'Mandy Chen','mandy@airbc.ca','mchen','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
 	(3,'Alison Wu','alison@airbc.ca','awu','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
 	(4,'Harryson Hu','harryson@airbc.ca','hhu','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (5,'Boss','boss@airbc.ca','boss','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (6,'Adam','adam@customer.ca','adam','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (7,'Bailey','bailey@customer.ca','bailey','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (8,'Carlos','carlos@customer.ca','carlos','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (9,'Darcy','darcy@customer.ca','darcy','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (10,'Eli','eli@customer.ca','eli','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (11,'Florence','florence@customer.ca','florence','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (12,'Grant','grant@customer.ca','grant','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (13,'Hana','hana@customer.ca','hana','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (14,'Issac','issac@customer.ca','issac','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (15,'Jane','jane@customer.ca','jane','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8');
+  	(5,'Boss','boss@airbc.ca','boss','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  	(6,'Adam','adam@customer.ca','adam','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  	(7,'Bailey','bailey@customer.ca','bailey','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  	(8,'Carlos','carlos@customer.ca','carlos','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  	(9,'Darcy','darcy@customer.ca','darcy','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  	(10,'Eli','eli@customer.ca','eli','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  	(11,'Florence','florence@customer.ca','florence','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  	(12,'Grant','grant@customer.ca','grant','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  	(13,'Hana','hana@customer.ca','hana','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  	(14,'Issac','issac@customer.ca','issac','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
+  	(15,'Jane','jane@customer.ca','jane','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8');
 
 
 # Staff
 # ------------------------------------------------------------
 
-CREATE TABLE `Staff` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `Account` FOREIGN KEY (`id`) REFERENCES `Account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE Staff (
+  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  title varchar(50) NOT NULL DEFAULT '',
+  PRIMARY KEY (id),
+  FOREIGN KEY (id) REFERENCES Account (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `Staff` (`id`, `title`)
+INSERT INTO Staff (id, title)
 VALUES
 	(1,'Software Engineer'),
 	(2,'Software Engineer'),
 	(3,'Software Engineer'),
 	(4,'Software Engineer'),
-  (5,'CEO');
+  	(5,'CEO');
 
 # Customer
 # ------------------------------------------------------------
 
-CREATE TABLE `Customer` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `travel_document` varchar(50) NOT NULL DEFAULT '',
-  `billing_address` varchar(50) NOT NULL DEFAULT '',
-  `phone_number` varchar(50) NOT NULL DEFAULT '',
-  `seat_preference` enum('FIRST','BUSINESS', 'ECONOMY') NOT NULL DEFAULT 'ECONOMY',
-  `payment_information` varchar(50) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  CONSTRAINT `CustomerAccount` FOREIGN KEY (`id`) REFERENCES `Account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE Customer (
+  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  travel_document varchar(50) NOT NULL DEFAULT '',
+  billing_address varchar(50) NOT NULL DEFAULT '',
+  phone_number varchar(50) NOT NULL DEFAULT '',
+  seat_preference enum('FIRST','BUSINESS', 'ECONOMY') NOT NULL DEFAULT 'ECONOMY',
+  payment_information varchar(50) NOT NULL DEFAULT '',
+  PRIMARY KEY (id),
+  FOREIGN KEY (id) REFERENCES Account (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `Customer` (`id`, `travel_document`, `billing_address`, `phone_number`, `seat_preference`, `payment_information`)
+INSERT INTO Customer (id, travel_document, billing_address, phone_number, seat_preference, payment_information)
 VALUES
 	(6,'Passport:111','111 Adam Dr. Vancouver BC, Canada','111-222-3333','ECONOMY', 'Visa:1111-1111-1111-1111'),
-  (7,'Passport:222','222 Bailey Dr. Vancouver BC, Canada','222-222-3333','ECONOMY', 'Visa:2222-2222-2222-2222'),
-  (8,'Passport:333','333 Carlos Dr. Vancouver BC, Canada','333-222-3333','FIRST', 'Visa:3333-3333-3333-3333'),
-  (9,'Passport:444','444 Darcy Dr. Vancouver BC, Canada','444-222-3333','BUSINESS', 'Visa:4444-4444-4444-4444'),
-  (10,'Passport:555','555 Eli Dr. Vancouver BC, Canada','555-222-3333','ECONOMY', 'Visa:5555-5555-5555-5555'),
-  (11,'Passport:666','666 Florence Dr. Vancouver BC, Canada','666-222-3333','FIRST', 'Visa:6666-6666-6666-6666'),
-  (12,'Passport:777','777 Grant Dr. Vancouver BC, Canada','777-222-3333','ECONOMY', 'Visa:7777-7777-7777-7777'),
-  (13,'Passport:888','888 Hana Dr. Vancouver BC, Canada','888-222-3333','BUSINESS', 'Visa:8888-8888-8888-8888'),
-  (14,'Passport:999','999 Issac Dr. Vancouver BC, Canada','999-222-3333','ECONOMY', 'Visa:9999-9999-9999-9999'),
-  (15,'Passport:000','000 Jane Dr. Vancouver BC, Canada','000-222-3333','BUSINESS', 'Visa:0000-0000-0000-0000');
+  	(7,'Passport:222','222 Bailey Dr. Vancouver BC, Canada','222-222-3333','ECONOMY', 'Visa:2222-2222-2222-2222'),
+  	(8,'Passport:333','333 Carlos Dr. Vancouver BC, Canada','333-222-3333','FIRST', 'Visa:3333-3333-3333-3333'),
+  	(9,'Passport:444','444 Darcy Dr. Vancouver BC, Canada','444-222-3333','BUSINESS', 'Visa:4444-4444-4444-4444'),
+  	(10,'Passport:555','555 Eli Dr. Vancouver BC, Canada','555-222-3333','ECONOMY', 'Visa:5555-5555-5555-5555'),
+  	(11,'Passport:666','666 Florence Dr. Vancouver BC, Canada','666-222-3333','FIRST', 'Visa:6666-6666-6666-6666'),
+  	(12,'Passport:777','777 Grant Dr. Vancouver BC, Canada','777-222-3333','ECONOMY', 'Visa:7777-7777-7777-7777'),
+  	(13,'Passport:888','888 Hana Dr. Vancouver BC, Canada','888-222-3333','BUSINESS', 'Visa:8888-8888-8888-8888'),
+  	(14,'Passport:999','999 Issac Dr. Vancouver BC, Canada','999-222-3333','ECONOMY', 'Visa:9999-9999-9999-9999'),
+  	(15,'Passport:000','000 Jane Dr. Vancouver BC, Canada','000-222-3333','BUSINESS', 'Visa:0000-0000-0000-0000');
 
 # Loyalty_Member
 # ------------------------------------------------------------
 
-CREATE TABLE `Loyalty_Member` (
-  `id` int(11) unsigned NOT NULL,
-  `points` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `Loyalty_Member` FOREIGN KEY (`id`) REFERENCES `Customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE Loyalty_Member (
+  id int(11) unsigned NOT NULL,
+  points int(11) DEFAULT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (id) REFERENCES Customer (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `Loyalty_Member` (`id`, `points`)
+INSERT INTO Loyalty_Member (id, points)
 VALUES
 	(6,0),
-  (8,1500),
-  (10,950),
-  (12,25),
-  (14,1150);
+  	(8,1500),
+  	(10,950),
+  	(12,25),
+  	(14,1150);
 
 # Type
 # ------------------------------------------------------------
 
-CREATE TABLE `Type` (
-  `type` varchar(50) NOT NULL DEFAULT '',
-  `first_class_seats` int(11) NOT NULL,
-  `business_seats` int(11) NOT NULL,
-  `economy_seats` int(11) NOT NULL,
-  PRIMARY KEY (`type`)
+CREATE TABLE Type (
+  type varchar(50) NOT NULL DEFAULT '',
+  first_class_seats int(11) NOT NULL,
+  business_seats int(11) NOT NULL,
+  economy_seats int(11) NOT NULL,
+  PRIMARY KEY (type)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `Type` (`type`, `first_class_seats`, `business_seats`, `economy_seats`)
+INSERT INTO Type (type, first_class_seats, business_seats, economy_seats)
 VALUES
 	('Fokker F28-1000',10,20,200),
 	('Boeing 737',10,20,200),
@@ -141,16 +140,16 @@ VALUES
 # Aircraft
 # ------------------------------------------------------------
 
-CREATE TABLE `Aircraft` (
-  `id` char(7) NOT NULL DEFAULT '',
-  `type` varchar(50) NOT NULL DEFAULT '',
-  `purchase_date` date NOT NULL,
-  `status` enum('OK','REPAIR') NOT NULL DEFAULT 'OK',
-  PRIMARY KEY (`id`),
-  CONSTRAINT `Type` FOREIGN KEY (`type`) REFERENCES `Type` (`type`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE Aircraft (
+  id char(7) NOT NULL DEFAULT '',
+  type varchar(50) NOT NULL DEFAULT '',
+  purchase_date date NOT NULL,
+  status enum('OK','REPAIR') NOT NULL DEFAULT 'OK',
+  PRIMARY KEY (id),
+  FOREIGN KEY (type) REFERENCES Type (type) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `Aircraft` (`id`, `type`, `purchase_date`, `status`)
+INSERT INTO Aircraft (id, type, purchase_date, status)
 VALUES
 	('C-FONF','Fokker F28-1000','2017-01-01','OK'),
 	('C-FPWC','Boeing 737','2017-01-01','OK'),
@@ -182,14 +181,14 @@ VALUES
 # Airport
 # ------------------------------------------------------------
 
-CREATE TABLE `Airport` (
-  `id` char(3) NOT NULL DEFAULT '',
-  `name` varchar(100) NOT NULL DEFAULT '',
-  `location` varchar(100) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
+CREATE TABLE Airport (
+  id char(3) NOT NULL DEFAULT '',
+  name varchar(100) NOT NULL DEFAULT '',
+  location varchar(100) NOT NULL DEFAULT '',
+  PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `Airport` (`id`, `name`, `location`)
+INSERT INTO Airport (id, name, location)
 VALUES
 	('CXH','Vancouver Harbour Water Airport','1055 Canada Place, Vancouver, BC V6C 3T4'),
 	('DUQ','Duncan Airport','5100 Langtry Rd, Duncan, BC V9L 6R8'),
@@ -237,65 +236,65 @@ VALUES
 # Route
 # ------------------------------------------------------------
 
-CREATE TABLE `Route` (
-  `departure` char(3) NOT NULL DEFAULT '',
-  `arrival` char(3) NOT NULL DEFAULT '',
-  `first_class` int(11) NOT NULL,
-  `business` int(11) NOT NULL,
-  `economy` int(11) NOT NULL,
-  PRIMARY KEY (`arrival`,`departure`),
-  CONSTRAINT `Departure` FOREIGN KEY (`departure`) REFERENCES `Airport` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `Arrival` FOREIGN KEY (`arrival`) REFERENCES `Airport` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE Route (
+  departure char(3) NOT NULL DEFAULT '',
+  arrival char(3) NOT NULL DEFAULT '',
+  first_class int(11) NOT NULL,
+  business int(11) NOT NULL,
+  economy int(11) NOT NULL,
+  PRIMARY KEY (arrival,departure),
+  FOREIGN KEY (departure) REFERENCES Airport (id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (arrival) REFERENCES Airport (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `Route` (`departure`, `arrival`, `first_class`, `business`, `economy`)
+INSERT INTO Route (departure, arrival, first_class, business, economy)
 VALUES
 	('YVR','YYJ',500,300,200),
-  ('YYJ','YVR',500,300,200),
-  ('YVR','YXS',600,400,300),
-  ('YXS','YVR',600,400,300),
-  ('YYJ','YXS',650,450,350),
-  ('YXS','YYJ',650,450,350);
+  	('YYJ','YVR',500,300,200),
+  	('YVR','YXS',600,400,300),
+  	('YXS','YVR',600,400,300),
+  	('YYJ','YXS',650,450,350),
+  	('YXS','YYJ',650,450,350);
 
 # Flight
 # ------------------------------------------------------------
 
-CREATE TABLE `Flight` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `date_time` datetime NOT NULL,
-  `assigned` char(7) NOT NULL DEFAULT '',
-  `arrival` char(3) NOT NULL DEFAULT '',
-  `departure` char(3) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `Route` (`arrival`,`departure`),
-  KEY `Aircraft` (`assigned`),
-  CONSTRAINT `Aircraft` FOREIGN KEY (`assigned`) REFERENCES `Aircraft` (`id`),
-  CONSTRAINT `Route` FOREIGN KEY (`arrival`, `departure`) REFERENCES `Route` (`arrival`, `departure`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE Flight (
+  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  date_time datetime NOT NULL,
+  assigned char(7) NOT NULL DEFAULT '',
+  arrival char(3) NOT NULL DEFAULT '',
+  departure char(3) NOT NULL DEFAULT '',
+  PRIMARY KEY (id),
+  KEY Route (arrival,departure),
+  KEY Aircraft (assigned),
+  FOREIGN KEY (assigned) REFERENCES Aircraft (id),
+  FOREIGN KEY (arrival, departure) REFERENCES Route (arrival, departure) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `Flight` (`id`, `date_time`, `assigned`, `arrival`, `departure`)
+INSERT INTO Flight (id, date_time, assigned, arrival, departure)
 VALUES
 	(1,'2017-02-13 04:00:00','C-FONF','YVR','YYJ'),
-  (2,'2017-02-13 07:00:00','C-FONF','YYJ','YVR'),
-  (3,'2017-02-13 08:00:00','C-FQWL','YVR','YXS'),
-  (4,'2017-02-13 12:00:00','C-FSKI','YVR','YXS'),
-  (5,'2017-02-13 13:00:00','C-FTJP','YYJ','YXS'),
-  (6,'2017-02-13 13:00:00','C-FTLU','YXS','YYJ');
+  	(2,'2017-02-13 07:00:00','C-FONF','YYJ','YVR'),
+  	(3,'2017-02-13 08:00:00','C-FQWL','YVR','YXS'),
+  	(4,'2017-02-13 12:00:00','C-FSKI','YVR','YXS'),
+  	(5,'2017-02-13 13:00:00','C-FTJP','YYJ','YXS'),
+  	(6,'2017-02-13 13:00:00','C-FTLU','YXS','YYJ');
 
 # Ticket
 # ------------------------------------------------------------
 
-CREATE TABLE `Ticket` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `seat_type` enum('FIRST','BUSINESS','ECONOMY') NOT NULL DEFAULT 'ECONOMY',
-  `flightId` int(11) unsigned NOT NULL,
-  `customerId` int(11) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `Flight` FOREIGN KEY (`flightId`) REFERENCES `Flight` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `Customer` FOREIGN KEY (`customerId`) REFERENCES `Customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE Ticket (
+  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  seat_type enum('FIRST','BUSINESS','ECONOMY') NOT NULL DEFAULT 'ECONOMY',
+  flightId int(11) unsigned NOT NULL,
+  customerId int(11) unsigned NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (flightId) REFERENCES Flight (id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (customerId) REFERENCES Customer (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `Ticket` (`id`, `seat_type`, `flightId`, `customerId`)
+INSERT INTO Ticket (id, seat_type, flightId, customerId)
 VALUES
 	(1,'ECONOMY',1,6),
   (2,'BUSINESS',1,7),
@@ -306,6 +305,6 @@ VALUES
 
 # Views
 # ------------------------------------------------------------
-CREATE VIEW `AircraftJoin` AS
+CREATE VIEW AircraftJoin AS
   SELECT id, Aircraft.type, purchase_date, status, first_class_seats, business_seats, economy_seats
   	from Aircraft JOIN Type WHERE Aircraft.type=Type.type;
