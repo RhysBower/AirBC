@@ -11,28 +11,28 @@ CREATE TABLE `Account` (
   `name` varchar(50) NOT NULL DEFAULT '',
   `email` varchar(50) NOT NULL DEFAULT '',
   `username` varchar(50) NOT NULL DEFAULT '',
-  `password` char(64) NOT NULL DEFAULT '',
+  `password` char(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `Account` (`id`, `name`, `email`, `username`, `password`)
 VALUES
-	(1,'Rhys Bower','rhys@airbc.ca','rbower','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-	(2,'Mandy Chen','mandy@airbc.ca','mchen','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-	(3,'Alison Wu','alison@airbc.ca','awu','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-	(4,'Harryson Hu','harryson@airbc.ca','hhu','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (5,'Boss','boss@airbc.ca','boss','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (6,'Adam','adam@customer.ca','adam','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (7,'Bailey','bailey@customer.ca','bailey','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (8,'Carlos','carlos@customer.ca','carlos','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (9,'Darcy','darcy@customer.ca','darcy','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (10,'Eli','eli@customer.ca','eli','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (11,'Florence','florence@customer.ca','florence','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (12,'Grant','grant@customer.ca','grant','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (13,'Hana','hana@customer.ca','hana','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (14,'Issac','issac@customer.ca','issac','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'),
-  (15,'Jane','jane@customer.ca','jane','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8');
+	(1,'Rhys Bower','rhys@airbc.ca','rbower','$2y$10$aecMr2mzHPoZtWNNfSJFuey9wTfrvSgSGn9hZZdW2WJFSwhNcl5Xy'),
+	(2,'Mandy Chen','mandy@airbc.ca','mchen','$2y$10$3p3UEluJ397wPcMWNQLcYO96g135gHj.TyIDO0TTmKKvQqKFFjHXu'),
+	(3,'Alison Wu','alison@airbc.ca','awu','$2y$10$cdmvvqJnmy2jz6NAqE3zHeASMPTakVBzuVPBdz6wsUSwK02beFOsG'),
+	(4,'Harryson Hu','harryson@airbc.ca','hhu','$2y$10$8vuy4VwwFL5anBY2Idl72Oc.iPTjxpr9bl.fpRhzLnKFGhCNwSGUy'),
+  (5,'Boss','boss@airbc.ca','boss','$2y$10$fYHrzcRXp27HEFkKgTVe3.QH.oFlCPRgktQIqaOZN2up6sYLVdfea'),
+  (6,'Adam','adam@customer.ca','adam','$2y$10$Tj.cZSIGlZh4oJB0GTnm0.FRkkSY85vIxmdvsrQqakjTGi1/51LLS'),
+  (7,'Bailey','bailey@customer.ca','bailey','$2y$10$Pv/7XgbKETiZrZDDDMrbxuidyzp6lCIdcXJeFbeDHBuY3zXOPT41.'),
+  (8,'Carlos','carlos@customer.ca','carlos','$2y$10$dSL2yCCK1SCtEOHqWQytWO.A0rk9ngmqwEfz5vZAOGrZVsFwOdYTS'),
+  (9,'Darcy','darcy@customer.ca','darcy','$2y$10$X4Z5NFJ8XmA.2ZOrhZXXfO7C1kD8sr07WIdNO/18neCHNcVbWWtOa'),
+  (10,'Eli','eli@customer.ca','eli','$2y$10$iV0anL6otg/yxPZgdr8nGez75NfWSiJTHdXn4MAEKA.bvc1ZzFqwO'),
+  (11,'Florence','florence@customer.ca','florence','$2y$10$6PF3Taw8StEt4YF6eoD4NOQVW46G5WRqZWskBdND5CsK0zwy/U.bW'),
+  (12,'Grant','grant@customer.ca','grant','$2y$10$i/zrPp0SuN5d5NbkVVxq6uc3OY9VnZ2/8zmtHH72PZlm0JCCFjFzO'),
+  (13,'Hana','hana@customer.ca','hana','$2y$10$aX.h/7UbQMc9WPzDmjrHb.wbPdkWmzYh8CqVdsbbsIEQSnIvVZ2nO'),
+  (14,'Issac','issac@customer.ca','issac','$2y$10$1LKWLZkxVIwSXSwJn2kcVub.QiF4gWjN9D/AJCHbJWeNuxOKQulA.'),
+  (15,'Jane','jane@customer.ca','jane','$2y$10$NMOa8ImcRVzKdvSgKT5Nsux71CdHpHunwXMgqfg4fJ5T85yIZeHNO');
 
 
 # Staff
