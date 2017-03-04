@@ -1,6 +1,10 @@
 <?php declare(strict_types=1);
 namespace Airbc;
 
+/**
+ * Controls access to database.
+ * Other classes can make requests for data through here.
+ */
 class Database extends Object
 {
     private $logger;
@@ -20,6 +24,9 @@ class Database extends Object
         $logger->info('Connected to MySQL: ' . $this->mysqli->host_info);
     }
 
+    /**
+     * Returns Account with given id or null if no Account exists.
+     */
     public function getAccount(int $id): ?Model\Account
     {
         if ($result = $this->mysqli->query("SELECT * FROM Account WHERE id=$id")) {
@@ -43,6 +50,9 @@ class Database extends Object
         }
     }
 
+    /**
+     * Returns array of Account or empty array if no Accounts are found.
+     */
     public function getAccounts(): array
     {
         if ($result = $this->mysqli->query("SELECT * FROM Account")) {

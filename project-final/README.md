@@ -17,3 +17,7 @@ Everything is under `vendor` so we don't need to do anything. If you need to upd
 
 Tests are located in `tests` and can be run with PHPUnit. You can think of this as the same general system as JUnit.
 You can run the tests with `composer test` or `vendor/bin/phpunit --colors=always tests`.
+
+## Logging
+
+During development it is useful to monitor the application log stored id `logs/airbc.log`. It is useful to tail the log in terminal with `tail -f logs/airbc.log`.

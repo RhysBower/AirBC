@@ -7,6 +7,11 @@ use Monolog\Logger;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 
+/**
+ * Base controller for pages.
+ * Configures logging, database connection, and Twig.
+ * Page controllers should extend this class and implement page specific functionality.
+ */
 class Controller extends Object
 {
     protected $logger;
@@ -26,7 +31,7 @@ class Controller extends Object
 
         $this->logger->info('Load page: ' . $_SERVER['REQUEST_URI']);
 
-        set_exception_handler(array($this, 'exception_handler'));
+        set_exception_handler(array($this, 'exceptionHandler'));
 
         $this->database = new Database($this->logger);
 
@@ -34,7 +39,11 @@ class Controller extends Object
         $this->twig = new \Twig_Environment($this->loader, array('debug' => true));
     }
 
-    public function exception_handler($exception)
+    /**
+     * Global exception handler for all uncaught exceptions.
+     * These would normally trigger an error in PHP but are caught and logged.
+     */
+    public function exceptionHandler($exception)
     {
         $this->logger->alert("Uncaught exception: " . $exception->getMessage());
     }
