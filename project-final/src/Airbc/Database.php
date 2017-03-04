@@ -28,7 +28,7 @@ class Database extends Object
                 return null;
             }
             if ($result->num_rows > 1) {
-                throw new Exception("Duplicate account detected.");
+                throw new \Exception("Duplicate account detected.");
             }
 
             $row = $result->fetch_object();
@@ -38,8 +38,29 @@ class Database extends Object
 
             return $account;
         } else {
-            $this->logger->warn("SELECT Account returned $result->num_rows rows");
+            $this->logger->warn("SELECT Account query failed.");
             return null;
+        }
+    }
+
+    public function getAccounts(): array
+    {
+        if ($result = $this->mysqli->query("SELECT * FROM Account")) {
+            $this->logger->info("SELECT Accounts returned $result->num_rows rows");
+            if ($result->num_rows == 0) {
+                return [];
+            }
+
+            $accounts = [];
+            while ($row = $result->fetch_object()){
+                $accounts[] = new Model\Account((int)$row->id, $row->name, $row->email, $row->username, $row->password);
+            }
+            $result->close();
+
+            return $accounts;
+        } else {
+            $this->logger->warn("SELECT Accounts query failed.");
+            return [];
         }
     }
 

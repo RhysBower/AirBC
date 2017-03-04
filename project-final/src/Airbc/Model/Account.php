@@ -5,11 +5,11 @@ use Airbc\Object as Object;
 
 class Account extends Object
 {
-    private $id;
-    private $name;
-    private $email;
-    private $username;
-    private $password;
+    public $id;
+    public $name;
+    public $email;
+    public $username;
+    public $password;
 
     public function __construct(int $id, string $name, string $email, string $username, string $password)
     {
