@@ -1,0 +1,1 @@
+1. Originally, we had Customer and Staff tables and no Account table because Customer and Staff —ISA— Account and they are disjoint. We changed to have Customer, Staff, and Account tables so that customer and staff account id's are unique.
