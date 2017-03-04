@@ -14,6 +14,14 @@ $logger = new Logger('Airbc');
 $logger->pushHandler(new StreamHandler(__DIR__.'/../logs/airbc.log', Logger::DEBUG));
 $logger->info('Load page: ' . $_SERVER['REQUEST_URI']);
 
+function exception_handler($exception)
+{
+    global $logger;
+    $logger->alert("Uncaught exception: " . $exception->getMessage());
+}
+
+set_exception_handler('exception_handler');
+
 $airbc = new Airbc\App($logger);
 
 $loader = new Twig_Loader_Filesystem('templates', __DIR__);

@@ -3,10 +3,11 @@ namespace Airbc\Model;
 
 use Airbc\Object as Object;
 
-class Route extends Object {
-    private Airport $departure;
-    private Airport $arrival;
-    private int $firstClass;
-    private int $business;
-    private int $economy;
+class Route extends Object
+{
+    private $departure;
+    private $arrival;
+    private $firstClass;
+    private $business;
+    private $economy;
 }

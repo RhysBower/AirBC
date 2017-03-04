@@ -3,6 +3,7 @@ namespace Airbc\Model;
 
 use Airbc\Object as Object;
 
-class Account extends Account {
-    private string $title;
+class Account extends Account
+{
+    private $title;
 }

@@ -3,8 +3,9 @@ namespace Airbc\Model;
 
 use Airbc\Object as Object;
 
-class Airport extends Object {
-    private string $id;
-    private string $name;
-    private string $location;
+class Airport extends Object
+{
+    private $id;
+    private $name;
+    private $location;
 }

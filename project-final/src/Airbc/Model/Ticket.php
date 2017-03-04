@@ -3,9 +3,10 @@ namespace Airbc\Model;
 
 use Airbc\Object as Object;
 
-class Ticket extends Object {
-    private int $id;
-    private SeatType $seatType;
-    private Flight $flight;
-    private Customer $customer;
+class Ticket extends Object
+{
+    private $id;
+    private $seatType;
+    private $flight;
+    private $customer;
 }

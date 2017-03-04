@@ -3,7 +3,8 @@ namespace Airbc\Model;
 
 use Airbc\Object as Object;
 
-final class AircraftStatus extends Object {
-    public const OK = 0;
-    public const REPAIR = 1;
+final class AircraftStatus extends Object
+{
+    const OK = 0;
+    const REPAIR = 1;
 }

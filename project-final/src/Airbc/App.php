@@ -9,5 +9,6 @@ class App extends Object
     {
         $logger->info('App Init');
         $database = new Database($logger);
+        $account = $database->getAccount(1);
     }
 }

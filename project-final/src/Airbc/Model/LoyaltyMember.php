@@ -3,6 +3,7 @@ namespace Airbc\Model;
 
 use Airbc\Object as Object;
 
-class Account extends Customer {
-    private int $points;
+class Account extends Customer
+{
+    private $points;
 }

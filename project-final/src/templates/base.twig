@@ -18,6 +18,33 @@
     <![endif]-->
   </head>
   <body>
+    <nav class="navbar navbar-default"></nav>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">AirBC</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li {% if (page == 'home') %} class="active" {% endif %}><a href="/">Home</a></li>
+            <li {% if (page == 'routes') %} class="active" {% endif %}><a href="/">Routes</a></li>
+            <li {% if (page == 'flights') %} class="active" {% endif %}><a href="/">Flights</a></li>
+            <li {% if (page == 'airports') %} class="active" {% endif %}><a href="/">Airports</a></li>
+            <li {% if (page == 'tickets') %} class="active" {% endif %}><a href="/">Tickets</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li {% if (page == 'account') %} class="active" {% endif %}><a href="/">Account</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
     {% block content %}
     	No Content on this page.
     {% endblock %}
