@@ -38,7 +38,7 @@ class Database extends Object
 
             return $account;
         } else {
-            $this->logger->warn("SELECT Account query failed.");
+            $this->logSqlError();
             return null;
         }
     }
@@ -59,7 +59,7 @@ class Database extends Object
 
             return $accounts;
         } else {
-            $this->logger->warn("SELECT Accounts query failed.");
+            $this->logSqlError();
             return [];
         }
     }
@@ -68,5 +68,9 @@ class Database extends Object
     {
         $this->logger->info('Closing MySQL connection');
         $this->mysqli->close();
+    }
+
+    private function logSqlError() {
+        $this->logger->alert("Query failed with errno: ".$this->mysqli->errno."\n".$this->mysqli->error);
     }
 }
