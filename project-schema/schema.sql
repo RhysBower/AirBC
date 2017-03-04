@@ -8,11 +8,10 @@ DROP TABLE if EXISTS Aircraft, Airport, Type, Account;
 CREATE TABLE Account (
   id int(11) unsigned NOT NULL AUTO_INCREMENT,
   name varchar(50) NOT NULL,
-  email varchar(50) NOT NULL,
-  username varchar(50) NOT NULL,
-  password varchar(255) NOT NULL,
-  PRIMARY KEY (id),
-  UNIQUE (username)
+  email varchar(50) NOT NULL UNIQUE,
+  username varchar(50) NOT NULL UNIQUE,
+  password char(255) NOT NULL,
+  PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO Account (id, name, email, username, password)
@@ -182,8 +181,8 @@ VALUES
 
 CREATE TABLE Airport (
   id char(3) NOT NULL,
-  name varchar(100) NOT NULL,
-  location varchar(100) NOT NULL,
+  name varchar(100) NOT NULL UNIQUE,
+  location varchar(100) NOT NULL UNIQUE,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
