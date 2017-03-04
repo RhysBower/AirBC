@@ -31,6 +31,4 @@ class Controller extends Object
     {
         $this->logger->alert("Uncaught exception: " . $exception->getMessage());
     }
-
-
 }
