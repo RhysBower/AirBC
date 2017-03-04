@@ -1,4 +1,4 @@
-DROP VIEW if EXISTS AircraftJoin;
+DROP VIEW if EXISTS FullAircraft, FullCustomer, FullLoyaltyMember, FullStaff;
 DROP TABLE if EXISTS Loyalty_Member, Staff, Ticket;
 DROP TABLE if EXISTS Customer, Flight, Route;
 DROP TABLE if EXISTS Aircraft, Airport, Type, Account;
@@ -6,56 +6,56 @@ DROP TABLE if EXISTS Aircraft, Airport, Type, Account;
 # Account
 # ------------------------------------------------------------
 CREATE TABLE Account (
-  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  id bigint(11) unsigned NOT NULL AUTO_INCREMENT,
   name varchar(50) NOT NULL,
   email varchar(50) NOT NULL UNIQUE,
   username varchar(50) NOT NULL UNIQUE,
   password char(255) NOT NULL,
   PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=8589934592;
 
 INSERT INTO Account (id, name, email, username, password)
 VALUES
-	(1,'Rhys Bower','rhys@airbc.ca','rbower','$2y$10$aecMr2mzHPoZtWNNfSJFuey9wTfrvSgSGn9hZZdW2WJFSwhNcl5Xy'),
-	(2,'Mandy Chen','mandy@airbc.ca','mchen','$2y$10$3p3UEluJ397wPcMWNQLcYO96g135gHj.TyIDO0TTmKKvQqKFFjHXu'),
-	(3,'Alison Wu','alison@airbc.ca','awu','$2y$10$cdmvvqJnmy2jz6NAqE3zHeASMPTakVBzuVPBdz6wsUSwK02beFOsG'),
-	(4,'Harryson Hu','harryson@airbc.ca','hhu','$2y$10$8vuy4VwwFL5anBY2Idl72Oc.iPTjxpr9bl.fpRhzLnKFGhCNwSGUy'),
-  (5,'Boss','boss@airbc.ca','boss','$2y$10$fYHrzcRXp27HEFkKgTVe3.QH.oFlCPRgktQIqaOZN2up6sYLVdfea'),
-  (6,'Adam','adam@customer.ca','adam','$2y$10$Tj.cZSIGlZh4oJB0GTnm0.FRkkSY85vIxmdvsrQqakjTGi1/51LLS'),
-  (7,'Bailey','bailey@customer.ca','bailey','$2y$10$Pv/7XgbKETiZrZDDDMrbxuidyzp6lCIdcXJeFbeDHBuY3zXOPT41.'),
-  (8,'Carlos','carlos@customer.ca','carlos','$2y$10$dSL2yCCK1SCtEOHqWQytWO.A0rk9ngmqwEfz5vZAOGrZVsFwOdYTS'),
-  (9,'Darcy','darcy@customer.ca','darcy','$2y$10$X4Z5NFJ8XmA.2ZOrhZXXfO7C1kD8sr07WIdNO/18neCHNcVbWWtOa'),
-  (10,'Eli','eli@customer.ca','eli','$2y$10$iV0anL6otg/yxPZgdr8nGez75NfWSiJTHdXn4MAEKA.bvc1ZzFqwO'),
-  (11,'Florence','florence@customer.ca','florence','$2y$10$6PF3Taw8StEt4YF6eoD4NOQVW46G5WRqZWskBdND5CsK0zwy/U.bW'),
-  (12,'Grant','grant@customer.ca','grant','$2y$10$i/zrPp0SuN5d5NbkVVxq6uc3OY9VnZ2/8zmtHH72PZlm0JCCFjFzO'),
-  (13,'Hana','hana@customer.ca','hana','$2y$10$aX.h/7UbQMc9WPzDmjrHb.wbPdkWmzYh8CqVdsbbsIEQSnIvVZ2nO'),
-  (14,'Issac','issac@customer.ca','issac','$2y$10$1LKWLZkxVIwSXSwJn2kcVub.QiF4gWjN9D/AJCHbJWeNuxOKQulA.'),
-  (15,'Jane','jane@customer.ca','jane','$2y$10$NMOa8ImcRVzKdvSgKT5Nsux71CdHpHunwXMgqfg4fJ5T85yIZeHNO');
+	(8589934592,'Rhys Bower','rhys@airbc.ca','rbower','$2y$10$aecMr2mzHPoZtWNNfSJFuey9wTfrvSgSGn9hZZdW2WJFSwhNcl5Xy'),
+	(8589934593,'Mandy Chen','mandy@airbc.ca','mchen','$2y$10$3p3UEluJ397wPcMWNQLcYO96g135gHj.TyIDO0TTmKKvQqKFFjHXu'),
+	(8589934594,'Alison Wu','alison@airbc.ca','awu','$2y$10$cdmvvqJnmy2jz6NAqE3zHeASMPTakVBzuVPBdz6wsUSwK02beFOsG'),
+	(8589934595,'Harryson Hu','harryson@airbc.ca','hhu','$2y$10$8vuy4VwwFL5anBY2Idl72Oc.iPTjxpr9bl.fpRhzLnKFGhCNwSGUy'),
+  (8589934596,'Boss','boss@airbc.ca','boss','$2y$10$fYHrzcRXp27HEFkKgTVe3.QH.oFlCPRgktQIqaOZN2up6sYLVdfea'),
+  (8589934597,'Adam','adam@customer.ca','adam','$2y$10$Tj.cZSIGlZh4oJB0GTnm0.FRkkSY85vIxmdvsrQqakjTGi1/51LLS'),
+  (8589934598,'Bailey','bailey@customer.ca','bailey','$2y$10$Pv/7XgbKETiZrZDDDMrbxuidyzp6lCIdcXJeFbeDHBuY3zXOPT41.'),
+  (8589934599,'Carlos','carlos@customer.ca','carlos','$2y$10$dSL2yCCK1SCtEOHqWQytWO.A0rk9ngmqwEfz5vZAOGrZVsFwOdYTS'),
+  (8589934600,'Darcy','darcy@customer.ca','darcy','$2y$10$X4Z5NFJ8XmA.2ZOrhZXXfO7C1kD8sr07WIdNO/18neCHNcVbWWtOa'),
+  (8589934601,'Eli','eli@customer.ca','eli','$2y$10$iV0anL6otg/yxPZgdr8nGez75NfWSiJTHdXn4MAEKA.bvc1ZzFqwO'),
+  (8589934602,'Florence','florence@customer.ca','florence','$2y$10$6PF3Taw8StEt4YF6eoD4NOQVW46G5WRqZWskBdND5CsK0zwy/U.bW'),
+  (8589934603,'Grant','grant@customer.ca','grant','$2y$10$i/zrPp0SuN5d5NbkVVxq6uc3OY9VnZ2/8zmtHH72PZlm0JCCFjFzO'),
+  (8589934604,'Hana','hana@customer.ca','hana','$2y$10$aX.h/7UbQMc9WPzDmjrHb.wbPdkWmzYh8CqVdsbbsIEQSnIvVZ2nO'),
+  (8589934605,'Issac','issac@customer.ca','issac','$2y$10$1LKWLZkxVIwSXSwJn2kcVub.QiF4gWjN9D/AJCHbJWeNuxOKQulA.'),
+  (8589934606,'Jane','jane@customer.ca','jane','$2y$10$NMOa8ImcRVzKdvSgKT5Nsux71CdHpHunwXMgqfg4fJ5T85yIZeHNO');
 
 
 # Staff
 # ------------------------------------------------------------
 
 CREATE TABLE Staff (
-  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  id bigint(11) unsigned NOT NULL,
   title varchar(50) NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (id) REFERENCES Account (id) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO Staff (id, title)
 VALUES
-	(1,'Software Engineer'),
-	(2,'Software Engineer'),
-	(3,'Software Engineer'),
-	(4,'Software Engineer'),
-  	(5,'CEO');
+	(8589934592,'Software Engineer'),
+	(8589934593,'Software Engineer'),
+	(8589934594,'Software Engineer'),
+	(8589934595,'Software Engineer'),
+	(8589934596,'CEO');
 
 # Customer
 # ------------------------------------------------------------
 
 CREATE TABLE Customer (
-  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  id bigint(11) unsigned NOT NULL,
   travel_document varchar(50) NOT NULL,
   billing_address varchar(50) NOT NULL DEFAULT '',
   phone_number varchar(50) NOT NULL DEFAULT '',
@@ -63,38 +63,38 @@ CREATE TABLE Customer (
   payment_information varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (id),
   FOREIGN KEY (id) REFERENCES Account (id) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO Customer (id, travel_document, billing_address, phone_number, seat_preference, payment_information)
 VALUES
-	(6,'Passport:111','111 Adam Dr. Vancouver BC, Canada','111-222-3333','ECONOMY', 'Visa:1111-1111-1111-1111'),
-  	(7,'Passport:222','222 Bailey Dr. Vancouver BC, Canada','222-222-3333','ECONOMY', 'Visa:2222-2222-2222-2222'),
-  	(8,'Passport:333','333 Carlos Dr. Vancouver BC, Canada','333-222-3333','FIRST', 'Visa:3333-3333-3333-3333'),
-  	(9,'Passport:444','444 Darcy Dr. Vancouver BC, Canada','444-222-3333','BUSINESS', 'Visa:4444-4444-4444-4444'),
-  	(10,'Passport:555','555 Eli Dr. Vancouver BC, Canada','555-222-3333','ECONOMY', 'Visa:5555-5555-5555-5555'),
-  	(11,'Passport:666','666 Florence Dr. Vancouver BC, Canada','666-222-3333','FIRST', 'Visa:6666-6666-6666-6666'),
-  	(12,'Passport:777','777 Grant Dr. Vancouver BC, Canada','777-222-3333','ECONOMY', 'Visa:7777-7777-7777-7777'),
-  	(13,'Passport:888','888 Hana Dr. Vancouver BC, Canada','888-222-3333','BUSINESS', 'Visa:8888-8888-8888-8888'),
-  	(14,'Passport:999','999 Issac Dr. Vancouver BC, Canada','999-222-3333','ECONOMY', 'Visa:9999-9999-9999-9999'),
-  	(15,'Passport:000','000 Jane Dr. Vancouver BC, Canada','000-222-3333','BUSINESS', 'Visa:0000-0000-0000-0000');
+	(8589934597,'Passport:111','111 Adam Dr. Vancouver BC, Canada','111-222-3333','ECONOMY', 'Visa:1111-1111-1111-1111'),
+	(8589934598,'Passport:222','222 Bailey Dr. Vancouver BC, Canada','222-222-3333','ECONOMY', 'Visa:2222-2222-2222-2222'),
+	(8589934599,'Passport:333','333 Carlos Dr. Vancouver BC, Canada','333-222-3333','FIRST', 'Visa:3333-3333-3333-3333'),
+	(8589934600,'Passport:444','444 Darcy Dr. Vancouver BC, Canada','444-222-3333','BUSINESS', 'Visa:4444-4444-4444-4444'),
+	(8589934601,'Passport:555','555 Eli Dr. Vancouver BC, Canada','555-222-3333','ECONOMY', 'Visa:5555-5555-5555-5555'),
+	(8589934602,'Passport:666','666 Florence Dr. Vancouver BC, Canada','666-222-3333','FIRST', 'Visa:6666-6666-6666-6666'),
+	(8589934603,'Passport:777','777 Grant Dr. Vancouver BC, Canada','777-222-3333','ECONOMY', 'Visa:7777-7777-7777-7777'),
+	(8589934604,'Passport:888','888 Hana Dr. Vancouver BC, Canada','888-222-3333','BUSINESS', 'Visa:8888-8888-8888-8888'),
+	(8589934605,'Passport:999','999 Issac Dr. Vancouver BC, Canada','999-222-3333','ECONOMY', 'Visa:9999-9999-9999-9999'),
+	(8589934606,'Passport:000','000 Jane Dr. Vancouver BC, Canada','000-222-3333','BUSINESS', 'Visa:0000-0000-0000-0000');
 
 # Loyalty_Member
 # ------------------------------------------------------------
 
 CREATE TABLE Loyalty_Member (
-  id int(11) unsigned NOT NULL,
+  id bigint(11) unsigned NOT NULL,
   points int(11) DEFAULT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (id) REFERENCES Customer (id) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO Loyalty_Member (id, points)
 VALUES
-	(6,0),
-  	(8,1500),
-  	(10,950),
-  	(12,25),
-  	(14,1150);
+	(8589934597,0),
+	(8589934599,1500),
+	(8589934601,950),
+	(8589934603,25),
+	(8589934605,1150);
 
 # Type
 # ------------------------------------------------------------
@@ -105,7 +105,7 @@ CREATE TABLE Type (
   business_seats int(11) NOT NULL,
   economy_seats int(11) NOT NULL,
   PRIMARY KEY (type)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO Type (type, first_class_seats, business_seats, economy_seats)
 VALUES
@@ -145,7 +145,7 @@ CREATE TABLE Aircraft (
   status enum('OK','REPAIR') NOT NULL DEFAULT 'OK',
   PRIMARY KEY (id),
   FOREIGN KEY (type) REFERENCES Type (type) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO Aircraft (id, type, purchase_date, status)
 VALUES
@@ -184,7 +184,7 @@ CREATE TABLE Airport (
   name varchar(100) NOT NULL UNIQUE,
   location varchar(100) NOT NULL UNIQUE,
   PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO Airport (id, name, location)
 VALUES
@@ -243,7 +243,7 @@ CREATE TABLE Route (
   PRIMARY KEY (arrival,departure),
   FOREIGN KEY (departure) REFERENCES Airport (id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (arrival) REFERENCES Airport (id) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO Route (departure, arrival, first_class, business, economy)
 VALUES
@@ -258,7 +258,7 @@ VALUES
 # ------------------------------------------------------------
 
 CREATE TABLE Flight (
-  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  id bigint(11) unsigned NOT NULL AUTO_INCREMENT,
   date_time datetime NOT NULL,
   assigned char(7) NOT NULL,
   arrival char(3) NOT NULL,
@@ -266,41 +266,55 @@ CREATE TABLE Flight (
   PRIMARY KEY (id),
   FOREIGN KEY (assigned) REFERENCES Aircraft (id),
   FOREIGN KEY (arrival, departure) REFERENCES Route (arrival, departure) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=8589934592;
 
 INSERT INTO Flight (id, date_time, assigned, arrival, departure)
 VALUES
-	(1,'2017-02-13 04:00:00','C-FONF','YVR','YYJ'),
-  	(2,'2017-02-13 07:00:00','C-FONF','YYJ','YVR'),
-  	(3,'2017-02-13 08:00:00','C-FQWL','YVR','YXS'),
-  	(4,'2017-02-13 12:00:00','C-FSKI','YVR','YXS'),
-  	(5,'2017-02-13 13:00:00','C-FTJP','YYJ','YXS'),
-  	(6,'2017-02-13 13:00:00','C-FTLU','YXS','YYJ');
+	(8589934592,'2017-02-13 04:00:00','C-FONF','YVR','YYJ'),
+	(8589934593,'2017-02-13 07:00:00','C-FONF','YYJ','YVR'),
+	(8589934594,'2017-02-13 08:00:00','C-FQWL','YVR','YXS'),
+	(8589934595,'2017-02-13 12:00:00','C-FSKI','YVR','YXS'),
+	(8589934596,'2017-02-13 13:00:00','C-FTJP','YYJ','YXS'),
+	(8589934597,'2017-02-13 13:00:00','C-FTLU','YXS','YYJ');
 
 # Ticket
 # ------------------------------------------------------------
 
 CREATE TABLE Ticket (
-  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  id bigint(11) unsigned NOT NULL AUTO_INCREMENT,
   seat_type enum('FIRST','BUSINESS','ECONOMY') NOT NULL DEFAULT 'ECONOMY',
-  flightId int(11) unsigned NOT NULL,
-  customerId int(11) unsigned NOT NULL,
+  flightId bigint(11) unsigned NOT NULL,
+  customerId bigint(11) unsigned NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (flightId) REFERENCES Flight (id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (customerId) REFERENCES Customer (id) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=8589934592;
 
 INSERT INTO Ticket (id, seat_type, flightId, customerId)
 VALUES
-	(1,'ECONOMY',1,6),
-  (2,'BUSINESS',1,7),
-  (3,'FIRST',2,8),
-  (4,'ECONOMY',2,8),
-  (5,'ECONOMY',3,8),
-  (6,'ECONOMY',4,9);
+	(8589934592,'ECONOMY',8589934592,8589934597),
+  (8589934593,'BUSINESS',8589934592,8589934598),
+  (8589934594,'FIRST',8589934593,8589934599),
+  (8589934595,'ECONOMY',8589934593,8589934599),
+  (8589934596,'ECONOMY',8589934594,8589934599),
+  (8589934597,'ECONOMY',8589934595,8589934600);
 
 # Views
 # ------------------------------------------------------------
-CREATE VIEW AircraftJoin AS
+CREATE VIEW FullAircraft AS
   SELECT id, Aircraft.type, purchase_date, status, first_class_seats, business_seats, economy_seats
   	from Aircraft JOIN Type WHERE Aircraft.type=Type.type;
+
+CREATE VIEW FullStaff AS
+  SELECT Account.id, name, email, username, password, title
+  	from Account, Staff WHERE Account.id=Staff.id;
+
+CREATE VIEW FullCustomer AS
+  SELECT Account.id, name, email, username, password, travel_document,
+  billing_address, phone_number, seat_preference, payment_information
+  	from Account, Customer WHERE Account.id=Customer.id;
+
+CREATE VIEW FullLoyaltyMember AS
+  SELECT Account.id, name, email, username, password, travel_document,
+  billing_address, phone_number, seat_preference, payment_information, points
+  	from Account, Customer, Loyalty_Member WHERE Account.id=Customer.id AND Account.id=Loyalty_Member.id;
