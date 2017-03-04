@@ -24,15 +24,15 @@ class Database extends Object
     {
         if ($result = $this->mysqli->query("SELECT * FROM Account WHERE id=$id")) {
             $this->logger->info("SELECT Account returned $result->num_rows rows");
-            if($result->num_rows == 0) {
+            if ($result->num_rows == 0) {
                 return null;
             }
-            if($result->num_rows > 1) {
+            if ($result->num_rows > 1) {
                 throw new Exception("Duplicate account detected.");
             }
 
             $row = $result->fetch_object();
-            $account = new Model\Account($row->id, $row->name, $row->email, $row->username, $row->password);
+            $account = new Model\Account((int)$row->id, $row->name, $row->email, $row->username, $row->password);
 
             $result->close();
 
