@@ -2,6 +2,32 @@
 
 {% block content %}
 <div class="container">
-  <h1>{{hi}}</h1>
+  <h2>Accounts:</h2>
+  {% if accounts|length == 0 %}
+      <div class="well">No accounts were found.</div>
+  {% else %}
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <td>ID</td>
+        <td>Name</td>
+        <td>Email</td>
+        <td>Username</td>
+        <td>Password</td>
+      </tr>
+    </thead>
+    <tbody>
+    	{% for account in accounts %}
+           <tr>
+            <td>{{account.id}}</td>
+            <td>{{account.name}}</td>
+            <td>{{account.email}}</td>
+            <td>{{account.username}}</td>
+            <td>{{account.password}}</td>
+          </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
 </div>
 {% endblock %}
