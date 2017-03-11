@@ -32,6 +32,7 @@ class Controller extends Object
         $this->logger->info('Load page: ' . $_SERVER['REQUEST_URI']);
 
         set_exception_handler(array($this, 'exceptionHandler'));
+        set_error_handler(array($this, 'errorHandler'));
 
         $this->database = new Database($this->logger);
 
@@ -46,5 +47,29 @@ class Controller extends Object
     public function exceptionHandler($exception)
     {
         $this->logger->alert("Uncaught exception: " . $exception->getMessage());
+    }
+    function errorHandler($errno, $errstr, $errfile, $errline)
+    {
+        switch ($errno) {
+        case E_USER_ERROR:
+            $this->logger->alert("Uncaught error: [$errno] $errstr on line $errline in file $errfile");
+            exit(1);
+            break;
+
+        case E_USER_WARNING:
+            $this->logger->alert("Uncaught warning: [$errno] $errstr");
+            break;
+
+        case E_USER_NOTICE:
+            $this->logger->notice("Uncaught notice: [$errno] $errstr");
+            break;
+
+        default:
+            $this->logger->alert("Unknown error type: [$errno] $errstr");
+            break;
+        }
+
+        /* Don't execute PHP internal error handler */
+        return true;
     }
 }
