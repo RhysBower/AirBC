@@ -27,7 +27,7 @@ class Database extends Object
     /**
      * Returns Account with given id or null if no Account exists.
      */
-    public function getAccount(int $id): ?Model\Account
+    public function getAccount(int $id): Model\Account
     {
         if ($result = $this->mysqli->query("SELECT * FROM Account WHERE id=$id")) {
             $this->logger->info("SELECT Account returned $result->num_rows rows");
@@ -77,7 +77,7 @@ class Database extends Object
     /**
      * Returns Account with given id or null if no Account exists.
      */
-    public function getRoute(string $departure, string $arrival): ?Model\Route
+    public function getRoute(string $departure, string $arrival): Model\Route
     {
         if ($result = $this->mysqli->query("SELECT * FROM Route WHERE departure=$departure AND arrival=$arrival")) {
             $this->logger->info("SELECT Route returned $result->num_rows rows");
