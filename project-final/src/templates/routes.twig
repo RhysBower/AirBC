@@ -1,0 +1,33 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<div class="container">
+  <h2>Routes:</h2>
+  {% if routes|length == 0 %}
+      <div class="well">No routes were found.</div>
+  {% else %}
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <td>Departure Airport</td>
+        <td>Arrival Airport</td>
+        <td>First Class Seats</td>
+        <td>Business Seats</td>
+        <td>Economy Seats</td>
+      </tr>
+    </thead>
+    <tbody>
+    	{% for route in routes %}
+           <tr>
+            <td>{{route.departure}}</td>
+            <td>{{route.arrival}}</td>
+            <td>{{route.first_class}}</td>
+            <td>{{route.business}}</td>
+            <td>{{route.economy}}</td>
+          </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</div>
+{% endblock %}

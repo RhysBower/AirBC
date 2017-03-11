@@ -74,6 +74,56 @@ class Database extends Object
         }
     }
 
+    /**
+     * Returns Account with given id or null if no Account exists.
+     */
+    public function getRoute(string $departure, string $arrival): ?Model\Route
+    {
+        if ($result = $this->mysqli->query("SELECT * FROM Route WHERE departure=$departure AND arrival=$arrival")) {
+            $this->logger->info("SELECT Route returned $result->num_rows rows");
+            if ($result->num_rows == 0) {
+                return null;
+            }
+            if ($result->num_rows > 1) {
+                throw new \Exception("Duplicate routes detected.");
+            }
+
+            $row = $result->fetch_object();
+            $routes = new Model\Route((string)$row->departure, (string)$row->arrival, (int)$row->first_class, (int)$row->business, (int)$row->economy);;
+
+            $result->close();
+
+            return $routes;
+        } else {
+            $this->logSqlError();
+            return null;
+        }
+    }
+
+    /**
+     * Returns array of Routes or empty array if no Routes are found.
+     */
+    public function getRoutes(): array
+    {
+        if ($result = $this->mysqli->query("SELECT * FROM Route")) {
+            $this->logger->info("SELECT Routes returned $result->num_rows rows");
+            if ($result->num_rows == 0) {
+                return [];
+            }
+
+            $routes = [];
+            while ($row = $result->fetch_object()){
+                $routes[] = new Model\Route((string)$row->departure, (string)$row->arrival, (int)$row->first_class, (int)$row->business, (int)$row->economy);
+            }
+            $result->close();
+
+            return $routes;
+        } else {
+            $this->logSqlError();
+            return [];
+        }
+    }
+
     public function __destruct()
     {
         $this->logger->info('Closing MySQL connection');

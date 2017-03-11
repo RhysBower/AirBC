@@ -2,19 +2,19 @@
 namespace Airbc\Controllers;
 
 /**
- * Controller for the home page.
+ * Controller for the Routes page.
  */
-class HomeController extends Controller
+class RoutesController extends Controller
 {
     public function __construct()
     {
         parent::__construct();
         $context = [];
-        $context['page'] = "home";
+        $context['page'] = "routes";
         $context['accounts'] = $this->database->getAccounts();
         $context['routes'] = $this->database->getRoutes();
 
-        $template = $this->twig->load('home.twig');
+        $template = $this->twig->load('routes.twig');
         echo $template->render($context);
     }
 }
