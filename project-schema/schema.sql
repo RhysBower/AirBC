@@ -12,7 +12,7 @@ CREATE TABLE Account (
   username varchar(50) NOT NULL UNIQUE,
   password char(255) NOT NULL,
   PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=8589934592;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=8589934592;
 
 INSERT INTO Account (id, name, email, username, password)
 VALUES
@@ -41,7 +41,7 @@ CREATE TABLE Staff (
   title varchar(50) NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (id) REFERENCES Account (id) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO Staff (id, title)
 VALUES
@@ -63,7 +63,7 @@ CREATE TABLE Customer (
   payment_information varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (id),
   FOREIGN KEY (id) REFERENCES Account (id) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO Customer (id, travel_document, billing_address, phone_number, seat_preference, payment_information)
 VALUES
@@ -86,7 +86,7 @@ CREATE TABLE Loyalty_Member (
   points int(11) DEFAULT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (id) REFERENCES Customer (id) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO Loyalty_Member (id, points)
 VALUES
@@ -105,7 +105,7 @@ CREATE TABLE Type (
   business_seats int(11) NOT NULL,
   economy_seats int(11) NOT NULL,
   PRIMARY KEY (type)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO Type (type, first_class_seats, business_seats, economy_seats)
 VALUES
@@ -145,7 +145,7 @@ CREATE TABLE Aircraft (
   status enum('OK','REPAIR') NOT NULL DEFAULT 'OK',
   PRIMARY KEY (id),
   FOREIGN KEY (type) REFERENCES Type (type) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO Aircraft (id, type, purchase_date, status)
 VALUES
@@ -184,7 +184,7 @@ CREATE TABLE Airport (
   name varchar(100) NOT NULL UNIQUE,
   location varchar(100) NOT NULL UNIQUE,
   PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO Airport (id, name, location)
 VALUES
@@ -243,7 +243,7 @@ CREATE TABLE Route (
   PRIMARY KEY (arrival,departure),
   FOREIGN KEY (departure) REFERENCES Airport (id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (arrival) REFERENCES Airport (id) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO Route (departure, arrival, first_class, business, economy)
 VALUES
@@ -266,7 +266,7 @@ CREATE TABLE Flight (
   PRIMARY KEY (id),
   FOREIGN KEY (assigned) REFERENCES Aircraft (id),
   FOREIGN KEY (arrival, departure) REFERENCES Route (arrival, departure) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=8589934592;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=8589934592;
 
 INSERT INTO Flight (id, date_time, assigned, arrival, departure)
 VALUES
@@ -288,7 +288,7 @@ CREATE TABLE Ticket (
   PRIMARY KEY (id),
   FOREIGN KEY (flightId) REFERENCES Flight (id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (customerId) REFERENCES Customer (id) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=8589934592;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=8589934592;
 
 INSERT INTO Ticket (id, seat_type, flightId, customerId)
 VALUES
