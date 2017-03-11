@@ -18,14 +18,14 @@
     </thead>
     <tbody>
     	{% for account in accounts %}
-           <tr>
-            <td>{{account.id}}</td>
-            <td>{{account.name}}</td>
-            <td>{{account.email}}</td>
-            <td>{{account.username}}</td>
-            <td>{{account.password}}</td>
-          </tr>
-        {% endfor %}
+         <tr>
+          <td>{{account.id}}</td>
+          <td>{{account.name}}</td>
+          <td>{{account.email}}</td>
+          <td>{{account.username}}</td>
+          <td>{{account.password}}</td>
+        </tr>
+      {% endfor %}
     </tbody>
   </table>
   {% endif %}

@@ -12,7 +12,6 @@ class HomeController extends Controller
         $context = [];
         $context['page'] = "home";
         $context['accounts'] = $this->database->getAccounts();
-        $context['routes'] = $this->database->getRoutes();
 
         $template = $this->twig->load('home.twig');
         echo $template->render($context);

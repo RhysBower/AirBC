@@ -11,7 +11,6 @@ class RoutesController extends Controller
         parent::__construct();
         $context = [];
         $context['page'] = "routes";
-        $context['accounts'] = $this->database->getAccounts();
         $context['routes'] = $this->database->getRoutes();
 
         $template = $this->twig->load('routes.twig');

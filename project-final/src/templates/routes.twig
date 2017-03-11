@@ -17,15 +17,15 @@
       </tr>
     </thead>
     <tbody>
-    	{% for route in routes %}
-           <tr>
-            <td>{{route.departure}}</td>
-            <td>{{route.arrival}}</td>
-            <td>{{route.first_class}}</td>
-            <td>{{route.business}}</td>
-            <td>{{route.economy}}</td>
-          </tr>
-        {% endfor %}
+      {% for route in routes %}
+         <tr>
+          <td>{{route.departure}}</td>
+          <td>{{route.arrival}}</td>
+          <td>{{route.firstClass}}</td>
+          <td>{{route.business}}</td>
+          <td>{{route.economy}}</td>
+        </tr>
+      {% endfor %}
     </tbody>
   </table>
   {% endif %}
