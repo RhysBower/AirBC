@@ -15,5 +15,5 @@ switch($_SERVER['REQUEST_URI']) {
         new Airbc\Controllers\RoutesController();
         break;
     default:
-        echo "404 no page";
+        new Airbc\Controllers\Error404Controller();
 }
