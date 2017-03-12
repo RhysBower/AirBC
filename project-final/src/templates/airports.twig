@@ -1,0 +1,29 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<div class="container">
+  <h2>Airports:</h2>
+  {% if airports|length == 0 %}
+      <div class="well">No airports were found.</div>
+  {% else %}
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <td>ID</td>
+        <td>Name</td>
+        <td>Location</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for airport in airports %}
+         <tr>
+          <td>{{airport.id}}</td>
+          <td>{{airport.name}}</td>
+          <td>{{airport.location}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</div>
+{% endblock %}

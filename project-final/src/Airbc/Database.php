@@ -101,7 +101,7 @@ class Database extends Object
     }
 
     /**
-     * Returns Account with given id or null if no Account exists.
+     * Returns a Route from departure airport to arrival airport.
      */
     public function getRoute(string $departure, string $arrival): Model\Route
     {
@@ -176,6 +176,30 @@ class Database extends Object
     }
 
     // TODO: getFlight(...)
+
+    /**
+     * Returns array of Airports or empty array if no Airports are found.
+     */
+    public function getAirports(): array
+    {
+        if ($result = $this->mysqli->query("SELECT * FROM Airport")) {
+            $this->logger->info("SELECT Airports returned $result->num_rows rows");
+            if ($result->num_rows == 0) {
+                return [];
+            }
+
+            $airports = [];
+            while ($row = $result->fetch_object()){
+                $airports[] = new Model\Airport((string)$row->id, (string)$row->name, (string)$row->location);
+            }
+            $result->close();
+
+            return $airports;
+        } else {
+            $this->logSqlError();
+            return [];
+        }
+    }
 
     public function __destruct()
     {

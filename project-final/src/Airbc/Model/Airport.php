@@ -5,7 +5,14 @@ use Airbc\Object as Object;
 
 class Airport extends Object
 {
-    private $id;
-    private $name;
-    private $location;
+    public $id;
+    public $name;
+    public $location;
+
+    public function __construct(string $id, string $name, string $location)
+    {
+    	$this->id = $id;
+    	$this->name = $name;
+    	$this->location = $location;
+    }
 }
