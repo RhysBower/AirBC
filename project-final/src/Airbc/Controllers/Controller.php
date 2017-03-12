@@ -55,7 +55,7 @@ class Controller extends Object
      */
     public function exceptionHandler($exception)
     {
-        $this->logger->alert("Uncaught exception: $exception->getMessage() on line $exceptoin->getLine() in file $excepton->getFile()");
+        $this->logger->alert("Uncaught exception: $exception->getMessage() on line $exception->getLine() in file $exception->getFile()");
     }
     public function errorHandler($errno, $errstr, $errfile, $errline)
     {
