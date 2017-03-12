@@ -91,23 +91,35 @@ class Controller extends Object
         }
     }
 
-    public function isLoggedIn() {
+    public function isLoggedIn(): bool
+    {
         return $this->currentUser !== null;
     }
 
-    public function isPublic() {
+    public function isPublic(): bool 
+    {
         return $this->currentUser === null;
     }
 
-    public function isCustomer() {
+    public function isCustomer(): bool 
+    {
+        try {
+            $id = $this->currentUser->id;
+            $isCustomer = $this->database->isCustomer($id);
+            return $isCustomer;
+        } catch (Exception $e) {
+            $this->logger->info($e->getMessage());
+            return false;
+        } 
+    }
+
+    public function isLoyaltyMember(): bool 
+    {
         return false;
     }
 
-    public function isLoyaltyMember() {
-        return false;
-    }
-
-    public function isStaff() {
+    public function isStaff(): bool 
+    {
         return false;
     }
 

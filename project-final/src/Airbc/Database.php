@@ -101,6 +101,29 @@ class Database extends Object
     }
 
     /**
+     * Returns true if account with given id is a customer, false otherwise.
+     */
+    public function isCustomer(int $id): ?bool
+    {
+        if ($result = $this->mysqli->query("SELECT * FROM Customer WHERE id=$id")) {
+            $this->logger->info("SELECT Account returned $result->num_rows rows");
+            if ($result->num_rows == 0) {
+                $this->logger->info("no customer with this id found");
+                return false;
+            }
+            if ($result->num_rows > 1) {
+                throw new \Exception("Duplicate account detected.");
+            }
+            $result->close();
+            $this->logger->info("one customer with this id found");
+            return true;
+        } else {
+            $this->logSqlError();
+            return false;
+        }
+    }
+
+    /**
      * Returns a Route from departure airport to arrival airport.
      */
     public function getRoute(string $departure, string $arrival): ?Model\Route
@@ -115,7 +138,7 @@ class Database extends Object
             }
 
             $row = $result->fetch_object();
-            $routes = new Model\Route((string)$row->departure, (string)$row->arrival, (int)$row->first_class, (int)$row->business, (int)$row->economy);;
+            $routes = new Model\Route((string)$row->departure, (string)$row->arrival, (int)$row->first_class, (int)$row->business, (int)$row->economy);
 
             $result->close();
 
