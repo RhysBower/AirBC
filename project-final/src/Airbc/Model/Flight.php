@@ -5,8 +5,18 @@ use Airbc\Object as Object;
 
 class Flight extends Object
 {
-    private $id;
-    private $datetime;
-    private $assigned;
-    private $route;
+    public $id;
+    public $datetime;
+    public $assigned;
+    public $arrival;
+    public $departure;
+
+    public function __construct(int $id, string $datetime, string $assigned, string $arrival, string $departure)
+    {
+        $this->id = $id;
+        $this->datetime = $datetime;
+        $this->assigned = $assigned;
+        $this->arrival = $arrival;
+        $this->departure = $departure;
+    }
 }

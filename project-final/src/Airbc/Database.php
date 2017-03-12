@@ -100,6 +100,7 @@ class Database extends Object
         }
     }
 
+
     /**
      * Returns array of Routes or empty array if no Routes are found.
      */
@@ -110,14 +111,39 @@ class Database extends Object
             if ($result->num_rows == 0) {
                 return [];
             }
-
             $routes = [];
             while ($row = $result->fetch_object()){
                 $routes[] = new Model\Route((string)$row->departure, (string)$row->arrival, (int)$row->first_class, (int)$row->business, (int)$row->economy);
             }
             $result->close();
-
             return $routes;
+        } else {
+            $this->logSqlError();
+            return [];
+        }
+    }
+
+    /**
+     * Returns array of Flights or empty array if no Flights are found.
+     */
+    public function getFlights(): array
+    {
+        if ($result = $this->mysqli->query("SELECT * FROM Flight")) {
+            $this->logger->info("SELECT Flights returned $result->num_rows rows");
+            if ($result->num_rows == 0) {
+                return [];
+            }
+
+            $flights = [];
+            while ($row = $result->fetch_object()){
+
+                /*$time = strtotime($row->datetime);
+                $myFormatForView = date("m/d/y g:i A", $time);*/
+                $flights[] = new Model\Flight((int)$row->id, /*(string)$myFormatForView*/'', (string)$row->assigned, (string)$row->arrival, (string)$row->departure);
+            }
+            $result->close();
+
+            return $flights;
         } else {
             $this->logSqlError();
             return [];

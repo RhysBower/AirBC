@@ -1,0 +1,33 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<div class="container">
+  <h2>Flights:</h2>
+  {% if flights|length == 0 %}
+      <div class="well">No flights were found.</div>
+  {% else %}
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <td>ID</td>
+        <td>Date</td>
+        <td>Assigned Aircraft</td>
+        <td>Arrival Airport</td>
+        <td>Departure Airport</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for flight in flights %}
+         <tr>
+          <td>{{flight.id}}</td>
+          <td>{{flight.datetime}}</td>
+          <td>{{flight.assigned}}</td>
+          <td>{{flight.arrival}}</td>
+          <td>{{flight.departure}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</div>
+{% endblock %}
