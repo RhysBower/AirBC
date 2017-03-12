@@ -139,7 +139,9 @@ class Database extends Object
 
                 /*$time = strtotime($row->datetime);
                 $myFormatForView = date("m/d/y g:i A", $time);*/
-                $flights[] = new Model\Flight((int)$row->id, /*(string)$myFormatForView*/'', (string)$row->assigned, (string)$row->arrival, (string)$row->departure);
+                $date = new \DateTime($row->date_time);
+                $res = $date->format('h:i A, F d, Y');
+                $flights[] = new Model\Flight((int)$row->id, (string)$res, (string)$row->assigned, (string)$row->arrival, (string)$row->departure);
             }
             $result->close();
 
