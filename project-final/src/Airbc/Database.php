@@ -51,6 +51,32 @@ class Database extends Object
     }
 
     /**
+     * Returns Account with given username or null if no Account exists.
+     */
+    public function getUserAccount(string $username): Model\Account
+    {
+        if ($result = $this->mysqli->query("SELECT * FROM Account WHERE username=$username")) {
+            $this->logger->info("SELECT Account returned $result->num_rows rows");
+            if ($result->num_rows == 0) {
+                return null;
+            }
+            if ($result->num_rows > 1) {
+                throw new \Exception("Duplicate account detected.");
+            }
+
+            $row = $result->fetch_object();
+            $account = new Model\Account((int)$row->id, (string)$row->name, (string)$row->email, (string)$row->username, (string)$row->password);
+
+            $result->close();
+
+            return $account;
+        } else {
+            $this->logSqlError();
+            return null;
+        }
+    }
+
+    /**
      * Returns array of Account or empty array if no Accounts are found.
      */
     public function getAccounts(): array
@@ -136,9 +162,6 @@ class Database extends Object
 
             $flights = [];
             while ($row = $result->fetch_object()){
-
-                /*$time = strtotime($row->datetime);
-                $myFormatForView = date("m/d/y g:i A", $time);*/
                 $date = new \DateTime($row->date_time);
                 $res = $date->format('h:i A, F d, Y');
                 $flights[] = new Model\Flight((int)$row->id, (string)$res, (string)$row->assigned, (string)$row->arrival, (string)$row->departure);
@@ -151,6 +174,8 @@ class Database extends Object
             return [];
         }
     }
+
+    // TODO: getFlight(...)
 
     public function __destruct()
     {
