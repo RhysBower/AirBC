@@ -53,9 +53,9 @@ class Controller extends Object
      * Global exception handler for all uncaught exceptions.
      * These would normally trigger an error in PHP but are caught and logged.
      */
-    public function exceptionHandler($exception)
+    public function exceptionHandler(\Throwable $exception)
     {
-        $this->logger->alert("Uncaught exception: $exception->getMessage() on line $exception->getLine() in file $exception->getFile()");
+        $this->logger->alert("Uncaught exception: ".$exception->getMessage()." on line ".$exception->getLine()." in file ".$exception->getFile());
     }
     public function errorHandler($errno, $errstr, $errfile, $errline)
     {
