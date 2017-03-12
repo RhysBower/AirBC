@@ -127,7 +127,14 @@ class Controller extends Object
 
     public function isStaff(): bool 
     {
-        return false;
+        try {
+            $id = $this->currentUser->id;
+            $isStaff = $this->database->isStaff($id);
+            return $isStaff;
+        } catch (Exception $e) {
+            $this->logger->info($e->getMessage());
+            return false;
+        } 
     }
 
     public function renderForbidden() {

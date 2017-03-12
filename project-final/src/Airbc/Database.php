@@ -123,7 +123,7 @@ class Database extends Object
         }
     }
 
-       /**
+    /**
      * Returns true if account with given id is a loyalty member, false otherwise.
      */
     public function isLoyaltyMember(int $id): ?bool
@@ -139,6 +139,29 @@ class Database extends Object
             }
             $result->close();
             $this->logger->info("one loyalty member with given id found");
+            return true;
+        } else {
+            $this->logSqlError();
+            return false;
+        }
+    }
+
+    /**
+     * Returns true if account with given id is a staff, false otherwise.
+     */
+    public function isStaff(int $id): ?bool
+    {
+        if ($result = $this->mysqli->query("SELECT * FROM Staff WHERE id=$id")) {
+            $this->logger->info("SELECT Staff returned $result->num_rows rows");
+            if ($result->num_rows == 0) {
+                $this->logger->info("no staff with this id found");
+                return false;
+            }
+            if ($result->num_rows > 1) {
+                throw new \Exception("Duplicate account detected.");
+            }
+            $result->close();
+            $this->logger->info("one staff with given id found");
             return true;
         } else {
             $this->logSqlError();
