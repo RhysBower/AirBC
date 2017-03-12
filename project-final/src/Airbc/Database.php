@@ -106,7 +106,7 @@ class Database extends Object
     public function isCustomer(int $id): ?bool
     {
         if ($result = $this->mysqli->query("SELECT * FROM Customer WHERE id=$id")) {
-            $this->logger->info("SELECT Account returned $result->num_rows rows");
+            $this->logger->info("SELECT Customer returned $result->num_rows rows");
             if ($result->num_rows == 0) {
                 $this->logger->info("no customer with this id found");
                 return false;
@@ -115,7 +115,30 @@ class Database extends Object
                 throw new \Exception("Duplicate account detected.");
             }
             $result->close();
-            $this->logger->info("one customer with this id found");
+            $this->logger->info("one customer with given id found");
+            return true;
+        } else {
+            $this->logSqlError();
+            return false;
+        }
+    }
+
+       /**
+     * Returns true if account with given id is a loyalty member, false otherwise.
+     */
+    public function isLoyaltyMember(int $id): ?bool
+    {
+        if ($result = $this->mysqli->query("SELECT * FROM Loyalty_Member WHERE id=$id")) {
+            $this->logger->info("SELECT Loyalty_Member returned $result->num_rows rows");
+            if ($result->num_rows == 0) {
+                $this->logger->info("no loyalty member with this id found");
+                return false;
+            }
+            if ($result->num_rows > 1) {
+                throw new \Exception("Duplicate account detected.");
+            }
+            $result->close();
+            $this->logger->info("one loyalty member with given id found");
             return true;
         } else {
             $this->logSqlError();

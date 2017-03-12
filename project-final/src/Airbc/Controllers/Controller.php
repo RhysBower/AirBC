@@ -115,7 +115,14 @@ class Controller extends Object
 
     public function isLoyaltyMember(): bool 
     {
-        return false;
+        try {
+            $id = $this->currentUser->id;
+            $isLoyaltyMember = $this->database->isLoyaltyMember($id);
+            return $isLoyaltyMember;
+        } catch (Exception $e) {
+            $this->logger->info($e->getMessage());
+            return false;
+        } 
     }
 
     public function isStaff(): bool 
