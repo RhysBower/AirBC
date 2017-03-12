@@ -201,6 +201,31 @@ class Database extends Object
         }
     }
 
+    /**
+     * Returns array of Tickets or empty array if no Tickets are found.
+     */
+    public function getTickets(): array
+    {
+        if ($result = $this->mysqli->query("SELECT * FROM Ticket")) {
+            $this->logger->info("SELECT Tickets returned $result->num_rows rows");
+            if ($result->num_rows == 0) {
+                return [];
+            }
+
+            $tickets = [];
+            while ($row = $result->fetch_object()){
+                $tickets[] = new Model\Ticket((string)$row->id, (string)$row->seat_type, (string)$row->flightId,
+                    (string)$row->customerId);
+            }
+            $result->close();
+
+            return $tickets;
+        } else {
+            $this->logSqlError();
+            return [];
+        }
+    }
+
     public function __destruct()
     {
         $this->logger->info('Closing MySQL connection');

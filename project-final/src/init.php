@@ -20,6 +20,9 @@ switch($_SERVER['REQUEST_URI']) {
     case "/airports":
         new Airbc\Controllers\AirportsController();
         break;
+    case "/tickets":
+        new Airbc\Controllers\TicketsController();
+        break;
     default:
         new Airbc\Controllers\Error404Controller();
 }

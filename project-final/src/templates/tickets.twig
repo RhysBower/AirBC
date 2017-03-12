@@ -1,0 +1,31 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<div class="container">
+  <h2>Tickets:</h2>
+  {% if tickets|length == 0 %}
+      <div class="well">No tickets were found.</div>
+  {% else %}
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <td>ID</td>
+        <td>Seat Type</td>
+        <td>Flight</td>
+        <td>Customer ID</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for ticket in Tickets %}
+         <tr>
+          <td>{{ticket.id}}</td>
+          <td>{{ticket.seat_type}}</td>
+          <td>{{ticket.flightId}}</td>
+          <td>{{ticket.customerId}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</div>
+{% endblock %}
