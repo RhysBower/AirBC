@@ -9,11 +9,10 @@ class Error404Controller extends Controller
     public function __construct()
     {
         parent::__construct();
-        $context = [];
-        $context['page'] = "404";
+        $this->context['page'] = "404";
 
         http_response_code(404);
         $template = $this->twig->load('404.twig');
-        echo $template->render($context);
+        echo $template->render($this->context);
     }
 }

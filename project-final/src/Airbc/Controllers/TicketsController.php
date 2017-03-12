@@ -9,11 +9,10 @@ class TicketsController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $context = [];
-        $context['page'] = "tickets";
-        $context['tickets'] = $this->database->getTickets();
+        $this->context['page'] = "tickets";
+        $this->context['tickets'] = $this->database->getTickets();
 
         $template = $this->twig->load('tickets.twig');
-        echo $template->render($context);
+        echo $template->render($this->context);
     }
 }

@@ -42,7 +42,11 @@
             <li {% if (page == 'tickets') %} class="active" {% endif %}><a href="/tickets">Tickets</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li {% if (page == 'account') %} class="active" {% endif %}><a href="/">Account</a></li>
+            {% if currentUser is null %}
+              <li {% if (page == 'login') %} class="active" {% endif %}><a href="/login">Login</a></li>
+            {% else %}
+            <li {% if (page == 'account') %} class="active" {% endif %}><a href="/account">{{currentUser.name}}</a></li>
+            {% endif %}
           </ul>
         </div><!--/.nav-collapse -->
       </div>

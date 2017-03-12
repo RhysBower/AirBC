@@ -1,0 +1,8 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<div class="container">
+  <h2>Account page for {{currentUser.name}}</h2>
+  <a class="btn btn-danger" href="/logout" role="button">Logout</a>
+</div>
+{% endblock %}

@@ -9,11 +9,10 @@ class RoutesController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $context = [];
-        $context['page'] = "routes";
-        $context['routes'] = $this->database->getRoutes();
+        $this->context['page'] = "routes";
+        $this->context['routes'] = $this->database->getRoutes();
 
         $template = $this->twig->load('routes.twig');
-        echo $template->render($context);
+        echo $template->render($this->context);
     }
 }

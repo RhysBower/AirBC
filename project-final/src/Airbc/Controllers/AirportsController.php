@@ -9,11 +9,10 @@ class AirportsController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $context = [];
-        $context['page'] = "airports";
-        $context['airports'] = $this->database->getAirports();
+        $this->context['page'] = "airports";
+        $this->context['airports'] = $this->database->getAirports();
 
         $template = $this->twig->load('airports.twig');
-        echo $template->render($context);
+        echo $template->render($this->context);
     }
 }

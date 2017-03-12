@@ -23,6 +23,18 @@ switch($_SERVER['REQUEST_URI']) {
     case "/tickets":
         new Airbc\Controllers\TicketsController();
         break;
+    case "/login":
+        $controller = new Airbc\Controllers\AccountController();
+        $controller->login();
+        break;
+    case "/logout":
+        $controller = new Airbc\Controllers\AccountController();
+        $controller->logout();
+        break;
+    case "/account":
+        $controller = new Airbc\Controllers\AccountController();
+        $controller->account();
+        break;
     default:
         new Airbc\Controllers\Error404Controller();
 }

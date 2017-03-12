@@ -9,11 +9,10 @@ class FlightsController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $context = [];
-        $context['page'] = "flights";
-        $context['flights'] = $this->database->getFlights();
+        $this->context['page'] = "flights";
+        $this->context['flights'] = $this->database->getFlights();
 
         $template = $this->twig->load('flights.twig');
-        echo $template->render($context);
+        echo $template->render($this->context);
     }
 }
