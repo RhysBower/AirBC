@@ -43,7 +43,7 @@ class AccountController extends Controller
                     // User does not exist
                     $this->displayLoginPage();
                 } else {
-                    $verified = password_verify($password, $account->password);
+                    $verified = password_verify($password, $account->getPassword());
                     if($verified) {
                         $this->logUserIn($account);
                     } else {
