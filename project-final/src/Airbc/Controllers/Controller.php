@@ -55,10 +55,13 @@ class Controller extends Object
      */
     public function exceptionHandler(\Throwable $exception)
     {
-        $this->logger->alert("Uncaught exception: ".$exception->getMessage()." on line ".$exception->getLine()." in file ".$exception->getFile());
+        $this->logger->alert("Uncaught exception: ".$exception->getMessage()." on line ".$exception->getLine()." in file ".$exception->getFile() . "\n".$exception->getTraceAsString());
     }
     public function errorHandler($errno, $errstr, $errfile, $errline)
     {
+        if(error_reporting() === 0) {
+            return true;
+        }
         switch ($errno) {
             case E_USER_ERROR:
                 $this->logger->alert("Uncaught error: [$errno] $errstr on line $errline in file $errfile");
@@ -96,12 +99,12 @@ class Controller extends Object
         return $this->currentUser !== null;
     }
 
-    public function isPublic(): bool 
+    public function isPublic(): bool
     {
         return $this->currentUser === null;
     }
 
-    public function isCustomer(): bool 
+    public function isCustomer(): bool
     {
         try {
             $id = $this->currentUser->id;
@@ -110,10 +113,10 @@ class Controller extends Object
         } catch (Exception $e) {
             $this->logger->info($e->getMessage());
             return false;
-        } 
+        }
     }
 
-    public function isLoyaltyMember(): bool 
+    public function isLoyaltyMember(): bool
     {
         try {
             $id = $this->currentUser->id;
@@ -122,10 +125,10 @@ class Controller extends Object
         } catch (Exception $e) {
             $this->logger->info($e->getMessage());
             return false;
-        } 
+        }
     }
 
-    public function isStaff(): bool 
+    public function isStaff(): bool
     {
         try {
             $id = $this->currentUser->id;
@@ -134,7 +137,7 @@ class Controller extends Object
         } catch (Exception $e) {
             $this->logger->info($e->getMessage());
             return false;
-        } 
+        }
     }
 
     public function renderForbidden() {

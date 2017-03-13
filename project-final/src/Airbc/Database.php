@@ -1,6 +1,9 @@
 <?php declare(strict_types=1);
 namespace Airbc;
 
+use Airbc\MySQL\MySQL;
+use Airbc\MySQL\MySQLException;
+
 /**
  * Controls access to database.
  * Other classes can make requests for data through here.
@@ -8,20 +11,21 @@ namespace Airbc;
 class Database extends Object
 {
     private $logger;
-    private $mysqli;
+    private $mysql;
 
     public function __construct(\Psr\Log\LoggerInterface $logger)
     {
         $this->logger = $logger;
 
-        $this->mysqli = new \mysqli('localhost', 'root', 'root', 'cpsc304');
-
-        if ($this->mysqli->connect_error) {
-            $logger->emergency('Connect Error (' . $this->mysqli->connect_errno . ') ' . $this->mysqli->connect_error);
-            die('Connect Error (' . $this->mysqli->connect_errno . ') ' . $this->mysqli->connect_error);
+        try {
+            $this->mysql = new MySQL('localhost', 'root', 'root', 'cpsc304');
+            $this->mysql->connect();
+        } catch (MySQLException $e) {
+            $logger->emergency('Connect Error (' . $e->getCode() . ') ' . $e->getMessage());
+            die('Connect Error (' . $e->getCode() . ') ' . $e->getMessage());
         }
 
-        $logger->info('Connected to MySQL: ' . $this->mysqli->host_info);
+        $logger->info('Connected to MySQL: ' . $this->mysql->hostInfo());
     }
 
     /**
@@ -29,25 +33,9 @@ class Database extends Object
      */
     public function getAccount(int $id): ?Model\Account
     {
-        if ($result = $this->mysqli->query("SELECT * FROM Account WHERE id=$id")) {
-            $this->logger->info("SELECT Account returned $result->num_rows rows");
-            if ($result->num_rows == 0) {
-                return null;
-            }
-            if ($result->num_rows > 1) {
-                throw new \Exception("Duplicate account detected.");
-            }
-
-            $row = $result->fetch_object();
-            $account = new Model\Account((int)$row->id, $row->name, $row->email, $row->username, $row->password);
-
-            $result->close();
-
-            return $account;
-        } else {
-            $this->logSqlError();
-            return null;
-        }
+        return $this->querySingle("SELECT * FROM Account WHERE id=$id", function($row) {
+            return new Model\Account((int)$row->id, $row->name, $row->email, $row->username, $row->password);
+        });
     }
 
     /**
@@ -55,25 +43,9 @@ class Database extends Object
      */
     public function getUserAccount(string $username): ?Model\Account
     {
-        if ($result = $this->mysqli->query("SELECT * FROM Account WHERE username='$username'")) {
-            $this->logger->info("SELECT Account returned $result->num_rows rows");
-            if ($result->num_rows == 0) {
-                return null;
-            }
-            if ($result->num_rows > 1) {
-                throw new \Exception("Duplicate account detected.");
-            }
-
-            $row = $result->fetch_object();
-            $account = new Model\Account((int)$row->id, (string)$row->name, (string)$row->email, (string)$row->username, (string)$row->password);
-
-            $result->close();
-
-            return $account;
-        } else {
-            $this->logSqlError();
-            return null;
-        }
+        return $this->querySingle("SELECT * FROM Account WHERE username='$username'", function($row) {
+            return new Model\Account((int)$row->id, $row->name, $row->email, $row->username, $row->password);
+        });
     }
 
     /**
@@ -81,92 +53,33 @@ class Database extends Object
      */
     public function getAccounts(): array
     {
-        if ($result = $this->mysqli->query("SELECT * FROM Account")) {
-            $this->logger->info("SELECT Accounts returned $result->num_rows rows");
-            if ($result->num_rows == 0) {
-                return [];
-            }
-
-            $accounts = [];
-            while ($row = $result->fetch_object()){
-                $accounts[] = new Model\Account((int)$row->id, $row->name, $row->email, $row->username, $row->password);
-            }
-            $result->close();
-
-            return $accounts;
-        } else {
-            $this->logSqlError();
-            return [];
-        }
+        return $this->queryMultiple("SELECT * FROM Account", function($row) {
+            return new Model\Account((int)$row->id, $row->name, $row->email, $row->username, $row->password);
+        });
     }
 
     /**
      * Returns true if account with given id is a customer, false otherwise.
      */
-    public function isCustomer(int $id): ?bool
+    public function isCustomer(int $id): bool
     {
-        if ($result = $this->mysqli->query("SELECT * FROM Customer WHERE id=$id")) {
-            $this->logger->info("SELECT Customer returned $result->num_rows rows");
-            if ($result->num_rows == 0) {
-                $this->logger->info("no customer with this id found");
-                return false;
-            }
-            if ($result->num_rows > 1) {
-                throw new \Exception("Duplicate account detected.");
-            }
-            $result->close();
-            $this->logger->info("one customer with given id found");
-            return true;
-        } else {
-            $this->logSqlError();
-            return false;
-        }
+        return $this->isAccount("SELECT * FROM Customer WHERE id=$id");
     }
 
     /**
      * Returns true if account with given id is a loyalty member, false otherwise.
      */
-    public function isLoyaltyMember(int $id): ?bool
+    public function isLoyaltyMember(int $id): bool
     {
-        if ($result = $this->mysqli->query("SELECT * FROM Loyalty_Member WHERE id=$id")) {
-            $this->logger->info("SELECT Loyalty_Member returned $result->num_rows rows");
-            if ($result->num_rows == 0) {
-                $this->logger->info("no loyalty member with this id found");
-                return false;
-            }
-            if ($result->num_rows > 1) {
-                throw new \Exception("Duplicate account detected.");
-            }
-            $result->close();
-            $this->logger->info("one loyalty member with given id found");
-            return true;
-        } else {
-            $this->logSqlError();
-            return false;
-        }
+        return $this->isAccount("SELECT * FROM Loyalty_Member WHERE id=$id");
     }
 
     /**
      * Returns true if account with given id is a staff, false otherwise.
      */
-    public function isStaff(int $id): ?bool
+    public function isStaff(int $id): bool
     {
-        if ($result = $this->mysqli->query("SELECT * FROM Staff WHERE id=$id")) {
-            $this->logger->info("SELECT Staff returned $result->num_rows rows");
-            if ($result->num_rows == 0) {
-                $this->logger->info("no staff with this id found");
-                return false;
-            }
-            if ($result->num_rows > 1) {
-                throw new \Exception("Duplicate account detected.");
-            }
-            $result->close();
-            $this->logger->info("one staff with given id found");
-            return true;
-        } else {
-            $this->logSqlError();
-            return false;
-        }
+        return $this->isAccount("SELECT * FROM Staff WHERE id=$id");
     }
 
     /**
@@ -174,25 +87,9 @@ class Database extends Object
      */
     public function getRoute(string $departure, string $arrival): ?Model\Route
     {
-        if ($result = $this->mysqli->query("SELECT * FROM Route WHERE departure=$departure AND arrival=$arrival")) {
-            $this->logger->info("SELECT Route returned $result->num_rows rows");
-            if ($result->num_rows == 0) {
-                return null;
-            }
-            if ($result->num_rows > 1) {
-                throw new \Exception("Duplicate routes detected.");
-            }
-
-            $row = $result->fetch_object();
-            $routes = new Model\Route((string)$row->departure, (string)$row->arrival, (int)$row->first_class, (int)$row->business, (int)$row->economy);
-
-            $result->close();
-
-            return $routes;
-        } else {
-            $this->logSqlError();
-            return null;
-        }
+        return $this->querySingle("SELECT * FROM Route WHERE departure='$departure' AND arrival='$arrival'", function($row) {
+            return new Model\Route((string)$row->departure, (string)$row->arrival, (int)$row->first_class, (int)$row->business, (int)$row->economy);
+        });
     }
 
 
@@ -201,21 +98,9 @@ class Database extends Object
      */
     public function getRoutes(): array
     {
-        if ($result = $this->mysqli->query("SELECT * FROM Route")) {
-            $this->logger->info("SELECT Routes returned $result->num_rows rows");
-            if ($result->num_rows == 0) {
-                return [];
-            }
-            $routes = [];
-            while ($row = $result->fetch_object()){
-                $routes[] = new Model\Route((string)$row->departure, (string)$row->arrival, (int)$row->first_class, (int)$row->business, (int)$row->economy);
-            }
-            $result->close();
-            return $routes;
-        } else {
-            $this->logSqlError();
-            return [];
-        }
+        return $this->queryMultiple("SELECT * FROM Route", function($row) {
+            return new Model\Route((string)$row->departure, (string)$row->arrival, (int)$row->first_class, (int)$row->business, (int)$row->economy);
+        });
     }
 
     /**
@@ -223,25 +108,11 @@ class Database extends Object
      */
     public function getFlights(): array
     {
-        if ($result = $this->mysqli->query("SELECT * FROM Flight")) {
-            $this->logger->info("SELECT Flights returned $result->num_rows rows");
-            if ($result->num_rows == 0) {
-                return [];
-            }
-
-            $flights = [];
-            while ($row = $result->fetch_object()){
-                $date = new \DateTime($row->date_time);
-                $res = $date->format('h:i A, F d, Y');
-                $flights[] = new Model\Flight((int)$row->id, (string)$res, (string)$row->assigned, (string)$row->arrival, (string)$row->departure);
-            }
-            $result->close();
-
-            return $flights;
-        } else {
-            $this->logSqlError();
-            return [];
-        }
+        return $this->queryMultiple("SELECT * FROM Flight", function($row) {
+            $date = new \DateTime($row->date_time);
+            $res = $date->format('h:i A, F d, Y');
+            return new Model\Flight((int)$row->id, (string)$res, (string)$row->assigned, (string)$row->arrival, (string)$row->departure);
+        });
     }
 
     // TODO: getFlight(...)
@@ -251,23 +122,9 @@ class Database extends Object
      */
     public function getAirports(): array
     {
-        if ($result = $this->mysqli->query("SELECT * FROM Airport")) {
-            $this->logger->info("SELECT Airports returned $result->num_rows rows");
-            if ($result->num_rows == 0) {
-                return [];
-            }
-
-            $airports = [];
-            while ($row = $result->fetch_object()){
-                $airports[] = new Model\Airport((string)$row->id, (string)$row->name, (string)$row->location);
-            }
-            $result->close();
-
-            return $airports;
-        } else {
-            $this->logSqlError();
-            return [];
-        }
+        return $this->queryMultiple("SELECT * FROM Airport", function($row) {
+            return new Model\Airport((string)$row->id, (string)$row->name, (string)$row->location);
+        });
     }
 
     /**
@@ -275,33 +132,80 @@ class Database extends Object
      */
     public function getTickets(): array
     {
-        if ($result = $this->mysqli->query("SELECT * FROM Ticket")) {
-            $this->logger->info("SELECT Tickets returned $result->num_rows rows");
-            if ($result->num_rows == 0) {
-                return [];
-            }
-
-            $tickets = [];
-            while ($row = $result->fetch_object()){
-                $tickets[] = new Model\Ticket((string)$row->id, (string)$row->seat_type, (string)$row->flightId,
-                    (string)$row->customerId);
-            }
-            $result->close();
-
-            return $tickets;
-        } else {
-            $this->logSqlError();
-            return [];
-        }
+        return $this->queryMultiple("SELECT * FROM Ticket", function($row) {
+            return new Model\Ticket((string)$row->id, (string)$row->seat_type, (string)$row->flightId,
+                (string)$row->customerId);
+        });
     }
 
     public function __destruct()
     {
         $this->logger->info('Closing MySQL connection');
-        $this->mysqli->close();
+        $this->mysql->close();
     }
 
-    private function logSqlError() {
-        $this->logger->alert("Query failed with errno: ".$this->mysqli->errno."\n".$this->mysqli->error);
+    private function logSqlError(MySQLException $e) {
+        $this->logger->alert("Query failed with errno: ".$e->getCode()."\n".$e->getMessage());
+    }
+
+    private function querySingle(string $query, callable $fn) {
+        try {
+            $result = $this->mysql->query($query);
+            $this->logger->info("$query returned $result->num_rows rows");
+            if ($result->num_rows == 0) {
+                return null;
+            }
+            if ($result->num_rows > 1) {
+                throw new \Exception("Duplicate rows detected.");
+            }
+
+            $row = $result->fetch_object();
+            $model = $fn($row);
+            $result->close();
+
+            return $model;
+        } catch (MySQLException $e) {
+            $this->logSqlError($e);
+            return null;
+        }
+    }
+
+    private function queryMultiple(string $query, callable $fn) {
+        try {
+            $result = $this->mysql->query($query);
+            $this->logger->info("$query $result->num_rows rows");
+            if ($result->num_rows == 0) {
+                return [];
+            }
+
+            $models = [];
+            while ($row = $result->fetch_object()){
+                $models[] = $fn($row);
+            }
+            $result->close();
+
+            return $models;
+        } catch (MySQLException $e) {
+            $this->logSqlError($e);
+            return [];
+        }
+    }
+
+    private function isAccount(string $query): bool {
+        try {
+            $result = $this->mysql->query($query);
+            $this->logger->info("$query returned $result->num_rows rows");
+            if ($result->num_rows == 0) {
+                return false;
+            }
+            if ($result->num_rows > 1) {
+                throw new \Exception("Duplicate account detected.");
+            }
+            $result->close();
+            return true;
+        } catch (MySQLException $e) {
+            $this->logSqlError($e);
+            return false;
+        }
     }
 }
