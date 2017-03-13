@@ -9,7 +9,7 @@ class Account extends Object
     public $name;
     public $email;
     public $username;
-    public $password;
+    private $password;
 
     public function __construct(int $id, string $name, string $email, string $username, string $password)
     {
@@ -18,5 +18,13 @@ class Account extends Object
         $this->email = $email;
         $this->username = $username;
         $this->password = $password;
+    }
+
+    public function getPassword() {
+        return $this->password;
+    }
+
+    public function setPassword(string $password) {
+        $this->password = password_hash($password, PASSWORD_DEFAULT);
     }
 }
