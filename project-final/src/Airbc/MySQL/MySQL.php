@@ -20,35 +20,39 @@ class MySQL extends Object
         $this->dbname = $dbname;
 
         $this->mysqli = mysqli_init();
-        if(!$this->mysqli) {
+        if (!$this->mysqli) {
             throw new MySQLException("mysqli_init failed");
         }
     }
 
-    public function connect() {
+    public function connect()
+    {
         if (!@$this->mysqli->real_connect($this->host, $this->username, $this->password, $this->dbname)) {
             throw new MySQLException($this->mysqli->connect_error, $this->mysqli->connect_errno);
         }
     }
 
-    public function query(string $query) {
+    public function query(string $query)
+    {
         $queryResult = $this->mysqli->real_query($query);
-        if(!$queryResult) {
+        if (!$queryResult) {
             throw new MySQLException($this->mysqli->error, $this->mysqli->errno);
         }
 
         $result = $this->mysqli->store_result();
-        if($this->mysqli->errno !== 0) {
+        if ($this->mysqli->errno !== 0) {
             throw new MySQLException($this->mysqli->error, $this->mysqli->errno);
         }
         return $result;
     }
 
-    public function hostInfo():string {
+    public function hostInfo():string
+    {
         return $this->mysqli->host_info;
     }
 
-    public function close():void {
+    public function close():void
+    {
         if (!$this->mysqli->close()) {
             throw new MySQLException($this->mysqli->error, $this->mysqli->errno);
         }

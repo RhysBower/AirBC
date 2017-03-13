@@ -11,8 +11,8 @@ class Airport extends Object
 
     public function __construct(string $id, string $name, string $location)
     {
-    	$this->id = $id;
-    	$this->name = $name;
-    	$this->location = $location;
+        $this->id = $id;
+        $this->name = $name;
+        $this->location = $location;
     }
 }

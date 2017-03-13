@@ -43,7 +43,7 @@ class Controller extends Object
         $this->loader = new \Twig_Loader_Filesystem('templates', __DIR__."/../../");
         $this->twig = new \Twig_Environment($this->loader, array('debug' => true));
         $this->context = [];
-        if(array_key_exists('account', $_COOKIE)) {
+        if (array_key_exists('account', $_COOKIE)) {
             $this->verifyAccount($_COOKIE['account']);
         }
         $this->context['currentUser'] = $this->currentUser;
@@ -59,7 +59,7 @@ class Controller extends Object
     }
     public function errorHandler($errno, $errstr, $errfile, $errline)
     {
-        if(error_reporting() === 0) {
+        if (error_reporting() === 0) {
             return true;
         }
         switch ($errno) {
@@ -82,7 +82,8 @@ class Controller extends Object
         return true;
     }
 
-    private function verifyAccount($jwt) {
+    private function verifyAccount($jwt)
+    {
         try {
             $decoded = JWT::decode($jwt, AccountController::KEY, array('HS256'));
             $this->currentUser = $this->database->getAccount($decoded->sub);
@@ -140,7 +141,8 @@ class Controller extends Object
         }
     }
 
-    public function renderForbidden() {
+    public function renderForbidden()
+    {
         http_response_code(403);
         $template = $this->twig->load('403.twig');
         echo $template->render($this->context);

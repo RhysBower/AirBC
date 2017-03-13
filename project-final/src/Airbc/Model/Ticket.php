@@ -12,9 +12,9 @@ class Ticket extends Object
 
     public function __construct(string $id, string $seat_type, string $flightId, string $customerId)
     {
-    	$this->id = $id;
-    	$this->seat_type = $seat_type;
-    	$this->flightId = $flightId;
-    	$this->customerId = $customerId;
+        $this->id = $id;
+        $this->seat_type = $seat_type;
+        $this->flightId = $flightId;
+        $this->customerId = $customerId;
     }
 }

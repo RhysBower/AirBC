@@ -7,7 +7,7 @@ date_default_timezone_set('America/Vancouver');
 
 require  __DIR__ . '/../vendor/autoload.php';
 
-switch($_SERVER['REQUEST_URI']) {
+switch ($_SERVER['REQUEST_URI']) {
     case "/":
         new Airbc\Controllers\HomeController();
         break;

@@ -20,11 +20,13 @@ class Account extends Object
         $this->password = $password;
     }
 
-    public function getPassword() {
+    public function getPassword()
+    {
         return $this->password;
     }
 
-    public function setPassword(string $password) {
+    public function setPassword(string $password)
+    {
         $this->password = password_hash($password, PASSWORD_DEFAULT);
     }
 }

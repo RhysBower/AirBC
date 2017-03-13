@@ -18,7 +18,7 @@ class AccountController extends Controller
 
     public function account()
     {
-        if($this->isLoggedIn()) {
+        if ($this->isLoggedIn()) {
             $this->context['page'] = "account";
 
             $template = $this->twig->load('account.twig');
@@ -30,21 +30,21 @@ class AccountController extends Controller
 
     public function login()
     {
-        if($this->isPublic()) {
+        if ($this->isPublic()) {
             $this->context['page'] = "login";
 
-            if($_SERVER['REQUEST_METHOD'] === "POST" &&
+            if ($_SERVER['REQUEST_METHOD'] === "POST" &&
                 array_key_exists('username', $_POST) &&
                 array_key_exists('password', $_POST)) {
                 $username = $_POST['username'];
                 $password = $_POST['password'];
                 $account = $this->database->getUserAccount($username);
-                if($account === null) {
+                if ($account === null) {
                     // User does not exist
                     $this->displayLoginPage();
                 } else {
                     $verified = password_verify($password, $account->getPassword());
-                    if($verified) {
+                    if ($verified) {
                         $this->logUserIn($account);
                     } else {
                         // Invalid credentials
@@ -66,12 +66,14 @@ class AccountController extends Controller
         setcookie('account', "", time()-1000);
     }
 
-    private function displayLoginPage() {
+    private function displayLoginPage()
+    {
         $template = $this->twig->load('login.twig');
         echo $template->render($this->context);
     }
 
-    private function logUserIn(Account $account) {
+    private function logUserIn(Account $account)
+    {
         $iat = time();
         // Expire token in one week
         $exp = $iat + (7 * 24 * 60 * 60);
@@ -87,7 +89,8 @@ class AccountController extends Controller
         setcookie('account', $jwt, $exp);
     }
 
-    private function verifyJwt($jwt):boolean {
+    private function verifyJwt($jwt):boolean
+    {
         return JWT::decode($jwt, self::KEY, array('HS256'));
     }
 }
