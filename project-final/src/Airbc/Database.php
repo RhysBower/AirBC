@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 namespace Airbc;
 
+use Airbc\Log;
 use Airbc\MySQL\MySQL;
 use Airbc\MySQL\MySQLException;
 
@@ -10,13 +11,10 @@ use Airbc\MySQL\MySQLException;
  */
 class Database extends Object
 {
-    private $logger;
     private $mysql;
 
-    public function __construct(\Psr\Log\LoggerInterface $logger)
+    public function __construct()
     {
-        $this->logger = $logger;
-
         try {
             $this->mysql = new MySQL('localhost', 'root', 'root', 'cpsc304');
             $this->mysql->connect();
@@ -25,7 +23,7 @@ class Database extends Object
             die('Connect Error (' . $e->getCode() . ') ' . $e->getMessage());
         }
 
-        $logger->info('Connected to MySQL: ' . $this->mysql->hostInfo());
+        Log::info('Connected to MySQL: ' . $this->mysql->hostInfo());
     }
 
     /**
@@ -140,18 +138,18 @@ class Database extends Object
 
     public function __destruct()
     {
-        $this->logger->info('Closing MySQL connection');
+        Log::info('Closing MySQL connection');
         $this->mysql->close();
     }
 
     private function logSqlError(MySQLException $e) {
-        $this->logger->alert("Query failed with errno: ".$e->getCode()."\n".$e->getMessage());
+        Log::alert("Query failed with errno: ".$e->getCode()."\n".$e->getMessage());
     }
 
     private function querySingle(string $query, callable $fn) {
         try {
             $result = $this->mysql->query($query);
-            $this->logger->info("$query returned $result->num_rows rows");
+            Log::info("$query returned $result->num_rows rows");
             if ($result->num_rows == 0) {
                 return null;
             }
@@ -173,7 +171,7 @@ class Database extends Object
     private function queryMultiple(string $query, callable $fn) {
         try {
             $result = $this->mysql->query($query);
-            $this->logger->info("$query $result->num_rows rows");
+            Log::info("$query $result->num_rows rows");
             if ($result->num_rows == 0) {
                 return [];
             }
@@ -194,7 +192,7 @@ class Database extends Object
     private function isAccount(string $query): bool {
         try {
             $result = $this->mysql->query($query);
-            $this->logger->info("$query returned $result->num_rows rows");
+            Log::info("$query returned $result->num_rows rows");
             if ($result->num_rows == 0) {
                 return false;
             }
