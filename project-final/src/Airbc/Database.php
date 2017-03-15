@@ -19,7 +19,7 @@ class Database extends Object
             $this->mysql = new MySQL('localhost', 'root', 'root', 'cpsc304');
             $this->mysql->connect();
         } catch (MySQLException $e) {
-            $logger->emergency('Connect Error (' . $e->getCode() . ') ' . $e->getMessage());
+            Log::emergency('Connect Error (' . $e->getCode() . ') ' . $e->getMessage());
             die('Connect Error (' . $e->getCode() . ') ' . $e->getMessage());
         }
 
