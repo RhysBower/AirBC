@@ -49,38 +49,32 @@ class Router extends Object
 
     public function route($url) {
         foreach ($this->routes as $route) {
-            try {
-                $this->validateUrl($url, $route);
+            $request = $this->validateUrl($url, $route);
+            if($request !== null) {
+                $route->getController()($request);
                 return;
-            } catch (Exception $e) {
-
             }
         }
+        // Route not found. Call render 404 page.
         $request = new Request($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI'], []);
         $controller = $this->error404Controller;
         $controller($request);
     }
 
-    private function validateUrl(string $url, Route $route) {
+    private function validateUrl(string $url, Route $route): ?Request {
         if($_SERVER['REQUEST_METHOD'] !== $route->getMethod()) {
-            throw new Exception("Invalid Method");
+            return null;
         }
-        try {
-            $request = Router::urlToRouter($route->getMethod(), $url, $route->getUrl());
-            $route->getController()($request);
-            //call_user_func($route->getController(), $request);
-        } catch (Exception $e) {
-            throw new Exception("URL didn't match");
-        }
+        return Router::urlToRouter($route, $url);
     }
 
-    public static function urlToRouter(string $method, string $url, string $route): Request
+    public static function urlToRouter(Route $route, string $url): ?Request
     {
         $urlExplode = explode('/', $url);
-        $routeExplode = explode('/', $route);
+        $routeExplode = explode('/', $route->getUrl());
 
         if(count($urlExplode) !== count($routeExplode)) {
-            throw new Exception("url and route length don't match");
+            return null;
         }
 
         $params = [];
@@ -90,10 +84,10 @@ class Router extends Object
                 (mb_substr($routeExplode[$i], -1) === '}')) {
                 $params[mb_substr($routeExplode[$i], 1, -1)] = $urlExplode[$i];
             } else if ($routeExplode[$i] !== $urlExplode[$i]) {
-                throw new Exception("url part doesn't match");
+                return null;
             }
          }
 
-        return new Request($method, $url, $params);
+        return new Request($route->getMethod(), $url, $params);
     }
 }

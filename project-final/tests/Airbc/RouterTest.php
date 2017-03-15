@@ -2,38 +2,44 @@
 
 use PHPUnit\Framework\TestCase;
 use Airbc\Router\Router;
+use Airbc\Router\Route;
 use Airbc\Router\Request;
+use Airbc\Router\HttpVerb;
 
 final class RouterTest extends TestCase
 {
     public function testSimpleUrl()
     {
-        $route = Router::urlToRouter('/', '/');
-        $expected = new Request('/', []);
+        $route = new Route(HttpVerb::GET, '/', function (Request $request) {});
+        $request = Router::urlToRouter($route, '/');
+        $expected = new Request(HttpVerb::GET, '/', []);
 
-        $this->assertEquals($expected, $route);
+        $this->assertEquals($expected, $request);
     }
 
     public function testParam()
     {
-        $route = Router::urlToRouter('/flights/1024', '/flights/{id}');
-        $expected = new Request('/flights/1024', ['id' => 1024]);
+        $route = new Route(HttpVerb::GET, '/flights/{id}', function (Request $request) {});
+        $request = Router::urlToRouter($route, '/flights/1024');
+        $expected = new Request(HttpVerb::GET, '/flights/1024', ['id' => 1024]);
 
-        $this->assertEquals($expected, $route);
+        $this->assertEquals($expected, $request);
     }
 
     public function testMultipleParams()
     {
-        $route = Router::urlToRouter('/flights/1024/tickets/1', '/flights/{id}/tickets/{tid}');
-        $expected = new Request('/flights/1024/tickets/1', ['id' => 1024, 'tid' => 1]);
+        $route = new Route(HttpVerb::GET, '/flights/{id}/tickets/{tid}', function (Request $request) {});
+        $request = Router::urlToRouter($route, '/flights/1024/tickets/1');
+        $expected = new Request(HttpVerb::GET, '/flights/1024/tickets/1', ['id' => 1024, 'tid' => 1]);
 
-        $this->assertEquals($expected, $route);
+        $this->assertEquals($expected, $request);
     }
 
     public function testInvalidUrl()
     {
-        $this->expectException(Exception::class);
+        $route = new Route(HttpVerb::GET, '/flights', function (Request $request) {});
+        $request = Router::urlToRouter($route, '/flights/1024');
 
-        $route = Router::urlToRouter('/flights/1024', '/flights');
+        $this->assertNull($request);
     }
 }
