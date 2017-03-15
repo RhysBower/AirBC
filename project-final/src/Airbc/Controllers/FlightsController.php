@@ -6,9 +6,8 @@ namespace Airbc\Controllers;
  */
 class FlightsController extends Controller
 {
-    public function __construct()
+    public function flights()
     {
-        parent::__construct();
         $this->context['page'] = "flights";
         $this->context['flights'] = $this->database->getFlights();
 

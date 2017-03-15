@@ -6,9 +6,7 @@ namespace Airbc\Controllers;
  */
 class HomeController extends Controller
 {
-    public function __construct()
-    {
-        parent::__construct();
+    public function home() {
         $this->context['page'] = "home";
         $this->context['accounts'] = $this->database->getAccounts();
 

@@ -8,12 +8,14 @@ class Route extends Object
     private $method;
     private $url;
     private $controller;
+    private $callback;
 
-    public function __construct(string $method, string $url, callable $controller)
+    public function __construct(string $method, string $url, $controller, $callback)
     {
         $this->method = $method;
         $this->url = $url;
         $this->controller = $controller;
+        $this->callback = $callback;
     }
 
     public function getMethod() {
@@ -26,5 +28,9 @@ class Route extends Object
 
     public function getController() {
         return $this->controller;
+    }
+
+    public function getCallback() {
+        return $this->callback;
     }
 }

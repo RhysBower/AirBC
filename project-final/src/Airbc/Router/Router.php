@@ -13,33 +13,33 @@ class Router extends Object
         $routes = [];
     }
 
-    public function get(string $url, callable $controller)
+    public function get(string $url, $controller, $callback)
     {
-        $this->add(HttpVerb::GET, $url, $controller);
+        $this->add(HttpVerb::GET, $url, $controller, $callback);
     }
 
-    public function post(string $url, callable $controller)
+    public function post(string $url, $controller, $callback)
     {
-        $this->add(HttpVerb::POST, $url, $controller);
+        $this->add(HttpVerb::POST, $url, $controller, $callback);
     }
 
-    public function put(string $url, callable $controller)
+    public function put(string $url, $controller, $callback)
     {
-        $this->add(HttpVerb::PUT, $url, $controller);
+        $this->add(HttpVerb::PUT, $url, $controller, $callback);
     }
 
-    public function patch(string $url, callable $controller)
+    public function patch(string $url, $controller, $callback)
     {
         $this->add(HttpVerb::PATCH, $url, $controller);
     }
 
-    public function delete(string $url, callable $controller)
+    public function delete(string $url, $controller, $callback)
     {
-        $this->add(HttpVerb::DELETE, $url, $controller);
+        $this->add(HttpVerb::DELETE, $url, $controller, $callback);
     }
 
-    public function add(string $method, string $url, callable $controller) {
-        $route = new Route($method, $url, $controller);
+    public function add(string $method, string $url, $controller, $callback) {
+        $route = new Route($method, $url, $controller, $callback);
         $this->routes[] = $route;
     }
 
@@ -51,7 +51,9 @@ class Router extends Object
         foreach ($this->routes as $route) {
             $request = $this->validateUrl($url, $route);
             if($request !== null) {
-                $route->getController()($request);
+                $c = $route->getController();
+                $ctr = new $c();
+                call_user_func_array([$ctr, $route->getCallback()], $request->getParams());
                 return;
             }
         }

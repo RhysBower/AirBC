@@ -19,37 +19,15 @@ class App extends Object
     private function setupRoutes() {
         $router = new Router();
 
-        $router->get("/", function (Request $request) {
-            new Controllers\HomeController();
-        });
-        $router->get("/routes", function (Request $request) {
-            new Controllers\RoutesController();
-        });
-        $router->get("/flights", function (Request $request) {
-            new Controllers\FlightsController();
-        });
-        $router->get("/airports", function (Request $request) {
-            new Controllers\AirportsController();
-        });
-        $router->get("/tickets", function (Request $request) {
-            new Controllers\TicketsController();
-        });
-        $router->get("/login", function (Request $request) {
-            $controller = new Controllers\AccountController();
-            $controller->login();
-        });
-        $router->post("/login", function (Request $request) {
-            $controller = new Controllers\AccountController();
-            $controller->login();
-        });
-        $router->get("/logout", function (Request $request) {
-            $controller = new Controllers\AccountController();
-            $controller->logout();
-        });
-        $router->get("/account", function (Request $request) {
-            $controller = new Controllers\AccountController();
-            $controller->account();
-        });
+        $router->get("/", Controllers\HomeController::class, 'home');
+        $router->get("/routes", Controllers\RoutesController::class, 'routes');
+        $router->get("/flights", Controllers\FlightsController::class, 'flights');
+        $router->get("/airports", Controllers\AirportsController::class, 'airports');
+        $router->get("/tickets", Controllers\TicketsController::class, 'tickets');
+        $router->get("/login", Controllers\AccountController::class, 'login');
+        $router->post("/login", Controllers\AccountController::class, 'login');
+        $router->get("/logout", Controllers\AccountController::class, 'logout');
+        $router->get("/account", Controllers\AccountController::class, 'account');
 
         $router->error404(function (Request $request) {
             new Controllers\Error404Controller();

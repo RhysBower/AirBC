@@ -6,9 +6,8 @@ namespace Airbc\Controllers;
  */
 class RoutesController extends Controller
 {
-    public function __construct()
+    public function routes()
     {
-        parent::__construct();
         $this->context['page'] = "routes";
         $this->context['routes'] = $this->database->getRoutes();
 
