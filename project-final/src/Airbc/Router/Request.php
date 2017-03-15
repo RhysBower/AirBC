@@ -3,17 +3,17 @@ namespace Airbc\Router;
 
 use Airbc\Object;
 
-class Route extends Object
+class Request extends Object
 {
     private $method;
     private $url;
-    private $controller;
+    private $params;
 
-    public function __construct(string $method, string $url, callable $controller)
+    public function __construct(string $method, string $url, array $params)
     {
         $this->method = $method;
         $this->url = $url;
-        $this->controller = $controller;
+        $this->params = $params;
     }
 
     public function getMethod() {
@@ -24,7 +24,7 @@ class Route extends Object
         return $this->url;
     }
 
-    public function getController() {
-        return $this->controller;
+    public function getParams() {
+        return $this->params;
     }
 }
