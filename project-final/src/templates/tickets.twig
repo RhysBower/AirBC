@@ -2,7 +2,14 @@
 
 {% block content %}
 <div class="container">
-  <h2>Tickets:</h2>
+  <h2>Tickets:
+    {% if currentUser is null %}
+      <button class="btn" type="submit" style="float: right" disabled>Book Tickets</button>
+    {% else %}
+      <button class="btn" type="submit" style="float: right">Book Tickets</button>
+    {% endif %}
+  </h2>
+
   {% if tickets|length == 0 %}
       <div class="well">No tickets were found.</div>
   {% else %}
