@@ -1,0 +1,33 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<link rel="stylesheet" href="css/custom.css">
+<div class="container">
+  <form class="form-signin" action="/login" method="post">
+    <h2 class="form-signin-heading">Book your trip here!</h2>
+    
+    <div class="col-xs-2" id="from">
+        <input class="form-control" type="text" placeholder="FROM" required>
+        <select id="departure">
+            {% for airport in airports %}
+                <option value="{{ airport.name }}">{{ airport.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="col-xs-2" id="to">
+        <input class="form-control" type="text" placeholder="TO" required>
+        <select id="arrival">
+            {% for airport in airports %}
+                <option value="{{ airport.name }}">{{ airport.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="col-xs-2">
+        <input class="form-control" id="passengers" type="text" placeholder="PASSENGERS" required>
+    </div>
+    
+  </form>
+</div>
+{% endblock %}

@@ -14,4 +14,14 @@ class TicketsController extends Controller
         $template = $this->twig->load('tickets.twig');
         echo $template->render($this->context);
     }
+
+    public function bookTicket()
+    {
+    	$this->context['page'] = "bookTicket";
+    	$this->context['airports'] = $this->database->getAirports();
+    	
+    	$template = $this->twig->load('bookTicket.twig');
+        echo $template->render($this->context);
+    }
+
 }
