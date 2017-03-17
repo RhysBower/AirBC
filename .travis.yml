@@ -1,0 +1,7 @@
+language: php
+php:
+  - '7.1'
+before_install: cd project-final
+script:
+  - composer install
+  - composer run test
