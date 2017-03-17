@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/RhysBower/cpsc304.svg?token=cm6Nzqyz7grR6yRfgy4q&branch=master)](https://travis-ci.com/RhysBower/cpsc304)
 # Set Up for Project
 
 Clone this repo.
