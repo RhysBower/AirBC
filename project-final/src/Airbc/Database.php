@@ -124,6 +124,15 @@ class Database extends Object
             return new Model\Airport((string)$row->id, (string)$row->name, (string)$row->location);
         });
     }
+    // General search of airports
+    public function getAirportsSearch(string $query): array // why can't I overload methods :(
+    {
+        return $this->queryMultiple("SELECT * FROM Airport
+            WHERE (`id` LIKE '%".$query."%') OR (`name` LIKE '%".$query."%') OR (`location` LIKE '%".$query."%')",
+            function($row){
+                return new Model\Airport((string)$row->id, (string)$row->name, (string)$row->location);
+            });
+    }
 
     /**
      * Returns array of Tickets or empty array if no Tickets are found.

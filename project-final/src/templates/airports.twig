@@ -3,6 +3,13 @@
 {% block content %}
 <div class="container">
   <h2>Airports:</h2>
+
+  <form id="query-airport" action="/airports" method="get"> <!-- redirects to /airports?query_airports=... which is 404 -->
+    <input type="text" name="query_airports" placeholder="Search ...">
+    <button class="btn" type="submit">Search</button>
+  </form>
+
+  <br>
   {% if airports|length == 0 %}
       <div class="well">No airports were found.</div>
   {% else %}
@@ -16,7 +23,7 @@
     </thead>
     <tbody>
       {% for airport in airports %}
-         <tr>
+         <tr href="/airports/{{airport.id}}">
           <td>{{airport.id}}</td>
           <td>{{airport.name}}</td>
           <td>{{airport.location}}</td>
