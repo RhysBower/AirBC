@@ -15,7 +15,7 @@
         </select>
     </div>
 
-    <div class="col-xs-2" id="to">
+    <div class="col-xs-2" id="toForm">
         <input class="form-control" type="text" placeholder="TO" required>
         <select id="arrival">
             {% for airport in airports %}
@@ -27,6 +27,8 @@
     <div class="col-xs-2">
         <input class="form-control" id="passengers" type="text" placeholder="PASSENGERS" required>
     </div>
+
+    <button class="btn" type="submit" id="bookingButton">Book!</button> <!-- This doesn't lead anywhere meaningful yet-->
     
   </form>
 </div>

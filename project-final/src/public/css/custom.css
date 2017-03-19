@@ -3,3 +3,20 @@
 	margin-top: 10px;
 }
 
+#toForm {
+	margin-top: 20px;
+}
+
+#arrival, #departure {
+	margin-top: 10px;
+}
+
+#passengers {
+	margin-top: 20px;
+}
+
+#bookingButton {
+	margin-top: 20px;
+	margin-left: 15px;
+}
+
