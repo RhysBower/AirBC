@@ -14,4 +14,15 @@ class FlightsController extends Controller
         $template = $this->twig->load('flights.twig');
         echo $template->render($this->context);
     }
+
+    public function getFlight($id)
+    {
+        $this->context['page'] = "flights";
+        $flight = [];       
+        $flight[] = $this->database->getFlight(intval($id));
+        $this->context['flights'] = $flight;
+
+        $template = $this->twig->load('flights.twig');
+        echo $template->render($this->context);
+    }
 }

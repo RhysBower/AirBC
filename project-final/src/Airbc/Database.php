@@ -113,7 +113,17 @@ class Database extends Object
         });
     }
 
-    // TODO: getFlight(...)
+    /**
+     * Returns a Flight with id.
+     */
+    public function getFlight(int $id): ?Model\Flight
+    {
+        return $this->querySingle("SELECT * FROM Flight WHERE id=$id", function($row) {
+            $date = new \DateTime($row->date_time);
+            $res = $date->format('h:i A, F d, Y');
+            return new Model\Flight((int)$row->id, (string)$res, (string)$row->assigned, (string)$row->arrival, (string)$row->departure);
+        });
+    }
 
     /**
      * Returns array of Airports or empty array if no Airports are found.
