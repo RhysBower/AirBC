@@ -24,4 +24,18 @@ class TicketsController extends Controller
         echo $template->render($this->context);
     }
 
+    public function getTicket($id)
+    {
+        $this->context['page'] = "tickets";
+        $resultTicket = [];       
+        $ticket = $this->database->getTicket(intval($id));
+        if (!is_null($ticket))
+            $resultTicket[] = $ticket;
+        
+        $this->context['tickets'] = $resultTicket;
+
+        $template = $this->twig->load('tickets.twig');
+        echo $template->render($this->context);
+    }
+
 }

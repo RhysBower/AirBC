@@ -114,7 +114,7 @@ class Database extends Object
     }
 
     /**
-     * Returns a Flight with id.
+     * Returns a Flight with id or null if not found.
      */
     public function getFlight(int $id): ?Model\Flight
     {
@@ -150,6 +150,17 @@ class Database extends Object
     public function getTickets(): array
     {
         return $this->queryMultiple("SELECT * FROM Ticket", function($row) {
+            return new Model\Ticket((string)$row->id, (string)$row->seat_type, (string)$row->flightId,
+                (string)$row->customerId);
+        });
+    }
+
+    /**
+     * Returns a Ticket with id or null if not found.
+     */
+    public function getTicket(int $id): ?Model\Ticket
+    {
+        return $this->querySingle("SELECT * FROM Ticket WHERE id=$id", function($row) {
             return new Model\Ticket((string)$row->id, (string)$row->seat_type, (string)$row->flightId,
                 (string)$row->customerId);
         });

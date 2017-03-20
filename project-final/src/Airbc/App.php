@@ -25,6 +25,7 @@ class App extends Object
         $router->get("/flights/{id}", Controllers\FlightsController::class, 'getFlight');
         $router->get("/airports", Controllers\AirportsController::class, 'airports');
         $router->get("/tickets", Controllers\TicketsController::class, 'tickets');
+        $router->get("/tickets/{id}", Controllers\TicketsController::class, 'getTicket');
         $router->get("/bookTicket", Controllers\TicketsController::class, 'bookTicket'); // URI should be "/tickets/book"
         $router->get("/login", Controllers\AccountController::class, 'login');
         $router->post("/login", Controllers\AccountController::class, 'login');
