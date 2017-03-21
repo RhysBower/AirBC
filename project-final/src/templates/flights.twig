@@ -11,18 +11,18 @@
   <div>
     <form class="form-inline" action="/flights/search" method="get">
     <datalist id="browsers">
-          {% set airports = [] %}
-          {% for flight in flights %}
-            {% if flight.departure not in airports %}
-              {% set airports = airports|merge([flight.departure]) %}
-              <option value={{flight.departure}}>
-            {% endif %}
-            {% if flight.arrival not in airports %}
-              {% set airports = airports|merge([flight.arrival]) %}
-              <option value={{flight.arrival}}>
-            {% endif %}
-          {% endfor %}
-        </datalist>
+      {% set airports = [] %}
+      {% for flight in flights %}
+        {% if flight.departure not in airports %}
+          {% set airports = airports|merge([flight.departure]) %}
+          <option value={{flight.departure}}>
+        {% endif %}
+        {% if flight.arrival not in airports %}
+          {% set airports = airports|merge([flight.arrival]) %}
+          <option value={{flight.arrival}}>
+        {% endif %}
+      {% endfor %}
+    </datalist>
       <label><h4>From: </h4></label>
       <input class="form-control" type="text" list="browsers" name="from" placeholder="YVR">
         

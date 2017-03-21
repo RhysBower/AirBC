@@ -1,11 +1,36 @@
 {% extends "base.twig" %}
 
 {% block content %}
+<link rel="stylesheet" href="css/custom.css">
+
 <div class="container">
   <h2>Routes:</h2>
   {% if routes|length == 0 %}
       <div class="well">No routes were found.</div>
   {% else %}
+  <div>
+    <form class="form-inline" action="/routes/search" method="get">
+    <datalist id="browsers">
+      {% set airports = [] %}
+      {% for route in routes %}
+        {% if route.departure not in airports %}
+          {% set airports = airports|merge([route.departure]) %}
+          <option value={{route.departure}}>
+        {% endif %}
+        {% if route.arrival not in airports %}
+          {% set airports = airports|merge([route.arrival]) %}
+          <option value={{route.arrival}}>
+        {% endif %}        
+      {% endfor %}
+    </datalist>
+      <label><h4>From: </h4></label>
+      <input class="form-control" type="text" list="browsers" name="from" placeholder="YVR">
+        
+      <label><h4>To: </h4></label>
+      <input class="form-control" type="text" list="browsers" name="to" placeholder="YYJ">
+      <input class="btn btn-primary" type="submit" value="Search">
+    </form>
+  </div>
   <table class="table table-hover">
     <thead>
       <tr>
