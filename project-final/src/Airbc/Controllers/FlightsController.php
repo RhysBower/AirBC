@@ -1,6 +1,8 @@
 <?php declare(strict_types=1);
 namespace Airbc\Controllers;
 
+use Airbc\Log;
+
 /**
  * Controller for the Flights page.
  */
@@ -26,6 +28,15 @@ class FlightsController extends Controller
         $this->context['flights'] = $resultFlight;
 
         $template = $this->twig->load('flights.twig');
+        echo $template->render($this->context);
+    }
+
+    public function getFlightsOnRoute($departure, $arrival)
+    {
+    	$this->context['page'] = "flights";
+    	$this->context['flights'] = $this->database->getFlightsOnRoute($departure, $arrival);
+        
+    	$template = $this->twig->load('flights.twig');
         echo $template->render($this->context);
     }
 }
