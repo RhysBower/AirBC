@@ -46,6 +46,8 @@ final class RouterTest extends TestCase
 
     public function testGet()
     {
+        include 'RouterTestController.php';
+        $_SERVER['REQUEST_METHOD'] = 'GET';
         $router = new Router();
         $router->get("/routes", RouterTestController::class, 'method');
         $router->route("/routes");
