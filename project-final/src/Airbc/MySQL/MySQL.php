@@ -2,6 +2,7 @@
 namespace Airbc\MySQL;
 
 use Airbc\Object;
+use Airbc\MySQL\MySQLException;
 use mysqli;
 
 class MySQL extends Object

@@ -43,4 +43,11 @@ final class RouterTest extends TestCase
 
         $this->assertNull($request);
     }
+
+    public function testGet()
+    {
+        $router = new Router();
+        $router->get("/routes", RouterTestController::class, 'method');
+        $router->route("/routes");
+    }
 }
