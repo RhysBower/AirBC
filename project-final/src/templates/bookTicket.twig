@@ -7,7 +7,8 @@
     <h2 class="form-signin-heading">Book your trip here!</h2>
     
     <div class="col-xs-2" id="from">
-        <input class="form-control" type="text" placeholder="FROM" required>
+        <label><h4>From: </h4></label>
+        <input class="form-control" type="text" placeholder="YVR" required>
         <select id="departure">
             {% for airport in airports %}
                 <option value="{{ airport.name }}">{{ airport.name }}</option>
@@ -16,7 +17,8 @@
     </div>
 
     <div class="col-xs-2" id="toForm">
-        <input class="form-control" type="text" placeholder="TO" required>
+        <label><h4>To: </h4></label>
+        <input class="form-control" type="text" placeholder="YYJ" required>
         <select id="arrival">
             {% for airport in airports %}
                 <option value="{{ airport.name }}">{{ airport.name }}</option>
@@ -26,6 +28,8 @@
 
     <div class="col-xs-2">
         <input class="form-control" id="passengers" type="text" placeholder="PASSENGERS" required>
+        <input class="form-control" id="depart" type="text" placeholder="DEPART" required>
+        <input class="form-control" id="return" type="text" placeholder="RETURN" required>
     </div>
 
     <button class="btn" type="submit" id="bookingButton">Book!</button> <!-- This doesn't lead anywhere meaningful yet-->
