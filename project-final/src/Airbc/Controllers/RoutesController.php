@@ -14,4 +14,18 @@ class RoutesController extends Controller
         $template = $this->twig->load('routes.twig');
         echo $template->render($this->context);
     }
+
+    public function getRoute($departure, $arrival)
+    {
+    	$this->context['page'] = "routes";
+        $resultRoute = [];
+        $route = $this->database->getRoute($departure, $arrival);
+        if (!is_null($route))
+            $resultRoute[] = $route;
+
+        $this->context['routes'] = $resultRoute;
+
+        $template = $this->twig->load('routes.twig');
+        echo $template->render($this->context);
+    }
 }

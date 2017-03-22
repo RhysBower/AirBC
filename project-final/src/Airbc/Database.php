@@ -126,6 +126,18 @@ class Database extends Object
     }
 
     /**
+     * Returns array of Flights on Route or empty array if no Flights are found.
+     */
+    public function getFlightsOnRoute(string $departure, string $arrival): array
+    {
+        return $this->queryMultiple("SELECT * FROM Flight WHERE arrival='$arrival' AND departure='$departure'", function($row) {
+            $date = new \DateTime($row->date_time);
+            $res = $date->format('h:i A, F d, Y');
+            return new Model\Flight((int)$row->id, (string)$res, (string)$row->assigned, (string)$row->arrival, (string)$row->departure);
+        });
+    }
+
+    /**
      * Returns array of Airports or empty array if no Airports are found.
      */
     public static function getAirports(): array
