@@ -25,7 +25,11 @@ class App extends Object
         $router->get("/flights", Controllers\FlightsController::class, 'flights');
         $router->get("/flights/{id}", Controllers\FlightsController::class, 'getFlight');
         $router->get("/flights/search/from/{departure}/to/{arrival}", Controllers\FlightsController::class, 'getFlightsOnRoute');
+
         $router->get("/airports", Controllers\AirportsController::class, 'airports');
+        $router->get("/airports/add", Controllers\AirportsController::class, 'renderAddAirportPage');
+        $router->get("/airports/add/{id}/{name}/{location}", Controllers\AirportsController::class, 'addAirport');
+
         $router->get("/tickets", Controllers\TicketsController::class, 'tickets');
         $router->get("/tickets/{id}", Controllers\TicketsController::class, 'getTicket');
         $router->get("/bookTicket", Controllers\TicketsController::class, 'bookTicket'); // URI should be "/tickets/book"

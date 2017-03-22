@@ -2,7 +2,13 @@
 
 {% block content %}
 <div class="container">
-  <h2>Airports:</h2>
+  <h2>Airports:
+    {% if currentUser is null %}
+      <button class="btn" type="submit" style="float: right" disabled>Add Airport</button>
+    {% else %}
+      <a class="btn" type="submit" style="float: right" href="/airports/add"">Add Airport</a>
+    {% endif %}
+  </h2>
 
   <form id="query-airport" action="/airports" method="get"> <!-- redirects to /airports?query_airports=... which is 404 -->
     <input type="text" name="query_airports" placeholder="Search ...">

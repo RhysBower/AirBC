@@ -20,4 +20,24 @@ class AirportsController extends Controller
         $template = $this->twig->load('airports.twig');
         echo $template->render($this->context);
     }
+
+    public function renderAddAirportPage()
+    {
+        $this->context['page'] = "airports"; // ??? works without
+        $this->context['airports'] = $this->database->getAirports();
+
+        $template = $this->twig->load('airports_add.twig');
+        echo $template->render($this->context);
+    }
+
+    public function addAirport($id, $name, $location)
+    {
+        $this->database->addAirport($id, $name, $location);
+
+        $this->context['page'] = "airports";
+        $this->context['airports'] = $this->database->getAirports();
+
+        $template = $this->twig->load('airports.twig');
+        echo $template->render($this->context);
+    }
 }
