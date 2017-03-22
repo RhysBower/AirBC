@@ -4,5 +4,30 @@
 <div class="container">
   <h2>Account page for {{currentUser.name}}</h2>
   <a class="btn btn-danger" href="/logout" role="button">Logout</a>
+  <form action="/account" method="post">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="name" class="form-control" id="name" value="{{currentUser.name}}">
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" id="name" value="{{currentUser.email}}">
+    </div>
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="username" class="form-control" id="name" value="{{currentUser.username}}">
+    </div>
+    {% if currentUser.isStaff() %}
+      <p>I'm staff</p>
+    {% endif %}
+    <button type="submit" class="btn btn-primary">Update Account</button>
+  </form>
+  <form action="/account/password" method="post">
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password">
+    </div>
+    <button type="submit" class="btn btn-danger">Change Password</button>
+  </form>
 </div>
 {% endblock %}
