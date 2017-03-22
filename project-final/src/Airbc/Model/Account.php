@@ -2,6 +2,7 @@
 namespace Airbc\Model;
 
 use Airbc\Object as Object;
+use Airbc\Database;
 
 class Account extends Object
 {
@@ -28,5 +29,15 @@ class Account extends Object
     public function setPassword(string $password)
     {
         $this->password = password_hash($password, PASSWORD_DEFAULT);
+    }
+
+    public function isCustomer(): bool
+    {
+        return Database::isCustomer($this->id);
+    }
+
+    public function isStaff(): bool
+    {
+        return Database::isStaff($this->id);
     }
 }
