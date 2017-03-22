@@ -10,7 +10,7 @@ class TicketsController extends Controller
     {
         $this->context['page'] = "tickets";
         $this->context['tickets'] = $this->database->getTickets();
-
+        
         $template = $this->twig->load('tickets.twig');
         echo $template->render($this->context);
     }
@@ -19,6 +19,7 @@ class TicketsController extends Controller
     {
     	$this->context['page'] = "bookTicket";
     	$this->context['airports'] = $this->database->getAirports();
+        $this->context['flights'] = $this->database->getFlights();
     	
     	$template = $this->twig->load('bookTicket.twig');
         echo $template->render($this->context);
