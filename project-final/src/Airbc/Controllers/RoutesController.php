@@ -10,6 +10,7 @@ class RoutesController extends Controller
     {
         $this->context['page'] = "routes";
         $routes = $this->database->getRoutes();
+        $routeAirports = [];
         foreach ($routes as $route) {
             $departureArrival = $route->getDepartureArrival();
             if (!is_null($departureArrival))

@@ -47,17 +47,30 @@
         <td>Date</td>
         <td>Assigned Aircraft</td>
         <td>Arrival Airport</td>
+        <td>Name</td>
         <td>Departure Airport</td>
+        <td>Name</td>
       </tr>
     </thead>
     <tbody>
       {% for flight in flights %}
+        {% set departureArrival = flightAirports[loop.index0] %}  
          <tr>
           <td>{{flight.id}}</td>
           <td>{{flight.datetime}}</td>
           <td>{{flight.assigned}}</td>
           <td>{{flight.arrival}}</td>
+          {% if departureArrival is not null %}
+            <td>{{departureArrival.arrival.name}}</td>
+          {% else %}
+            <td></td>
+          {% endif %} 
           <td>{{flight.departure}}</td>
+          {% if departureArrival is not null %}
+            <td>{{departureArrival.departure.name}}</td>
+          {% else %}
+            <td></td>
+          {% endif %}
         </tr>
       {% endfor %}
     </tbody>

@@ -2,6 +2,7 @@
 namespace Airbc\Model;
 
 use Airbc\Object as Object;
+use Airbc\Database;
 
 class Flight extends Object
 {
@@ -18,5 +19,18 @@ class Flight extends Object
         $this->assigned = $assigned;
         $this->arrival = $arrival;
         $this->departure = $departure;
+    }
+
+    /**
+     * Returns a DepartureArrival object or null if any airport is not found.
+     */
+    public function getDepartureArrival(): ?DepartureArrival
+    {
+        $departureAirport = Database::getAirport($this->departure);
+        $arrivalAirport = Database::getAirport($this->arrival);
+        if (is_null($departureAirport) or is_null($arrivalAirport))
+            return null;
+        else
+            return new DepartureArrival($departureAirport, $arrivalAirport);
     }
 }
