@@ -157,6 +157,16 @@ class Database extends Object
     }
 
     /**
+     * Returns an Airport with given id or null if no Airport is found.
+     */
+    public static function getAirport(string $id): ?Model\Airport
+    {
+        return self::querySingle("SELECT * FROM Airport WHERE id='$id'", function($row) {
+            return new Model\Airport((string)$row->id, (string)$row->name, (string)$row->location);
+        });
+    }
+
+    /**
      * Returns array of Tickets or empty array if no Tickets are found.
      */
     public static function getTickets(): array
