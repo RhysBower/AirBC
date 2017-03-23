@@ -33,9 +33,7 @@ class App extends Object
         
         $router->get("/tickets", Controllers\TicketsController::class, 'tickets');
         $router->get("/tickets/book", Controllers\TicketsController::class, 'bookTicket');
-        $router->post("/tickets/book", Controllers\TicketsController::class, 'addTicket');
         $router->get("/tickets/{id}", Controllers\TicketsController::class, 'getTicket'); //TODO
-        
         $router->get("/login", Controllers\AccountController::class, 'login');
         $router->post("/login", Controllers\AccountController::class, 'login');
         $router->get("/logout", Controllers\AccountController::class, 'logout');
