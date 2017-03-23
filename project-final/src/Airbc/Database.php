@@ -166,6 +166,22 @@ class Database extends Object
         });
     }
 
+    // Inserts an airport, and returns list view back
+    public static function addAirport(string $id, string $name, string $location): array
+    {
+        return self::queryMultiple("INSERT INTO Airport (id, name, location) VALUES
+            ('$id','$name','$location')", function($row) {
+            return new Model\Airport((string)$row->id, (string)$row->name, (string)$row->location);
+        });
+    }
+    // Removes an airport, and returns list view back
+    public static function removeAirport(string $id): array
+    {
+        return self::queryMultiple("DELETE FROM Airport WHERE id='$id'", function($row) {
+            return new Model\Airport((string)$row->id, (string)$row->name, (string)$row->location);
+        });
+    }
+
     /**
      * Returns array of Tickets or empty array if no Tickets are found.
      */
