@@ -23,18 +23,14 @@ class AirportsController extends Controller
 
     public function renderAddAirportPage()
     {
-        //TODO: each endpoint that is not supposed to be accessed by public needs to have a guard
         if($this->isStaff()){
-            echo 'hi';
+            $this->context['page'] = "airports";
+            // $this->context['airports'] = $this->database->getAirports();
+            $template = $this->twig->load('airports_add.twig');
+            echo $template->render($this->context);
         } else {
             $this->renderForbidden();
         }
-        echo 'fail';
-
-        // $this->context['page'] = "airports"; // ??? works without
-        // $this->context['airports'] = $this->database->getAirports();
-        // $template = $this->twig->load('airports_add.twig');
-        // echo $template->render($this->context);
     }
 
     public function addAirport()
@@ -42,6 +38,7 @@ class AirportsController extends Controller
         // check if user is staff. 
         if($this->isStaff()) {
             $this->context['page'] = "airports";
+            
             if (array_key_exists('id', $_POST) && $_POST['id'] !== "" &&
                 array_key_exists('name', $_POST) && $_POST['name'] !== "" &&
                 array_key_exists('location', $_POST) && $_POST['location'] !== "") {
@@ -55,7 +52,7 @@ class AirportsController extends Controller
             } else {
                 // render error
                 $this->context['error'] = "Please fill in all the fields!";
-                $this->context['airports'] = $this->database->getAirports();
+                // $this->context['airports'] = $this->database->getAirports();
                 $template = $this->twig->load('airports_add.twig');
                 echo $template->render($this->context);
             }
