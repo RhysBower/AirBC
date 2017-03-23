@@ -59,6 +59,9 @@ class Controller extends Object
     public function isCustomer(): bool
     {
         try {
+            if($this->currentUser === null ) {
+                return false;
+            }
             $id = $this->currentUser->id;
             $isCustomer = $this->database->isCustomer($id);
             return $isCustomer;
@@ -71,6 +74,9 @@ class Controller extends Object
     public function isLoyaltyMember(): bool
     {
         try {
+            if($this->currentUser === null ) {
+                return false;
+            }
             $id = $this->currentUser->id;
             $isLoyaltyMember = $this->database->isLoyaltyMember($id);
             return $isLoyaltyMember;
@@ -83,8 +89,8 @@ class Controller extends Object
     public function isStaff(): bool
     {
         try {
-            if($this->currentUser[0]->id === null ) {
-                throw false;
+            if($this->currentUser === null ) {
+                return false;
             }
             $id = $this->currentUser->id;
             $isStaff = $this->database->isStaff($id);
