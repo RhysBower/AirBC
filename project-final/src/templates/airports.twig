@@ -3,10 +3,8 @@
 {% block content %}
 <div class="container">
   <h2>Airports:
-    {% if currentUser is null %}
-      <button class="btn" type="submit" style="float: right" disabled>Add Airport</button>
-    {% else %}
-      <a class="btn" type="submit" style="float: right" href="/airports/add"">Add Airport</a>
+    {% if currentUser.isStaff() %}
+      <a class="btn" type="submit" style="float: right" href="/airports/add">Add Airport</a>
     {% endif %}
   </h2>
 
@@ -18,6 +16,12 @@
   <br>
   {% if airports|length == 0 %}
       <div class="well">No airports were found.</div>
+  {% elseif error is not null %}
+      <div class="alert alert-danger" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        {{error}}
+      </div>
   {% else %}
   <table class="table table-hover">
     <thead>

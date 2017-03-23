@@ -23,6 +23,8 @@ class AirportsController extends Controller
 
     public function renderAddAirportPage()
     {
+        //TODO: each endpoint that is not supposed to be accessed by public needs to have a guard
+
         $this->context['page'] = "airports"; // ??? works without
         $this->context['airports'] = $this->database->getAirports();
 
@@ -30,14 +32,32 @@ class AirportsController extends Controller
         echo $template->render($this->context);
     }
 
-    public function addAirport($id, $name, $location)
+    public function addAirport()
     {
-        $this->database->addAirport($id, $name, $location);
-
-        $this->context['page'] = "airports";
-        $this->context['airports'] = $this->database->getAirports();
-
-        $template = $this->twig->load('airports.twig');
-        echo $template->render($this->context);
+        // check if user is staff. 
+        if($this->isStaff()) {
+            $this->context['page'] = "airports";
+            if (array_key_exists('id', $_POST) && $_POST['id'] !== "" &&
+                array_key_exists('name', $_POST) && $_POST['name'] !== "" &&
+                array_key_exists('location', $_POST) && $_POST['location'] !== "") {
+                // add airport and redirect if successful
+                // else render page with error message
+                $id = $_POST['id'];
+                $name = $_POST['name'];
+                $location = $_POST['location'];
+                $this->database->addAirport($id, $name, $location);
+                header('Location: /airports');    
+            } else {
+                // render error
+                $this->context['error'] = "Please fill in all the fields!";
+                $this->context['airports'] = $this->database->getAirports();
+                $template = $this->twig->load('airports.twig');
+                echo $template->render($this->context);
+            }
+        } else {
+            // If not staff render 403 forbidden page
+            $this->renderForbidden();
+        }
+        
     }
 }
