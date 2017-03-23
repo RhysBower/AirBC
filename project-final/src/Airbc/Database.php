@@ -166,20 +166,19 @@ class Database extends Object
         });
     }
 
-    // Inserts an airport, and returns list view back
+    // Inserts an airport, and returns list view back TODO: return false if cannot insert ???
     public static function addAirport(string $id, string $name, string $location): array
     {
+        Log::emergency('adding...');
         return self::queryMultiple("INSERT INTO Airport (id, name, location) VALUES
             ('$id','$name','$location')", function($row) {
             return new Model\Airport((string)$row->id, (string)$row->name, (string)$row->location);
         });
     }
     // Removes an airport, and returns list view back
-    public static function removeAirport(string $id): array
+    public static function removeAirport(string $id): void
     {
-        return self::queryMultiple("DELETE FROM Airport WHERE id='$id'", function($row) {
-            return new Model\Airport((string)$row->id, (string)$row->name, (string)$row->location);
-        });
+        self::querySingle("DELETE FROM Airport WHERE id='$id'", function($row){} );
     }
 
     /**
@@ -282,6 +281,19 @@ class Database extends Object
         } catch (MySQLException $e) {
             self::logSqlError($e);
             return [];
+        }
+    }
+
+    private static function queryModify(string $query, callable $fn) {
+        try {
+            // $result =
+            self::$mysql->query($query);
+            // $result->close();
+
+            return true;
+        } catch (MySQLException $e) {
+            self::logSqlError($e);
+            return $e;
         }
     }
 }

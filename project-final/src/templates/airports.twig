@@ -39,8 +39,8 @@
           <td>{{airport.location}}</td>
           {% if currentUser.isStaff() %}
             <td><form action="/airports/{{airport.id}}" method="post">
-                <input type="hidden" name="_method" value="delete">
-                <button class="btn btn-link" type="submit" name="button">Remove</button>
+              <input type="hidden" name="_method" value="delete">
+              <button class="btn btn-link" type="submit" name="button">Remove</button>
             </form></td>
           {% endif %}
         </tr>
