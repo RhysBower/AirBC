@@ -8,14 +8,14 @@ class AirportsController extends Controller
 {
     public function airports()
     {
-    	$query = $_GET['query_airports'];
+    	// $query = $_GET['query_airports'];
 
         $this->context['page'] = "airports";
-        if($query){
-        	$this->context['airports'] = $this->database->getAirportsSearch($query);
-        } else{
+        // if($query){
+        	// $this->context['airports'] = $this->database->getAirportsSearch($query);
+        // } else{
         	$this->context['airports'] = $this->database->getAirports();
-        }
+        // }
 
         $template = $this->twig->load('airports.twig');
         echo $template->render($this->context);
@@ -24,12 +24,17 @@ class AirportsController extends Controller
     public function renderAddAirportPage()
     {
         //TODO: each endpoint that is not supposed to be accessed by public needs to have a guard
+        if($this->isStaff()){
+            echo 'hi';
+        } else {
+            $this->renderForbidden();
+        }
+        echo 'fail';
 
-        $this->context['page'] = "airports"; // ??? works without
-        $this->context['airports'] = $this->database->getAirports();
-
-        $template = $this->twig->load('airports_add.twig');
-        echo $template->render($this->context);
+        // $this->context['page'] = "airports"; // ??? works without
+        // $this->context['airports'] = $this->database->getAirports();
+        // $template = $this->twig->load('airports_add.twig');
+        // echo $template->render($this->context);
     }
 
     public function addAirport()
@@ -64,6 +69,6 @@ class AirportsController extends Controller
     public function removeAirport($id)
     {
         $this->database->removeAirport($id);
-        $this->airports();
+        header('Location: /airports');
     }
 }

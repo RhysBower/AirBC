@@ -83,6 +83,9 @@ class Controller extends Object
     public function isStaff(): bool
     {
         try {
+            if($this->currentUser[0]->id === null ) {
+                throw false;
+            }
             $id = $this->currentUser->id;
             $isStaff = $this->database->isStaff($id);
             return $isStaff;
