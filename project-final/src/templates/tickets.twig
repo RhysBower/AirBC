@@ -3,10 +3,11 @@
 {% block content %}
 <div class="container">
   <h2>Tickets:
+
     {% if currentUser is null %}
       <button class="btn" type="submit" style="float: right" disabled>Book Tickets</button>
     {% else %}
-      <a class="btn" type="submit" style="float: right" href="/bookTicket"">Book Tickets</a>
+      <a class="btn" type="submit" style="float: right" href="/tickets/book">Book Tickets</a>
     {% endif %}
   </h2>
 
