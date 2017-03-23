@@ -51,7 +51,7 @@ class AirportsController extends Controller
                 // render error
                 $this->context['error'] = "Please fill in all the fields!";
                 $this->context['airports'] = $this->database->getAirports();
-                $template = $this->twig->load('airports.twig');
+                $template = $this->twig->load('airports_add.twig');
                 echo $template->render($this->context);
             }
         } else {
