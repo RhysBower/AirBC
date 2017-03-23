@@ -8,6 +8,9 @@ class App extends Object
 {
     public function __construct()
     {
+        if(array_key_exists('_method', $_POST)) {
+            $_SERVER['REQUEST_METHOD'] = strtoupper($_POST['_method']);
+        }
         Log::info($_SERVER['REQUEST_METHOD'] . ' ' . $_SERVER['REQUEST_URI']);
 
         set_exception_handler(array($this, 'exceptionHandler'));
@@ -29,8 +32,8 @@ class App extends Object
         $router->get("/airports", Controllers\AirportsController::class, 'airports');
         $router->get("/airports/add", Controllers\AirportsController::class, 'renderAddAirportPage');
         $router->post("/airports/add", Controllers\AirportsController::class, 'addAirport');
-        $router->get("/airports/rmv/{id}", Controllers\AirportsController::class, 'removeAirport');
-        
+        $router->delete("/airports/{id}", Controllers\AirportsController::class, 'removeAirport');
+
         $router->get("/tickets", Controllers\TicketsController::class, 'tickets');
         $router->get("/tickets/book", Controllers\TicketsController::class, 'bookTicket');
         $router->post("/tickets/book", Controllers\TicketsController::class, 'addTicket');

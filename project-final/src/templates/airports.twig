@@ -37,8 +37,11 @@
           <td>{{airport.id}}</td>
           <td>{{airport.name}}</td>
           <td>{{airport.location}}</td>
-          {% if currentUser is not null %}
-            <td><a href="/airports/rmv/{{airport.id}}">Remove</a></td>
+          {% if currentUser.isStaff() %}
+            <td><form action="/airports/{{airport.id}}" method="post">
+                <input type="hidden" name="_method" value="delete">
+                <button class="btn btn-link" type="submit" name="button">Remove</button>
+            </form></td>
           {% endif %}
         </tr>
       {% endfor %}
