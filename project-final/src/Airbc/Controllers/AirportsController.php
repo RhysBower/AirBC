@@ -60,4 +60,10 @@ class AirportsController extends Controller
         }
         
     }
+
+    public function removeAirport($id)
+    {
+        $this->database->removeAirport($id);
+        $this->airports();
+    }
 }

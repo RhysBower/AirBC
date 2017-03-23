@@ -28,6 +28,7 @@ class App extends Object
         $router->get("/airports", Controllers\AirportsController::class, 'airports');
         $router->get("/airports/add", Controllers\AirportsController::class, 'renderAddAirportPage');
         $router->post("/airports/add", Controllers\AirportsController::class, 'addAirport');
+        $router->get("/airports/rmv/{id}", Controllers\AirportsController::class, 'removeAirport');
         $router->get("/tickets", Controllers\TicketsController::class, 'tickets');
         $router->get("/tickets/book", Controllers\TicketsController::class, 'bookTicket');
         $router->get("/tickets/{id}", Controllers\TicketsController::class, 'getTicket'); //TODO
