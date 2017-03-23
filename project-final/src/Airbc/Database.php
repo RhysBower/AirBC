@@ -173,6 +173,13 @@ class Database extends Object
             return new Model\Airport((string)$row->id, (string)$row->name, (string)$row->location);
         });
     }
+    // Removes an airport, and returns list view back
+    public static function removeAirport(string $id): array
+    {
+        return self::queryMultiple("DELETE FROM Airport WHERE id='$id'", function($row) {
+            return new Model\Airport((string)$row->id, (string)$row->name, (string)$row->location);
+        });
+    }
 
     /**
      * Returns array of Tickets or empty array if no Tickets are found.

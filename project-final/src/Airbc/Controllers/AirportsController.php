@@ -33,11 +33,12 @@ class AirportsController extends Controller
     public function addAirport($id, $name, $location)
     {
         $this->database->addAirport($id, $name, $location);
+        $this->airports();
+    }
 
-        $this->context['page'] = "airports";
-        $this->context['airports'] = $this->database->getAirports();
-
-        $template = $this->twig->load('airports.twig');
-        echo $template->render($this->context);
+    public function removeAirport($id)
+    {
+        $this->database->removeAirport($id);
+        $this->airports();
     }
 }

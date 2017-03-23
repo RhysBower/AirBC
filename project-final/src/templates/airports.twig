@@ -33,6 +33,9 @@
           <td>{{airport.id}}</td>
           <td>{{airport.name}}</td>
           <td>{{airport.location}}</td>
+          {% if currentUser is not null %}
+            <td><a href="/airports/rmv/{{airport.id}}">Remove</a></td>
+          {% endif %}
         </tr>
       {% endfor %}
     </tbody>
@@ -41,10 +44,10 @@
 </div>
 
 <!--<div class="container">-->
-  <h2>Map - Airports</h2>
-  <div id="map"></div>
+  <!-- <h2>Map - Airports</h2> -->
+  <!-- <div id="map"></div> -->
 <!--</div>-->
 
-<script type="text/javascript" src="js/map.js"></script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDklKARJQmiN7GB4UcIEz0FgOym6Nvv1LM&callback=initMap"></script>
+<!-- <script type="text/javascript" src="js/map.js"></script> -->
+<!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDklKARJQmiN7GB4UcIEz0FgOym6Nvv1LM&callback=initMap"></script> -->
 {% endblock %}
