@@ -71,4 +71,10 @@ class TicketsController extends Controller
         }
     }
 
+    public function removeTicket($id)
+    {
+        $this->database->removeTicket($id);
+        header('Location: /tickets');
+    }
+
 }

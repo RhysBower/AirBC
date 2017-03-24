@@ -206,11 +206,19 @@ class Database extends Object
     /**
      * Adds a ticket
      */
-    public static function addTicket(string $flightId, string $seatType) 
+    public static function addTicket(string $flightId, string $seatType): array
     {
-        return self::queryMultiple("INSERT INTO Ticket (seat_type, flightId, customerId) VALUES    ('$seatType', '$flightId', '1029')", function($row) {
+        return self::queryMultiple("INSERT INTO Ticket (seat_type, flightId, customerId) VALUES        ('$seatType', '$flightId', '1029')", function($row) {
             return new Model\Ticket((string)$row->id, (string)$row->seat_type, (string)$row->flightId, (string)$row->customerId);
         });
+    }
+
+    /**
+     * Removes a ticket, returns the list of tickets view
+     */
+    public static function removeTicket(string $id): void 
+    {
+        self::querySingle("DELETE FROM Ticket WHERE id='$id'", function($row){} );
     }
 
     private static function isAccount(string $query): bool {

@@ -30,6 +30,12 @@
           <td>{{ticket.seat_type}}</td>
           <td>{{ticket.flightId}}</td>
           <td>{{ticket.customerId}}</td>
+          {% if currentUser.isStaff() %}
+            <td><form action="/tickets/{{ticket.id}}" method="post">
+              <input type="hidden" name="_method" value="delete">
+              <button class="btn btn-link" type="submit" name="button">Remove</button>
+            </form></td>
+          {% endif %}
         </tr>
       {% endfor %}
     </tbody>

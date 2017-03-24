@@ -38,6 +38,7 @@ class App extends Object
         $router->get("/tickets/book", Controllers\TicketsController::class, 'bookTicket');
         $router->post("/tickets/book", Controllers\TicketsController::class, 'addTicket');
         $router->get("/tickets/{id}", Controllers\TicketsController::class, 'getTicket'); //TODO
+        $router->delete("/tickets/{id}", Controllers\TicketsController::class, 'removeTicket');
         
         $router->get("/login", Controllers\AccountController::class, 'login');
         $router->post("/login", Controllers\AccountController::class, 'login');
