@@ -206,9 +206,9 @@ class Database extends Object
     /**
      * Adds a ticket
      */
-    public static function addTicket(string $id) 
+    public static function addTicket(string $ticketId, string $flightId, string $seatType) 
     {
-        return self::queryMultiple("INSERT INTO Ticket (id, seat_type, flightId, customerId) VALUES    ('12345', 'ECONOMY', '$id', '1029')", function($row) {
+        return self::queryMultiple("INSERT INTO Ticket (id, seat_type, flightId, customerId) VALUES    ('$ticketId', '$seatType', '$flightId', '1029')", function($row) {
             return new Model\Ticket((string)$row->id, (string)$row->seat_type, (string)$row->flightId, (string)$row->customerId);
         });
     }
