@@ -52,10 +52,12 @@ class TicketsController extends Controller
             $seatType = $_POST['seatType'];
 
             $flights = $this->database->getFlights();
+            $accountId = (string) $this->currentUser->id;
+
             for ($x = 0; $x < sizeof($flights); $x++) {
                 if ($flights[$x]->departure === $from && $flights[$x]->arrival === $to) {
                     $flightId = (string) $flights[$x]->id;
-                    $this->database->addTicket($flightId, $seatType);
+                    $this->database->addTicket($flightId, $seatType, $accountId);
                 } else {
                     $this->context['error'] = "This is not a valid flight to book!";
                 }
