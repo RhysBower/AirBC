@@ -17,7 +17,7 @@ class Controller extends Object
     protected $database;
     protected $loader;
     protected $twig;
-    private $currentUser;
+    protected $currentUser;
     protected $context;
 
     public function __construct()
