@@ -25,8 +25,16 @@
           <label><h4>To: </h4></label>
           <input class="form-control" id="to" type="text" list="browsers" name="to" placeholder="YYJ" required>
 
-          
+          <label><h4>Number of Tickets </h4></label>
           <input class="form-control" id="passengers" type="text" name="passengers" placeholder="PASSENGERS" required>
+          <datalist id="seatType">
+            <option value="FIRST CLASS">
+            <option value="BUSINESS">
+            <option value="ECONOMY">
+          </datalist>
+
+          <label><h4>Seat Type</h4></label>
+          <input class="form-control" id="seatType" type="text" list="seatType" name="seatType" placeholder="ECONOMY" required>
           <input class="form-control" id="depart" type="text" placeholder="DEPART" required>
           <input class="form-control" id="return" type="text" placeholder="RETURN" required>
           

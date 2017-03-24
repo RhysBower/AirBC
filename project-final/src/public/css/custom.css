@@ -3,11 +3,11 @@
 	margin-top: 10px;
 }
 
-#toForm, #passengers, #depart, #return {
+#toForm, #depart, #return {
 	margin-top: 20px;
 }
 
-#arrival, #departure {
+#arrival, #departure, {
 	margin-top: 10px;
 }
 
