@@ -188,7 +188,7 @@ class Database extends Object
     {
         return self::queryMultiple("SELECT * FROM Ticket", function($row) {
             return new Model\Ticket((string)$row->id, (string)$row->seat_type, (string)$row->flightId,
-                (string)$row->customerId);
+                (string)$row->customerId, (string)$row->purchasedBy);
         });
     }
 
@@ -199,17 +199,18 @@ class Database extends Object
     {
         return self::querySingle("SELECT * FROM Ticket WHERE id=$id", function($row) {
             return new Model\Ticket((string)$row->id, (string)$row->seat_type, (string)$row->flightId,
-                (string)$row->customerId);
+                (string)$row->customerId, (string)$row->purchasedBy);
         });
     }
 
     /**
      * Adds a ticket
      */
-    public static function addTicket(string $flightId, string $seatType, string $accountId): array
+    public static function addTicket(string $flightId, string $seatType, string $customerId,                             string $accountId): array
     {
-        return self::queryMultiple("INSERT INTO Ticket (seat_type, flightId, customerId) VALUES        ('$seatType', '$flightId', '$accountId')", function($row) {
-            return new Model\Ticket((string)$row->id, (string)$row->seat_type, (string)$row->flightId, (string)$row->customerId);
+        Log::emergency('adding...');
+        return self::queryMultiple("INSERT INTO Ticket (seat_type, flightId, customerId, purchasedBy) VALUES ('$seatType', '$flightId', '$customerId', '$accountId')", function($row) {
+            return new Model\Ticket((string)$row->id, (string)$row->seat_type, (string)$row->flightId, (string)$row->customerId, (string)$row->purchasedBy);
         });
     }
 

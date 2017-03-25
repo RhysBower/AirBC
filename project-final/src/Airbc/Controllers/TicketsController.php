@@ -1,6 +1,8 @@
 <?php declare(strict_types=1);
 namespace Airbc\Controllers;
 
+use Airbc\Log;
+
 /**
  * Controller for the Tickets page.
  */
@@ -46,6 +48,11 @@ class TicketsController extends Controller
             array_key_exists('to', $_POST) && $_POST['to'] !== "" &&
             array_key_exists('passengers', $_POST) && $_POST['passengers'] !== "" &&
             array_key_exists('seatType', $_POST) && $_POST['seatType'] !== "") {
+            if ($this->currentUser->isStaff()) {
+                $customerId = $_POST['customerId'];
+            } else {
+                $customerId = (string) $this->currentUser->id;
+            }
             $from = $_POST['from'];
             $to = $_POST['to'];
             $passengers = $_POST['passengers'];
@@ -57,7 +64,7 @@ class TicketsController extends Controller
             for ($x = 0; $x < sizeof($flights); $x++) {
                 if ($flights[$x]->departure === $from && $flights[$x]->arrival === $to) {
                     $flightId = (string) $flights[$x]->id;
-                    $this->database->addTicket($flightId, $seatType, $accountId);
+                    $this->database->addTicket($flightId, $seatType, $customerId, $accountId);
                 } else {
                     $this->context['error'] = "This is not a valid flight to book!";
                 }

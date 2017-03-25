@@ -21,6 +21,7 @@
         <td>Seat Type</td>
         <td>Flight</td>
         <td>Customer ID</td>
+        <td>Purchased By</td>
       </tr>
     </thead>
     <tbody>
@@ -30,6 +31,7 @@
           <td>{{ticket.seat_type}}</td>
           <td>{{ticket.flightId}}</td>
           <td>{{ticket.customerId}}</td>
+          <td>{{ticket.purchasedBy}}</td>
           {% if currentUser.isStaff() %}
             <td><form action="/tickets/{{ticket.id}}" method="post">
               <input type="hidden" name="_method" value="delete">
