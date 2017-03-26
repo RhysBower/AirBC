@@ -3,7 +3,7 @@
 	margin-top: 10px;
 }
 
-#toForm, #depart, #return {
+#toForm, #depart, #return, #bookingButton {
 	margin-top: 20px;
 }
 
@@ -11,8 +11,4 @@
 	margin-top: 10px;
 }
 
-#bookingButton {
-	margin-top: 20px;
-	margin-left: 15px;
-}
 
