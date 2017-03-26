@@ -2,6 +2,13 @@
 
 {% block content %}
 <div class="container">
+  {% if error is not null %}
+    <div class="alert alert-danger" role="alert">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only">Error:</span>
+      {{error}}
+    </div>
+  {% endif %}
   <form class="form-signin" action="/login" method="post">
     <h2 class="form-signin-heading">Please sign in</h2>
     <label for="inputUsername" class="sr-only">Username</label>

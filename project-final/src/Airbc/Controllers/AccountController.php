@@ -65,6 +65,7 @@ class AccountController extends Controller
                 $account = $this->database->getUserAccount($username);
                 if ($account === null) {
                     // User does not exist
+                    $this->context['error'] = "Invalid username or password!";
                     $this->displayLoginPage();
                 } else {
                     $verified = password_verify($password, $account->getPassword());
@@ -72,6 +73,7 @@ class AccountController extends Controller
                         $this->logUserIn($account);
                     } else {
                         // Invalid credentials
+                        $this->context['error'] = "Invalid username or password!";
                         $this->displayLoginPage();
                     }
                 }
