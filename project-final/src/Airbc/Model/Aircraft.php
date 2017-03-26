@@ -3,9 +3,10 @@ namespace Airbc\Model;
 
 use Airbc\Object as Object;
 
-class Aircraft extends AircraftType
+class Aircraft extends Object
 {
     private $id;
+    private $type;
     private $purchasedDate;
     private $status;
 }
