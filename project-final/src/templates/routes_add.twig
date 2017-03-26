@@ -1,0 +1,34 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<div class="container">
+  <h2>Add a Route</h2>
+  	<div class="col-xs-8">
+  	{% if error is not null %}
+		<div class="alert alert-danger" role="alert">
+			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+			<span class="sr-only">Error:</span>
+			{{error}}
+		</div>
+	{% endif %}
+        <form class="form-inline" id="add-airport-form" action="/routes/add" method="post">
+			<label><h4>Departure Airport: </h4></label>
+			<input class="form-control" type="text" id="route_departure" name="departure" placeholder="YVR">
+			<br>
+			<label><h4>Arrival Airport: </h4></label>
+			<input class="form-control" type="text" id="route_arrival" name="arrival" placeholder="YXS">
+			<br>
+			<label><h4>First Class Seat Price: </h4></label>
+			<input class="form-control" type="text" id="route_firstclass" name="firstclass" placeholder="600">
+			<br>
+			<label><h4>Business Seat Price: </h4></label>
+			<input class="form-control" type="text" id="route_business" name="business" placeholder="300">
+			<br>
+			<label><h4>Economy Seat Price: </h4></label>
+			<input class="form-control" type="text" id="route_economy" name="economy" placeholder="200">
+			<br>
+			<input class="btn btn-primary" type="submit" value="Add Route">
+        </form>
+    </div>
+</div>
+{% endblock %}

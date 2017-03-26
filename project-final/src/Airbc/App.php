@@ -25,6 +25,9 @@ class App extends Object
         $router->get("/", Controllers\HomeController::class, 'home');
         $router->get("/routes", Controllers\RoutesController::class, 'routes');
         $router->get("/routes/search/from/{departure}/to/{arrival}", Controllers\RoutesController::class, 'getRoute');
+        $router->get("/routes/add", Controllers\RoutesController::class, 'renderAddRoutePage');
+        $router->post("/routes/add", Controllers\RoutesController::class, 'addRoute');
+
         $router->get("/flights", Controllers\FlightsController::class, 'flights');
         $router->get("/flights/{id}", Controllers\FlightsController::class, 'getFlight');
         $router->get("/flights/search/from/{departure}/to/{arrival}", Controllers\FlightsController::class, 'getFlightsOnRoute');
