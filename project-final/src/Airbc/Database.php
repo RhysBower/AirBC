@@ -74,6 +74,28 @@ class Database extends Object
         });
     }
 
+    public static function updateStaff(Model\Staff $staff): bool
+    {
+        return self::updateAccount($staff) &&
+               self::queryModify("UPDATE Staff SET title='$staff->title' WHERE id=$staff->id");
+    }
+
+    public static function updateCustomer(Model\Customer $customer): bool
+    {
+        return self::updateAccount($customer) &&
+               self::queryModify("UPDATE Customer SET travel_document='$customer->travelDocument',
+                                  billing_address='$customer->billingAddress',
+                                  phone_number='$customer->phoneNumber',
+                                  seat_preference='$customer->seatPreference',
+                                  payment_information='$customer->paymentInformation'
+                                  WHERE id='$customer->id'");
+    }
+
+    public static function updateAccount(Model\Account $account): bool {
+        return self::queryModify("UPDATE Account SET name='$account->name', email='$account->email', username='$account->username',
+                                  password='".$account->getPassword()."' WHERE id='$account->id'");
+    }
+
     /**
      * Returns array of Account or empty array if no Accounts are found.
      */

@@ -3,6 +3,8 @@ namespace Airbc\Controllers;
 
 use Airbc\Model\Account;
 use Firebase\JWT\JWT;
+use Airbc\Database;
+use Airbc\Log;
 
 /**
  * Controller for the Account page.
@@ -33,7 +35,20 @@ class AccountController extends Controller
         if ($this->isLoggedIn()) {
             $this->context['page'] = "account";
 
-
+            $this->currentUser->name = $_POST['name'];
+            $this->currentUser->email = $_POST['email'];
+            $this->currentUser->username = $_POST['username'];
+            if($this->isStaff()) {
+                $this->currentUser->title = $_POST['title'];
+                Database::updateStaff($this->currentUser);
+            } else if ($this->isCustomer()) {
+                $this->currentUser->travelDocument = $_POST['travel_document'];
+                $this->currentUser->billingAddress = $_POST['billing_address'];
+                $this->currentUser->phoneNumber = $_POST['phone_number'];
+                $this->currentUser->seatPreference = $_POST['seat_preference'];
+                $this->currentUser->paymentInformation = $_POST['payment_information'];
+                Database::updateCustomer($this->currentUser);
+            }
 
             $template = $this->twig->load('account.twig');
             echo $template->render($this->context);
@@ -45,6 +60,9 @@ class AccountController extends Controller
     {
         if ($this->isLoggedIn()) {
             $this->context['page'] = "account";
+
+            $this->currentUser->setPassword($_POST['password']);
+            Database::updateAccount($this->currentUser);
 
             header('Location: /account');
         } else {
