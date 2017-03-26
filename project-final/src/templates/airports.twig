@@ -2,16 +2,26 @@
 
 {% block content %}
 <div class="container">
-  <h2>Airports:</h2>
+  <h2>Airports:
+    {% if currentUser.isStaff() %}
+      <a class="btn" type="submit" style="float: right" href="/airports/add">Add Airport</a>
+    {% endif %}
+  </h2>
 
-  <form id="query-airport" action="/airports" method="get"> <!-- redirects to /airports?query_airports=... which is 404 -->
-    <input type="text" name="query_airports" placeholder="Search ...">
+  <form class="form-inline" id="query-airport" action="/airports" method="get"> <!-- redirects to /airports?query_airports=... which is 404 -->
+    <input class="form-control" type="text" name="query_airports" placeholder="Search ...">
     <button class="btn" type="submit">Search</button>
   </form>
 
   <br>
   {% if airports|length == 0 %}
       <div class="well">No airports were found.</div>
+  {% elseif error is not null %}
+      <div class="alert alert-danger" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        {{error}}
+      </div>
   {% else %}
   <table class="table table-hover">
     <thead>
@@ -27,6 +37,12 @@
           <td>{{airport.id}}</td>
           <td>{{airport.name}}</td>
           <td>{{airport.location}}</td>
+          {% if currentUser.isStaff() %}
+            <td><form action="/airports/{{airport.id}}" method="post">
+              <input type="hidden" name="_method" value="delete">
+              <button class="btn btn-link" type="submit" name="button">Remove</button>
+            </form></td>
+          {% endif %}
         </tr>
       {% endfor %}
     </tbody>
@@ -35,10 +51,10 @@
 </div>
 
 <!--<div class="container">-->
-  <h2>Map - Airports</h2>
-  <div id="map"></div>
+  <!-- <h2>Map - Airports</h2> -->
+  <!-- <div id="map"></div> -->
 <!--</div>-->
 
-<script type="text/javascript" src="js/map.js"></script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDklKARJQmiN7GB4UcIEz0FgOym6Nvv1LM&callback=initMap"></script>
+<!-- <script type="text/javascript" src="js/map.js"></script> -->
+<!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDklKARJQmiN7GB4UcIEz0FgOym6Nvv1LM&callback=initMap"></script> -->
 {% endblock %}

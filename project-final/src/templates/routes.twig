@@ -7,7 +7,7 @@
       <div class="well">No routes were found.</div>
   {% else %}
   <div>
-    <form class="form-inline" action="/routes/search" method="get">
+    <form class="form-inline" id="search-form" action="" method="get">
     <datalist id="browsers">
       {% set airports = [] %}
       {% for route in routes %}
@@ -22,28 +22,52 @@
       {% endfor %}
     </datalist>
       <label><h4>From: </h4></label>
-      <input class="form-control" type="text" list="browsers" name="from" placeholder="YVR">
+      <input class="form-control" id="from" type="text" list="browsers" name="from" placeholder="YVR">
         
       <label><h4>To: </h4></label>
-      <input class="form-control" type="text" list="browsers" name="to" placeholder="YYJ">
+      <input class="form-control" id="to" type="text" list="browsers" name="to" placeholder="YYJ">
       <input class="btn btn-primary" type="submit" value="Search">
     </form>
+    <script type="text/javascript">
+    $(document).ready(function($) {
+      $("#search-form").submit(function(e) {
+        var from = $("#from").val();
+        var to = $("#to").val();
+        var action = "/routes/search/from/" + from + "/to/" + to;
+        e.preventDefault();
+        window.location = action;
+      })
+    });    
+    </script>
   </div>
   <table class="table table-hover">
     <thead>
       <tr>
         <td>Departure Airport</td>
+        <td>Name</td>
         <td>Arrival Airport</td>
-        <td>First Class Seats</td>
-        <td>Business Seats</td>
-        <td>Economy Seats</td>
+        <td>Name</td>
+        <td>First Class Price</td>
+        <td>Business Price</td>
+        <td>Economy Price</td>
       </tr>
     </thead>
     <tbody>
       {% for route in routes %}
+        {% set departureArrival = routeAirports[loop.index0] %}       
          <tr>
           <td>{{route.departure}}</td>
+          {% if departureArrival is not null %}
+            <td>{{departureArrival.departure.name}}</td>
+          {% else %}
+            <td></td>
+          {% endif %}
           <td>{{route.arrival}}</td>
+          {% if departureArrival is not null %}
+            <td>{{departureArrival.arrival.name}}</td>
+          {% else %}
+            <td></td>
+          {% endif %} 
           <td>{{route.firstClass}}</td>
           <td>{{route.business}}</td>
           <td>{{route.economy}}</td>

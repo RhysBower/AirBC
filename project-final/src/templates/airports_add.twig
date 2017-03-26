@@ -1,0 +1,28 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<div class="container">
+  <h2>Add an Airport</h2>
+  	<div class="col-xs-8">
+  	{% if error is not null %}
+		<div class="alert alert-danger" role="alert">
+			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+			<span class="sr-only">Error:</span>
+			{{error}}
+		</div>
+	{% endif %}
+        <form class="form-inline" id="add-airport-form" action="/airports/add" method="post">
+			<label><h4>ID: </h4></label>
+			<input class="form-control" type="text" id="airport_id" name="id" placeholder="YVR">
+			<br>
+			<label><h4>Name: </h4></label>
+			<input class="form-control" type="text" id="airport_name" name="name" placeholder="Vancouver International Airport">
+			<br>
+			<label><h4>Location: </h4></label>
+			<input class="form-control" type="text" id="airport_location" name="location" placeholder="3211 Grant McConachie Way, Richmond, BC V7B 0A4">
+			<br>
+			<input class="btn btn-primary" type="submit" value="Add Airport!">
+        </form>
+    </div>
+</div>
+{% endblock %}

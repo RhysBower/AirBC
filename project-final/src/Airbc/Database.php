@@ -126,6 +126,18 @@ class Database extends Object
     }
 
     /**
+     * Returns array of Flights on Route or empty array if no Flights are found.
+     */
+    public function getFlightsOnRoute(string $departure, string $arrival): array
+    {
+        return $this->queryMultiple("SELECT * FROM Flight WHERE arrival='$arrival' AND departure='$departure'", function($row) {
+            $date = new \DateTime($row->date_time);
+            $res = $date->format('h:i A, F d, Y');
+            return new Model\Flight((int)$row->id, (string)$res, (string)$row->assigned, (string)$row->arrival, (string)$row->departure);
+        });
+    }
+
+    /**
      * Returns array of Airports or empty array if no Airports are found.
      */
     public static function getAirports(): array
@@ -145,13 +157,38 @@ class Database extends Object
     }
 
     /**
+     * Returns an Airport with given id or null if no Airport is found.
+     */
+    public static function getAirport(string $id): ?Model\Airport
+    {
+        return self::querySingle("SELECT * FROM Airport WHERE id='$id'", function($row) {
+            return new Model\Airport((string)$row->id, (string)$row->name, (string)$row->location);
+        });
+    }
+
+    // Inserts an airport, and returns list view back TODO: return false if cannot insert ???
+    public static function addAirport(string $id, string $name, string $location): array
+    {
+        Log::emergency('adding...');
+        return self::queryMultiple("INSERT INTO Airport (id, name, location) VALUES
+            ('$id','$name','$location')", function($row) {
+            return new Model\Airport((string)$row->id, (string)$row->name, (string)$row->location);
+        });
+    }
+    // Removes an airport, and returns list view back
+    public static function removeAirport(string $id): void
+    {
+        self::querySingle("DELETE FROM Airport WHERE id='$id'", function($row){} );
+    }
+
+    /**
      * Returns array of Tickets or empty array if no Tickets are found.
      */
     public static function getTickets(): array
     {
         return self::queryMultiple("SELECT * FROM Ticket", function($row) {
             return new Model\Ticket((string)$row->id, (string)$row->seat_type, (string)$row->flightId,
-                (string)$row->customerId);
+                (string)$row->customerId, (string)$row->purchasedBy);
         });
     }
 
@@ -162,8 +199,27 @@ class Database extends Object
     {
         return self::querySingle("SELECT * FROM Ticket WHERE id=$id", function($row) {
             return new Model\Ticket((string)$row->id, (string)$row->seat_type, (string)$row->flightId,
-                (string)$row->customerId);
+                (string)$row->customerId, (string)$row->purchasedBy);
         });
+    }
+
+    /**
+     * Adds a ticket
+     */
+    public static function addTicket(string $flightId, string $seatType, string $customerId,                             string $accountId): array
+    {
+        Log::emergency('adding...');
+        return self::queryMultiple("INSERT INTO Ticket (seat_type, flightId, customerId, purchasedBy) VALUES ('$seatType', '$flightId', '$customerId', '$accountId')", function($row) {
+            return new Model\Ticket((string)$row->id, (string)$row->seat_type, (string)$row->flightId, (string)$row->customerId, (string)$row->purchasedBy);
+        });
+    }
+
+    /**
+     * Removes a ticket, returns the list of tickets view
+     */
+    public static function removeTicket(string $id): void 
+    {
+        self::querySingle("DELETE FROM Ticket WHERE id='$id'", function($row){} );
     }
 
     private static function isAccount(string $query): bool {
@@ -234,6 +290,19 @@ class Database extends Object
         } catch (MySQLException $e) {
             self::logSqlError($e);
             return [];
+        }
+    }
+
+    private static function queryModify(string $query, callable $fn) {
+        try {
+            // $result =
+            self::$mysql->query($query);
+            // $result->close();
+
+            return true;
+        } catch (MySQLException $e) {
+            self::logSqlError($e);
+            return $e;
         }
     }
 }

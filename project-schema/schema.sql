@@ -285,19 +285,21 @@ CREATE TABLE Ticket (
   seat_type enum('FIRST','BUSINESS','ECONOMY') NOT NULL DEFAULT 'ECONOMY',
   flightId bigint(11) unsigned NOT NULL,
   customerId bigint(11) unsigned NOT NULL,
+  purchasedBy bigint(11) unsigned NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (flightId) REFERENCES Flight (id) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (customerId) REFERENCES Customer (id) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (customerId) REFERENCES Customer (id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (purchasedBy) REFERENCES Account (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1024;
 
-INSERT INTO Ticket (id, seat_type, flightId, customerId)
+INSERT INTO Ticket (id, seat_type, flightId, customerId, purchasedBy)
 VALUES
-	(1024,'ECONOMY',1024,1029),
-  (1025,'BUSINESS',1024,1030),
-  (1026,'FIRST',1025,1031),
-  (1027,'ECONOMY',1025,1031),
-  (1028,'ECONOMY',1026,1031),
-  (1029,'ECONOMY',1027,1032);
+	(1024,'ECONOMY',1024,1029, 1029),
+  (1025,'BUSINESS',1024,1030, 1030),
+  (1026,'FIRST',1025,1031, 1031),
+  (1027,'ECONOMY',1025,1031, 1031),
+  (1028,'ECONOMY',1026,1031, 1031),
+  (1029,'ECONOMY',1027,1032, 1032);
 
 # Views
 # ------------------------------------------------------------

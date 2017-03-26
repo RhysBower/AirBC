@@ -7,7 +7,7 @@
       <div class="well">No flights were found.</div>
   {% else %}
   <div>
-    <form class="form-inline" action="/flights/search" method="get">
+    <form class="form-inline" id="search-form" action="" method="get">
     <datalist id="browsers">
       {% set airports = [] %}
       {% for flight in flights %}
@@ -22,12 +22,23 @@
       {% endfor %}
     </datalist>
       <label><h4>From: </h4></label>
-      <input class="form-control" type="text" list="browsers" name="from" placeholder="YVR">
+      <input class="form-control" id="from" type="text" list="browsers" name="from" placeholder="YVR">
         
       <label><h4>To: </h4></label>
-      <input class="form-control" type="text" list="browsers" name="to" placeholder="YYJ">
+      <input class="form-control" id="to" type="text" list="browsers" name="to" placeholder="YYJ">
       <input class="btn btn-primary" type="submit" value="Search">
     </form>
+    <script type="text/javascript">
+    $(document).ready(function($) {
+      $("#search-form").submit(function(e) {
+        var from = $("#from").val();
+        var to = $("#to").val();
+        var action = "/flights/search/from/" + from + "/to/" + to;
+        e.preventDefault();
+        window.location = action;
+      })
+    });    
+    </script>
   </div>
   <table class="table table-hover">
     <thead>
@@ -36,17 +47,30 @@
         <td>Date</td>
         <td>Assigned Aircraft</td>
         <td>Arrival Airport</td>
+        <td>Name</td>
         <td>Departure Airport</td>
+        <td>Name</td>
       </tr>
     </thead>
     <tbody>
       {% for flight in flights %}
+        {% set departureArrival = flightAirports[loop.index0] %}  
          <tr>
           <td>{{flight.id}}</td>
           <td>{{flight.datetime}}</td>
           <td>{{flight.assigned}}</td>
           <td>{{flight.arrival}}</td>
+          {% if departureArrival is not null %}
+            <td>{{departureArrival.arrival.name}}</td>
+          {% else %}
+            <td></td>
+          {% endif %} 
           <td>{{flight.departure}}</td>
+          {% if departureArrival is not null %}
+            <td>{{departureArrival.departure.name}}</td>
+          {% else %}
+            <td></td>
+          {% endif %}
         </tr>
       {% endfor %}
     </tbody>

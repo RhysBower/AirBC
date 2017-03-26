@@ -8,6 +8,9 @@ class App extends Object
 {
     public function __construct()
     {
+        if(array_key_exists('_method', $_POST)) {
+            $_SERVER['REQUEST_METHOD'] = strtoupper($_POST['_method']);
+        }
         Log::info($_SERVER['REQUEST_METHOD'] . ' ' . $_SERVER['REQUEST_URI']);
 
         set_exception_handler(array($this, 'exceptionHandler'));
@@ -21,12 +24,22 @@ class App extends Object
 
         $router->get("/", Controllers\HomeController::class, 'home');
         $router->get("/routes", Controllers\RoutesController::class, 'routes');
+        $router->get("/routes/search/from/{departure}/to/{arrival}", Controllers\RoutesController::class, 'getRoute');
         $router->get("/flights", Controllers\FlightsController::class, 'flights');
         $router->get("/flights/{id}", Controllers\FlightsController::class, 'getFlight');
+        $router->get("/flights/search/from/{departure}/to/{arrival}", Controllers\FlightsController::class, 'getFlightsOnRoute');
+
         $router->get("/airports", Controllers\AirportsController::class, 'airports');
+        $router->get("/airports/add", Controllers\AirportsController::class, 'renderAddAirportPage');
+        $router->post("/airports/add", Controllers\AirportsController::class, 'addAirport');
+        $router->delete("/airports/{id}", Controllers\AirportsController::class, 'removeAirport');
+
         $router->get("/tickets", Controllers\TicketsController::class, 'tickets');
-        $router->get("/tickets/{id}", Controllers\TicketsController::class, 'getTicket');
-        $router->get("/bookTicket", Controllers\TicketsController::class, 'bookTicket'); // URI should be "/tickets/book"
+        $router->get("/tickets/book", Controllers\TicketsController::class, 'bookTicket');
+        $router->get("/tickets/{id}", Controllers\TicketsController::class, 'getTicket'); //TODO
+        $router->post("/tickets/book", Controllers\TicketsController::class, 'addTicket');
+        $router->delete("/tickets/{id}", Controllers\TicketsController::class, 'removeTicket');
+        
         $router->get("/login", Controllers\AccountController::class, 'login');
         $router->post("/login", Controllers\AccountController::class, 'login');
         $router->get("/logout", Controllers\AccountController::class, 'logout');

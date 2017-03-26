@@ -2,37 +2,50 @@
 
 {% block content %}
 <div class="container">
-  <form class="form-signin" action="/login" method="post">
     <h2 class="form-signin-heading">Book your trip here!</h2>
     
-    <div class="col-xs-2" id="from">
-        <label><h4>From: </h4></label>
-        <input class="form-control" type="text" placeholder="YVR" required>
-        <select id="departure">
-            {% for airport in airports %}
-                <option value="{{ airport.name }}">{{ airport.name }}</option>
-            {% endfor %}
-        </select>
-    </div>
-
-    <div class="col-xs-2" id="toForm">
-        <label><h4>To: </h4></label>
-        <input class="form-control" type="text" placeholder="YYJ" required>
-        <select id="arrival">
-            {% for airport in airports %}
-                <option value="{{ airport.name }}">{{ airport.name }}</option>
-            {% endfor %}
-        </select>
-    </div>
-
     <div class="col-xs-2">
-        <input class="form-control" id="passengers" type="text" placeholder="PASSENGERS" required>
-        <input class="form-control" id="depart" type="text" placeholder="DEPART" required>
-        <input class="form-control" id="return" type="text" placeholder="RETURN" required>
-    </div>
+        <form class="form-inline" id="book-ticket-form" action="/tickets/book" method="post">
+        {% if currentUser.isStaff() %}
+          <label><h4>Customer ID:</h4></label>
+          <input class="form-control" id="customer_Id" type="text" name="customerId" placeholder="1030" required>
+        {% endif %}
+        
+        <datalist id="browsers">
+          {% set airports = [] %}
+          {% for flight in flights %}
+            {% if flight.departure not in airports %}
+              {% set airports = airports|merge([flight.departure]) %}
+              <option value={{flight.departure}}>
+            {% endif %}
+            {% if flight.arrival not in airports %}
+              {% set airports = airports|merge([flight.arrival]) %}
+              <option value={{flight.arrival}}>
+            {% endif %}
+          {% endfor %}
+        </datalist>
+          <label><h4>From: </h4></label>
+          <input class="form-control" id="from" type="text" list="browsers" name="from" placeholder="YVR" required>
+            
+          <label><h4>To: </h4></label>
+          <input class="form-control" id="to" type="text" list="browsers" name="to" placeholder="YYJ" required>
 
-    <button class="btn" type="submit" id="bookingButton">Book!</button> <!-- This doesn't lead anywhere meaningful yet-->
-    
-  </form>
+          <label><h4>Number of Tickets </h4></label>
+          <input class="form-control" id="passengers" type="text" name="passengers" placeholder="PASSENGERS" required>
+          <datalist id="seatType">
+            <option value="FIRST">
+            <option value="BUSINESS">
+            <option value="ECONOMY">
+          </datalist>
+
+          <label><h4>Seat Type</h4></label>
+          <input class="form-control" id="seatType" type="text" list="seatType" name="seatType" placeholder="ECONOMY" required>
+          <input class="form-control" id="depart" type="text" placeholder="DEPART" required>
+          <input class="form-control" id="return" type="text" placeholder="RETURN" required>
+          
+
+          <button class="btn" type="submit" id="bookingButton">Book!</button> <!-- This doesn't lead anywhere meaningful yet-->
+        </form>
+    </div>
 </div>
 {% endblock %}
