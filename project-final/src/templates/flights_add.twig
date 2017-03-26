@@ -1,0 +1,31 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<div class="container">
+  <h2>Add a Flight</h2>
+  	<div class="col-xs-8">
+  	{% if error is not null %}
+		<div class="alert alert-danger" role="alert">
+			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+			<span class="sr-only">Error:</span>
+			{{error}}
+		</div>
+	{% endif %}
+        <form class="form-inline" id="add-flight-form" action="/flights/add" method="post">
+			<label><h4>Date and Time: </h4></label>
+			<input class="form-control" type="text" id="flight_datetime" name="date_time" placeholder="YYYY-MM-DD HH:MM:SS">
+			<br>
+			<label><h4>Assigned Aircraft ID: </h4></label>
+			<input class="form-control" type="text" id="flight_assigned" name="assigned" placeholder="C-FONF">
+			<br>
+			<label><h4>Arrival Airport: </h4></label>
+			<input class="form-control" type="text" id="flight_arrival" name="arrival" placeholder="YVR">
+			<br>
+			<label><h4>Departure Airport: </h4></label>
+			<input class="form-control" type="text" id="flight_departure" name="departure" placeholder="YYJ">
+			<br>
+			<input class="btn btn-primary" type="submit" value="Add Flight">
+        </form>
+    </div>
+</div>
+{% endblock %}

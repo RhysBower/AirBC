@@ -175,6 +175,15 @@ class Database extends Object
     }
 
     /**
+     * Returns true if Flight is added, false otherwise.
+     */
+    public static function addFlight(string $date_time, string $assigned, string $arrival, string $departure): bool
+    {
+        return self::queryModify("INSERT INTO Flight (date_time, assigned, arrival, departure) VALUES
+            ('$date_time', '$assigned', '$arrival', '$departure')");
+    }
+
+    /**
      * Returns array of Airports or empty array if no Airports are found.
      */
     public static function getAirports(): array
@@ -257,6 +266,20 @@ class Database extends Object
     public static function removeTicket(string $id): void
     {
         self::querySingle("DELETE FROM Ticket WHERE id='$id'", function($row){} );
+    }
+
+    /**
+     * Return true if aircraft is in operation, false otherwise.
+     */
+    public static function isOperational(string $id): bool
+    {
+        try {
+            $result = self::isAccount("SELECT * FROM Aircraft WHERE id='$id' AND status='OK'");
+            return $result;
+        } catch (MySQLException $e) {
+            self::logSqlError($e);
+            return false;
+        }
     }
 
     private static function isAccount(string $query): bool {
