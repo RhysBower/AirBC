@@ -46,6 +46,34 @@ class Database extends Object
         });
     }
 
+    public static function getCustomer(int $id): ?Model\Customer
+    {
+        return self::querySingle("SELECT * FROM Account, Customer WHERE Account.id=Customer.id AND Account.id=$id", function($row) {
+            return new Model\Customer((int)$row->id, $row->name, $row->email, $row->username, $row->password,
+                                        $row->travel_document, $row->billing_address, $row->phone_number,
+                                        $row->seat_preference, $row->payment_information);
+        });
+    }
+
+    public static function getLoyaltyMember(int $id): ?Model\LoyaltyMember
+    {
+        return self::querySingle("SELECT * FROM Account, Customer, Loyalty_Member WHERE Account.id=Customer.id AND
+                                    Account.id=Loyalty_Member.id AND Account.id=$id", function($row) {
+            return new Model\LoyaltyMember((int)$row->id, $row->name, $row->email, $row->username, $row->password,
+                                        $row->travel_document, $row->billing_address, $row->phone_number,
+                                        $row->seat_preference, $row->payment_information,
+                                        (int) $row->points);
+        });
+    }
+
+    public static function getStaff(int $id): ?Model\Staff
+    {
+        return self::querySingle("SELECT * FROM Account, Staff WHERE Account.id=Staff.id AND Account.id=$id", function($row) {
+            return new Model\Staff((int)$row->id, $row->name, $row->email, $row->username, $row->password,
+                                        $row->title);
+        });
+    }
+
     /**
      * Returns array of Account or empty array if no Accounts are found.
      */
@@ -217,7 +245,7 @@ class Database extends Object
     /**
      * Removes a ticket, returns the list of tickets view
      */
-    public static function removeTicket(string $id): void 
+    public static function removeTicket(string $id): void
     {
         self::querySingle("DELETE FROM Ticket WHERE id='$id'", function($row){} );
     }

@@ -28,6 +28,30 @@ class AccountController extends Controller
         }
     }
 
+    public function updateAccount()
+    {
+        if ($this->isLoggedIn()) {
+            $this->context['page'] = "account";
+
+
+
+            $template = $this->twig->load('account.twig');
+            echo $template->render($this->context);
+        } else {
+            header('Location: /login');
+        }
+    }
+    public function updatePassword()
+    {
+        if ($this->isLoggedIn()) {
+            $this->context['page'] = "account";
+
+            header('Location: /account');
+        } else {
+            header('Location: /login');
+        }
+    }
+
     public function login()
     {
         if ($this->isPublic()) {

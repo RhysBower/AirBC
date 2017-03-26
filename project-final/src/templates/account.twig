@@ -7,7 +7,7 @@
   <form action="/account" method="post">
     <div class="form-group">
       <label for="name">Name</label>
-      <input type="name" class="form-control" id="name" value="{{currentUser.name}}">
+      <input type="text" class="form-control" id="name" value="{{currentUser.name}}">
     </div>
     <div class="form-group">
       <label for="email">Email</label>
@@ -15,10 +15,41 @@
     </div>
     <div class="form-group">
       <label for="username">Username</label>
-      <input type="username" class="form-control" id="name" value="{{currentUser.username}}">
+      <input type="text" class="form-control" id="name" value="{{currentUser.username}}">
     </div>
     {% if currentUser.isStaff() %}
-      <p>I'm staff</p>
+      <div class="form-group">
+        <label for="title">Tile</label>
+        <input type="text" class="form-control" id="title" value="{{currentUser.title}}">
+      </div>
+    {% endif %}
+    {% if currentUser.isCustomer() %}
+      <div class="form-group">
+        <label for="travel_document">Travel Document</label>
+        <input type="text" class="form-control" id="travel_document" value="{{currentUser.travelDocument}}">
+      </div>
+      <div class="form-group">
+        <label for="billing_address">Billing Address</label>
+        <input type="text" class="form-control" id="billing_address" value="{{currentUser.billingAddress}}">
+      </div>
+      <div class="form-group">
+        <label for="seat_preference">Seat Preference</label>
+        <input type="text" class="form-control" id="phone_number" value="{{currentUser.seatPreference}}">
+      </div>
+      <div class="form-group">
+        <label for="payment_information">Payment Information</label>
+        <input type="text" class="form-control" id="payment_information" value="{{currentUser.paymentInformation}}">
+      </div>
+      <div class="form-group">
+        <label for="travel_document">Travel Document</label>
+        <input type="text" class="form-control" id="travel_document" value="{{currentUser.travelDocument}}">
+      </div>
+    {% endif %}
+    {% if currentUser.isLoyaltyMember() %}
+      <div class="form-group">
+        <label for="title">Tile</label>
+        <input type="text" class="form-control" id="title" value="{{currentUser.title}}">
+      </div>
     {% endif %}
     <button type="submit" class="btn btn-primary">Update Account</button>
   </form>

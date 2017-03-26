@@ -3,7 +3,14 @@ namespace Airbc\Model;
 
 use Airbc\Object as Object;
 
-class Account extends Account
+class Staff extends Account
 {
-    private $title;
+    public $title;
+
+    public function __construct(int $id, string $name, string $email, string $username, string $password,
+                                string $title)
+    {
+        parent::__construct($id, $name, $email, $username, $password);
+        $this->title = $title;
+    }
 }

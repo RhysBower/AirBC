@@ -3,11 +3,23 @@ namespace Airbc\Model;
 
 use Airbc\Object as Object;
 
-class Account extends Account
+class Customer extends Account
 {
-    private $travelDocument;
-    private $billingAddress;
-    private $phoneNumber;
-    private $seatPreference;
-    private $paymentInformation;
+    public $travelDocument;
+    public $billingAddress;
+    public $phoneNumber;
+    public $seatPreference;
+    public $paymentInformation;
+
+    public function __construct(int $id, string $name, string $email, string $username, string $password,
+                                string $travelDocument, string $billingAddress, string $phoneNumber,
+                                string $seatPreference, string $paymentInformation)
+    {
+        parent::__construct($id, $name, $email, $username, $password);
+        $this->travelDocument = $travelDocument;
+        $this->billingAddress = $billingAddress;
+        $this->phoneNumber = $phoneNumber;
+        $this->seatPreference = $seatPreference;
+        $this->paymentInformation = $paymentInformation;
+    }
 }
