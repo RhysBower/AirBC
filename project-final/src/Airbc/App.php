@@ -42,11 +42,13 @@ class App extends Object
         $router->get("/tickets/{id}", Controllers\TicketsController::class, 'getTicket'); //TODO
         $router->post("/tickets/book", Controllers\TicketsController::class, 'addTicket');
         $router->delete("/tickets/{id}", Controllers\TicketsController::class, 'removeTicket');
-        
+
         $router->get("/login", Controllers\AccountController::class, 'login');
         $router->post("/login", Controllers\AccountController::class, 'login');
         $router->get("/logout", Controllers\AccountController::class, 'logout');
         $router->get("/account", Controllers\AccountController::class, 'account');
+        $router->post("/account", Controllers\AccountController::class, 'updateAccount');
+        $router->post("/account/password", Controllers\AccountController::class, 'updatePassword');
 
         $router->error404(function (Request $request) {
             new Controllers\Error404Controller();

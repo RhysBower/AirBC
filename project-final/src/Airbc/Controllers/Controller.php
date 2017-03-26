@@ -38,6 +38,13 @@ class Controller extends Object
         try {
             $decoded = JWT::decode($jwt, AccountController::KEY, array('HS256'));
             $this->currentUser = $this->database->getAccount($decoded->sub);
+            if($this->isLoyaltyMember()) {
+                $this->currentUser = $this->database->getLoyaltyMember($this->currentUser->id);
+            } else if($this->isCustomer()) {
+                $this->currentUser = $this->database->getCustomer($this->currentUser->id);
+            } else if($this->isStaff()) {
+                $this->currentUser = $this->database->getStaff($this->currentUser->id);
+            }
             Log::info("Valid token used");
         } catch (SignatureInvalidException $e) {
             // Invalid token
