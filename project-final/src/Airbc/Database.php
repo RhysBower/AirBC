@@ -132,7 +132,7 @@ class Database extends Object
     /**
      * Returns true if Route is added, false otherwise.
      */
-    public static function addRoute($departure, $arrival, $firstclass, $business, $economy): bool
+    public static function addRoute(string $departure, string $arrival, string $firstclass, string $business, string $economy): bool
     {
         return self::queryModify("INSERT INTO Route (departure, arrival, first_class, business, economy) VALUES
             ('$departure', '$arrival', $firstclass, $business, $economy)");
