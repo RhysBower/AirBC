@@ -47,6 +47,15 @@ class MySQL extends Object
         return $result;
     }
 
+    public function queryUpdate(string $query)
+    {
+        $queryResult = $this->mysqli->real_query($query);
+        if (!$queryResult) {
+            throw new MySQLException($this->mysqli->error, $this->mysqli->errno);
+        }
+        return $queryResult;
+    }
+
     public function hostInfo():string
     {
         return $this->mysqli->host_info;

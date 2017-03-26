@@ -2,9 +2,19 @@
 
 {% block content %}
 <div class="container">
-  <h2>Routes:</h2>
+  <h2>Routes:
+  {% if currentUser.isStaff() %}
+      <a class="btn" type="submit" style="float: right" href="/routes/add">Add Route</a>
+  {% endif %}
+  </h2>
   {% if routes|length == 0 %}
       <div class="well">No routes were found.</div>
+  {% elseif error is not null %}
+      <div class="alert alert-danger" role="alert">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only">Error:</span>
+      {{error}}
+      </div>
   {% else %}
   <div>
     <form class="form-inline" id="search-form" action="" method="get">

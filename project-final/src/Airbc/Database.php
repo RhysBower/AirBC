@@ -130,6 +130,15 @@ class Database extends Object
     }
 
     /**
+     * Returns true if Route is added, false otherwise.
+     */
+    public static function addRoute($departure, $arrival, $firstclass, $business, $economy): bool
+    {
+        return self::queryModify("INSERT INTO Route (departure, arrival, first_class, business, economy) VALUES
+            ('$departure', '$arrival', $firstclass, $business, $economy)");
+    }
+
+    /**
      * Returns array of Flights or empty array if no Flights are found.
      */
     public static function getFlights(): array
@@ -321,16 +330,14 @@ class Database extends Object
         }
     }
 
-    private static function queryModify(string $query, callable $fn) {
+    private static function queryModify(string $query): bool {
         try {
-            // $result =
-            self::$mysql->query($query);
-            // $result->close();
-
-            return true;
+            $result = self::$mysql->queryUpdate($query);
+            Log::info($result);
+            return $result;
         } catch (MySQLException $e) {
             self::logSqlError($e);
-            return $e;
+            return false;
         }
     }
 }
