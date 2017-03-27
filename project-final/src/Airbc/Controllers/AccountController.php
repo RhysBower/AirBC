@@ -45,6 +45,7 @@ class AccountController extends Controller
                 $this->logUserIn(Database::getUserAccount($this->currentUser->username));
             } else {
                 $this->context['error'] = 'Failed to create account';
+                $this->context['currentUser'] = $this->currentUser;
                 $template = $this->twig->load('new_account.twig');
                 echo $template->render($this->context);
             }
