@@ -180,7 +180,7 @@ VALUES
 # ------------------------------------------------------------
 
 CREATE TABLE Airport (
-  id char(3) NOT NULL,
+  id char(3) NOT NULL CHECK (LENGTH(id)=3),
   name varchar(100) NOT NULL UNIQUE,
   location varchar(100) NOT NULL UNIQUE,
   PRIMARY KEY (id)
@@ -235,8 +235,8 @@ VALUES
 # ------------------------------------------------------------
 
 CREATE TABLE Route (
-  departure char(3) NOT NULL,
-  arrival char(3) NOT NULL,
+  departure char(3) NOT NULL CHECK (LENGTH(departure)=3),
+  arrival char(3) NOT NULL CHECK (LENGTH(arrival)=3),
   first_class int(11) NOT NULL CHECK (first_class>0),
   business int(11) NOT NULL CHECK (business>0),
   economy int(11) NOT NULL CHECK (economy>0),
@@ -261,8 +261,8 @@ CREATE TABLE Flight (
   id bigint(11) unsigned NOT NULL AUTO_INCREMENT,
   date_time datetime NOT NULL,
   assigned char(7) NOT NULL,
-  arrival char(3) NOT NULL,
-  departure char(3) NOT NULL,
+  arrival char(3) NOT NULL CHECK (LENGTH(arrival)=3),
+  departure char(3) NOT NULL CHECK (LENGTH(departure)=3),
   PRIMARY KEY (id),
   FOREIGN KEY (assigned) REFERENCES Aircraft (id),
   FOREIGN KEY (arrival, departure) REFERENCES Route (arrival, departure) ON DELETE CASCADE ON UPDATE CASCADE
