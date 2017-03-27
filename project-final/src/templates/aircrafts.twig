@@ -1,0 +1,43 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<div class="container">
+  <h2>Aircrafts:</h2>
+  {% if aircrafts|length == 0 %}
+      <div class="well">No aircrafts were found.</div>
+  {% elseif error is not null %}
+      <div class="alert alert-danger" role="alert">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only">Error:</span>
+      {{error}}
+      </div>
+  {% else %}
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <td>ID</td>
+        <td>Type</td>
+        <td>Purchase Date</td>
+        <td>Status</td>
+        <td>Number of First Class Seats</td>
+        <td>Number of Business Seats</td>
+        <td>Number of Economy Seats</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for aircrafts in aircrafts %}
+         <tr>
+          <td>{{aircrafts.id}}</td>
+          <td>{{aircrafts.type.type}}</td>
+          <td>{{aircrafts.purchasedDate}}</td>
+          <td>{{aircrafts.status}}</td>
+          <td>{{aircrafts.type.firstClassSeats}}</td>
+          <td>{{aircrafts.type.businessSeats}}</td>
+          <td>{{aircrafts.type.economySeats}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</div>
+{% endblock %}

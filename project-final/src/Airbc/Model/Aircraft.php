@@ -5,8 +5,16 @@ use Airbc\Object as Object;
 
 class Aircraft extends Object
 {
-    private $id;
-    private $type;
-    private $purchasedDate;
-    private $status;
+    public $id;
+    public $type;
+    public $purchasedDate;
+    public $status;
+
+    public function __construct(string $id, AircraftType $type, string $purchasedDate, string $status)
+    {
+        $this->id = $id;
+        $this->type = $type;
+        $this->purchasedDate = $purchasedDate;
+        $this->status = $status;
+    }
 }

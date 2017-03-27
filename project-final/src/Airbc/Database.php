@@ -213,6 +213,28 @@ class Database extends Object
     }
 
     /**
+     * Returns true if Flight is added, false otherwise.
+     */
+    public static function addFlight(string $date_time, string $assigned, string $arrival, string $departure): bool
+    {
+        return self::queryModify("INSERT INTO Flight (date_time, assigned, arrival, departure) VALUES
+            ('$date_time', '$assigned', '$arrival', '$departure')");
+    }
+
+    /**
+     * Returns array of Aircrafts or empty array if no Aircrafts are found.
+     */
+    public static function getAircrafts(): array
+    {
+        return self::queryMultiple("SELECT * FROM fullaircraft", function($row) {
+            $type = new Model\AircraftType($row->type, (int)$row->first_class_seats, (int)$row->business_seats, (int)$row->economy_seats);
+            $date = new \DateTime($row->purchase_date);
+            $res = $date->format('h:i A, F d, Y');
+            return new Model\Aircraft($row->id, $type, $res, $row->status); 
+        });
+    }
+
+    /**
      * Returns array of Airports or empty array if no Airports are found.
      */
     public static function getAirports(): array
