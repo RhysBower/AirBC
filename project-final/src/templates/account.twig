@@ -60,7 +60,7 @@
   <form action="/account/password" method="post">
     <div class="form-group">
       <label for="password">Password</label>
-      <input type="password" class="form-control" id="password" name="password">
+      <input type="password" class="form-control" id="password" name="password" pattern=".{3,}" required title="3 characters minimum">
     </div>
     <button type="submit" class="btn btn-danger">Change Password</button>
   </form>

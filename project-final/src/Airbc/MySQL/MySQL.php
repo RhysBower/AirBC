@@ -7,7 +7,7 @@ use mysqli;
 
 class MySQL extends Object
 {
-    private $mysqli;
+    public $mysqli;
     private $host;
     private $username;
     private $password;

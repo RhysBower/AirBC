@@ -96,6 +96,22 @@ class Database extends Object
                                   password='".$account->getPassword()."' WHERE id='$account->id'");
     }
 
+    public static function createCustomer(Model\Customer $customer): bool
+    {
+       return self::queryModify("INSERT INTO Account (name, email, username, password)
+                          VALUES ('$customer->name', '$customer->email', '$customer->username',
+                                  '".$customer->getPassword()."')") &&
+              self::queryModify("INSERT INTO Customer (id, travel_document, billing_address,
+                                                       phone_number, seat_preference,
+                                                       payment_information)
+                                 VALUES (".self::$mysql->mysqli->insert_id.",
+                                         '$customer->travelDocument',
+                                         '$customer->billingAddress',
+                                         '$customer->phoneNumber',
+                                         '$customer->seatPreference',
+                                         '$customer->paymentInformation')");
+    }
+
     /**
      * Returns array of Account or empty array if no Accounts are found.
      */
@@ -154,7 +170,7 @@ class Database extends Object
     /**
      * Returns true if Route is added, false otherwise.
      */
-    public static function addRoute(string $departure, string $arrival, string $firstclass, string $business, string $economy): bool
+    public static function addRoute($departure, $arrival, $firstclass, $business, $economy): bool
     {
         return self::queryModify("INSERT INTO Route (departure, arrival, first_class, business, economy) VALUES
             ('$departure', '$arrival', $firstclass, $business, $economy)");
@@ -194,15 +210,6 @@ class Database extends Object
             $res = $date->format('h:i A, F d, Y');
             return new Model\Flight((int)$row->id, (string)$res, (string)$row->assigned, (string)$row->arrival, (string)$row->departure);
         });
-    }
-
-    /**
-     * Returns true if Flight is added, false otherwise.
-     */
-    public static function addFlight(string $date_time, string $assigned, string $arrival, string $departure): bool
-    {
-        return self::queryModify("INSERT INTO Flight (date_time, assigned, arrival, departure) VALUES
-            ('$date_time', '$assigned', '$arrival', '$departure')");
     }
 
     /**
@@ -274,9 +281,12 @@ class Database extends Object
     /**
      * Adds a ticket
      */
-    public static function addTicket(string $flightId, string $seatType, string $customerId,                             string $accountId): bool
+    public static function addTicket(string $flightId, string $seatType, string $customerId,                             string $accountId): array
     {
-        return self::queryModify("INSERT INTO Ticket (seat_type, flightId, customerId, purchasedBy) VALUES ('$seatType', '$flightId', '$customerId', '$accountId')");
+        Log::emergency('adding...');
+        return self::queryMultiple("INSERT INTO Ticket (seat_type, flightId, customerId, purchasedBy) VALUES ('$seatType', '$flightId', '$customerId', '$accountId')", function($row) {
+            return new Model\Ticket((string)$row->id, (string)$row->seat_type, (string)$row->flightId, (string)$row->customerId, (string)$row->purchasedBy);
+        });
     }
 
     /**
@@ -285,20 +295,6 @@ class Database extends Object
     public static function removeTicket(string $id): void
     {
         self::querySingle("DELETE FROM Ticket WHERE id='$id'", function($row){} );
-    }
-
-    /**
-     * Return true if aircraft is in operation, false otherwise.
-     */
-    public static function isOperational(string $id): bool
-    {
-        try {
-            $result = self::isAccount("SELECT * FROM Aircraft WHERE id='$id' AND status='OK'");
-            return $result;
-        } catch (MySQLException $e) {
-            self::logSqlError($e);
-            return false;
-        }
     }
 
     private static function isAccount(string $query): bool {
@@ -374,6 +370,7 @@ class Database extends Object
 
     private static function queryModify(string $query): bool {
         try {
+            Log::info($query);
             $result = self::$mysql->queryUpdate($query);
             Log::info($result);
             return $result;

@@ -51,6 +51,8 @@ class App extends Object
         $router->get("/account", Controllers\AccountController::class, 'account');
         $router->post("/account", Controllers\AccountController::class, 'updateAccount');
         $router->post("/account/password", Controllers\AccountController::class, 'updatePassword');
+        $router->get("/account/new", Controllers\AccountController::class, 'newAccountPage');
+        $router->post("/account/new", Controllers\AccountController::class, 'createAccount');
 
         $router->error404(function (Request $request) {
             new Controllers\Error404Controller();

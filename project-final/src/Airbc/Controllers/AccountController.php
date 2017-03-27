@@ -2,6 +2,7 @@
 namespace Airbc\Controllers;
 
 use Airbc\Model\Account;
+use Airbc\Model\Customer;
 use Firebase\JWT\JWT;
 use Airbc\Database;
 use Airbc\Log;
@@ -12,6 +13,45 @@ use Airbc\Log;
 class AccountController extends Controller
 {
     const KEY = '9nwhBxeQ83dw6zrG2BEZTmUq77Fkq8eS';
+
+    public function newAccountPage()
+    {
+        if ($this->isPublic()) {
+            $this->context['page'] = "account";
+
+            $template = $this->twig->load('new_account.twig');
+            echo $template->render($this->context);
+        } else {
+            header('Location: /account');
+        }
+    }
+
+    public function createAccount()
+    {
+        if ($this->isPublic()) {
+            $this->context['page'] = "account";
+
+            $this->currentUser = new Customer(0, "", "", "", "", "", "", "", "", "");
+            $this->currentUser->name = $_POST['name'];
+            $this->currentUser->email = $_POST['email'];
+            $this->currentUser->username = $_POST['username'];
+            $this->currentUser->travelDocument = $_POST['travel_document'];
+            $this->currentUser->billingAddress = $_POST['billing_address'];
+            $this->currentUser->phoneNumber = $_POST['phone_number'];
+            $this->currentUser->seatPreference = $_POST['seat_preference'];
+            $this->currentUser->paymentInformation = $_POST['payment_information'];
+            $this->currentUser->setPassword($_POST['password']);
+            if(Database::createCustomer($this->currentUser)) {
+                $this->logUserIn(Database::getUserAccount($this->currentUser->username));
+            } else {
+                $this->context['error'] = 'Failed to create account';
+                $template = $this->twig->load('new_account.twig');
+                echo $template->render($this->context);
+            }
+        } else {
+            header('Location: /account');
+        }
+    }
 
     public function __construct()
     {

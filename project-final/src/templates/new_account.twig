@@ -1,0 +1,57 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<div class="container">
+  <h2>Create Account</h2>
+  {% if error is not null %}
+    <div class="alert alert-danger" role="alert">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only">Error:</span>
+      {{error}}
+    </div>
+  {% endif %}
+  <form action="/account/new" method="post">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name" name="name" value="{{currentUser.name}}" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" id="email" name="email" value="{{currentUser.email}}" required>
+    </div>
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" class="form-control" id="username" name="username" value="{{currentUser.username}}" required>
+    </div>
+    <div class="form-group">
+      <label for="travel_document">Travel Document</label>
+      <input type="text" class="form-control" id="travel_document" name="travel_document" value="{{currentUser.travelDocument}}" required>
+    </div>
+    <div class="form-group">
+      <label for="billing_address">Billing Address</label>
+      <input type="text" class="form-control" id="billing_address" name="billing_address" value="{{currentUser.billingAddress}}" required>
+    </div>
+    <div class="form-group">
+      <label for="phone_number">Phone Number</label>
+      <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{currentUser.phoneNumber}}" required>
+    </div>
+    <div class="form-group">
+      <label for="seat_preference">Seat Preference</label>
+      <select id="payment_information" class="form-control" name="seat_preference" required>
+        <option value="ECONOMY" {% if (currentUser.seatPreference == "ECONOMY") %}selected{% endif %}>Economy</option>
+        <option value="BUSINESS" {% if (currentUser.seatPreference == "BUSINESS") %}selected{% endif %}>Business</option>
+        <option value="FIRST" {% if (currentUser.seatPreference == "FIRST") %}selected{% endif %}>First Class</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="payment_information">Payment Information</label>
+      <input type="text" class="form-control" id="payment_information" name="payment_information" value="{{currentUser.paymentInformation}}" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password" name="password" pattern=".{3,}" required title="3 characters minimum">
+    </div>
+    <button type="submit" class="btn btn-primary">Create Account</button>
+  </form>
+</div>
+{% endblock %}
