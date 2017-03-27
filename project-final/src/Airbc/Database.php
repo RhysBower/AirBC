@@ -267,15 +267,13 @@ class Database extends Object
     public static function addAirport(string $id, string $name, string $location): array
     {
         Log::emergency('adding...');
-        return self::queryMultiple("INSERT INTO Airport (id, name, location) VALUES
-            ('$id','$name','$location')", function($row) {
-            return new Model\Airport((string)$row->id, (string)$row->name, (string)$row->location);
-        });
+        return self::queryModify("INSERT INTO Airport (id, name, location) VALUES
+            ('$id','$name','$location')");
     }
     // Removes an airport, and returns list view back
     public static function removeAirport(string $id): void
     {
-        self::querySingle("DELETE FROM Airport WHERE id='$id'", function($row){} );
+        self::queryModify("DELETE FROM Airport WHERE id='$id'");
     }
 
     /**
@@ -306,9 +304,7 @@ class Database extends Object
     public static function addTicket(string $flightId, string $seatType, string $customerId,                             string $accountId): array
     {
         Log::emergency('adding...');
-        return self::queryMultiple("INSERT INTO Ticket (seat_type, flightId, customerId, purchasedBy) VALUES ('$seatType', '$flightId', '$customerId', '$accountId')", function($row) {
-            return new Model\Ticket((string)$row->id, (string)$row->seat_type, (string)$row->flightId, (string)$row->customerId, (string)$row->purchasedBy);
-        });
+        return self::queryModify("INSERT INTO Ticket (seat_type, flightId, customerId, purchasedBy) VALUES ('$seatType', '$flightId', '$customerId', '$accountId')");
     }
 
     /**
@@ -316,7 +312,7 @@ class Database extends Object
      */
     public static function removeTicket(string $id): void
     {
-        self::querySingle("DELETE FROM Ticket WHERE id='$id'", function($row){} );
+        self::queryModify("DELETE FROM Ticket WHERE id='$id'");
     }
 
     public static function getTicketsInfo(string $aggregation): array
