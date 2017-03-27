@@ -41,6 +41,12 @@ class AccountController extends Controller
             $this->currentUser->seatPreference = $_POST['seat_preference'];
             $this->currentUser->paymentInformation = $_POST['payment_information'];
             $this->currentUser->setPassword($_POST['password']);
+            if(length($_POST['name']) === 0) {
+                $this->context['error'] = "Name can't be empty.";
+                $template = $this->twig->load('new_account.twig');
+                echo $template->render($this->context);
+                return;
+            }
             if(Database::createCustomer($this->currentUser)) {
                 $this->logUserIn(Database::getUserAccount($this->currentUser->username));
             } else {
@@ -76,6 +82,13 @@ class AccountController extends Controller
         if ($this->isLoggedIn()) {
             $this->context['page'] = "account";
 
+            if(strlen($_POST['name']) === 0) {
+                $this->context['error'] = "Name can't be empty.";
+                $template = $this->twig->load('account.twig');
+                echo $template->render($this->context);
+                return;
+            }
+
             $this->currentUser->name = $_POST['name'];
             $this->currentUser->email = $_POST['email'];
             $this->currentUser->username = $_POST['username'];
@@ -88,7 +101,12 @@ class AccountController extends Controller
                 $this->currentUser->phoneNumber = $_POST['phone_number'];
                 $this->currentUser->seatPreference = $_POST['seat_preference'];
                 $this->currentUser->paymentInformation = $_POST['payment_information'];
-                Database::updateCustomer($this->currentUser);
+                if(!Database::updateCustomer($this->currentUser)) {
+                    $this->context['error'] = 'Failed to update account';
+                }
+                $this->context['currentUser'] = $this->currentUser;
+                $template = $this->twig->load('account.twig');
+                echo $template->render($this->context);
             }
 
             $template = $this->twig->load('account.twig');

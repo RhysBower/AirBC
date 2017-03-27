@@ -2,8 +2,15 @@
 
 {% block content %}
 <div class="container">
-  <h2>Account page for {{currentUser.name}}</h2>
+  <h2>Your account: {{currentUser.name}}</h2>
   <a class="btn btn-danger" href="/logout" role="button">Logout</a>
+  {% if error is not null %}
+    <div class="alert alert-danger" role="alert">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only">Error:</span>
+      {{error}}
+    </div>
+  {% endif %}
   <form action="/account" method="post">
     <div class="form-group">
       <label for="name">Name</label>
