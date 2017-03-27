@@ -95,16 +95,32 @@ class FlightsController extends Controller
 
                     // check if date_time is of valid DateTime format
                     if (\DateTime::createFromFormat('Y-m-d G:i:s', $date_time) !== false) {
-                        $success = $this->database->addFlight($date_time, $assigned, $arrival, $departure);
                         
-                        if ($success) {
-                            header('Location: /flights');    
+                        // check if airports exist
+                        if ($this->database->getAirport($arrival) !== null &&
+                            $this->database->getAirport($departure) !== null) {
+
+                            // check if route from arrival airport to departure airport exists
+                            if ($this->database->getRoute($departure, $arrival) !== null) {
+                                $success = $this->database->addFlight($date_time, $assigned, $arrival, $departure);
+                                if ($success) {
+                                    header('Location: /flights');    
+                                } else {
+                                    $error = "Failed to add Flight.";
+                                    $this->renderError($error);
+                                }
+                            } else {
+                                $error = "Failed to add Flight. Please check that the route from " . $arrival . " to " . $departure . " exists.";
+                                $this->renderError($error);
+                            }
+
                         } else {
                             $error = "Failed to add Flight. Please check that airports exist.";
                             $this->renderError($error);
-                        }
+                        }                      
+                        
                     } else {
-                        $error = "Failed to add Flight. Please enter a valid date and time in this format: YYYY-MM-DD HH:MM:SS. For example: 2017-02-13 04:00:00.";
+                        $error = "Failed to add Flight. Please enter a valid date and time in this format: YYYY-MM-DD HH:MM:SS. For example: 2017-02-13 17:00:00.";
                         $this->renderError($error);
                     }
                     
