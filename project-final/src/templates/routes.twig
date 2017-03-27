@@ -32,10 +32,10 @@
       {% endfor %}
     </datalist>
       <label><h4>From: </h4></label>
-      <input class="form-control" id="from" type="text" list="browsers" name="from" placeholder="YVR">
+      <input class="form-control" id="from" type="text" list="browsers" name="from" placeholder="YVR" required pattern="[a-zA-Z]{3}" title="Airport IDs are 3 characters">
         
       <label><h4>To: </h4></label>
-      <input class="form-control" id="to" type="text" list="browsers" name="to" placeholder="YYJ">
+      <input class="form-control" id="to" type="text" list="browsers" name="to" placeholder="YYJ" required pattern="[a-zA-Z]{3}" title="Airport IDs are 3 characters">
       <input class="btn btn-primary" type="submit" value="Search">
     </form>
     <script type="text/javascript">

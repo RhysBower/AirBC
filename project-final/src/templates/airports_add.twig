@@ -13,7 +13,7 @@
 	{% endif %}
         <form class="form-inline" id="add-airport-form" action="/airports/add" method="post">
 			<label><h4>ID: </h4></label>
-			<input class="form-control" type="text" id="airport_id" name="id" placeholder="YVR">
+			<input class="form-control" type="text" id="airport_id" name="id" placeholder="YVR" required pattern="[a-zA-Z]{3}" title="Airport IDs are 3 characters">
 			<br>
 			<label><h4>Name: </h4></label>
 			<input class="form-control" type="text" id="airport_name" name="name" placeholder="Vancouver International Airport">

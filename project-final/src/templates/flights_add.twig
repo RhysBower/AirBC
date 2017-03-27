@@ -19,10 +19,10 @@
 			<input class="form-control" type="text" id="flight_assigned" name="assigned" placeholder="C-FONF">
 			<br>
 			<label><h4>Arrival Airport: </h4></label>
-			<input class="form-control" type="text" id="flight_arrival" name="arrival" placeholder="YVR">
+			<input class="form-control" type="text" id="flight_arrival" name="arrival" placeholder="YVR" required pattern="[a-zA-Z]{3}" title="Airport IDs are 3 characters">
 			<br>
 			<label><h4>Departure Airport: </h4></label>
-			<input class="form-control" type="text" id="flight_departure" name="departure" placeholder="YYJ">
+			<input class="form-control" type="text" id="flight_departure" name="departure" placeholder="YYJ" required pattern="[a-zA-Z]{3}" title="Airport IDs are 3 characters">
 			<br>
 			<input class="btn btn-primary" type="submit" value="Add Flight">
         </form>

@@ -101,9 +101,9 @@ VALUES
 
 CREATE TABLE Type (
   type varchar(50) NOT NULL,
-  first_class_seats int(11) NOT NULL CHECK (first_class_seats>0),
-  business_seats int(11) NOT NULL CHECK (business_seats>0),
-  economy_seats int(11) NOT NULL CHECK (economy_seats>0),
+  first_class_seats int(11) NOT NULL CHECK (first_class_seats>=0),
+  business_seats int(11) NOT NULL CHECK (business_seats>=0),
+  economy_seats int(11) NOT NULL CHECK (economy_seats>=0),
   PRIMARY KEY (type)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -237,9 +237,9 @@ VALUES
 CREATE TABLE Route (
   departure char(3) NOT NULL CHECK (LENGTH(departure)=3),
   arrival char(3) NOT NULL CHECK (LENGTH(arrival)=3),
-  first_class int(11) NOT NULL CHECK (first_class>0),
-  business int(11) NOT NULL CHECK (business>0),
-  economy int(11) NOT NULL CHECK (economy>0),
+  first_class int(11) NOT NULL CHECK (first_class>=0),
+  business int(11) NOT NULL CHECK (business>=0),
+  economy int(11) NOT NULL CHECK (economy>=0),
   PRIMARY KEY (arrival,departure),
   FOREIGN KEY (departure) REFERENCES Airport (id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (arrival) REFERENCES Airport (id) ON DELETE CASCADE ON UPDATE CASCADE

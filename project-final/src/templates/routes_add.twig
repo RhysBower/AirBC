@@ -13,19 +13,19 @@
 	{% endif %}
         <form class="form-inline" id="add-route-form" action="/routes/add" method="post">
 			<label><h4>Departure Airport: </h4></label>
-			<input class="form-control" type="text" id="route_departure" name="departure" placeholder="YVR">
+			<input class="form-control" type="text" id="route_departure" name="departure" placeholder="YVR" required pattern="[a-zA-Z]{3}" title="Airport IDs are 3 characters">
 			<br>
 			<label><h4>Arrival Airport: </h4></label>
-			<input class="form-control" type="text" id="route_arrival" name="arrival" placeholder="YXS">
+			<input class="form-control" type="text" id="route_arrival" name="arrival" placeholder="YXS" required pattern="[a-zA-Z]{3}" title="Airport IDs are 3 characters">
 			<br>
 			<label><h4>First Class Seat Price: </h4></label>
-			<input class="form-control" type="text" id="route_firstclass" name="firstclass" placeholder="600">
+			<input class="form-control" type="number" id="route_firstclass" name="firstclass" min="0"placeholder="600">
 			<br>
 			<label><h4>Business Seat Price: </h4></label>
-			<input class="form-control" type="text" id="route_business" name="business" placeholder="300">
+			<input class="form-control" type="number" id="route_business" name="business" min="0" placeholder="300">
 			<br>
 			<label><h4>Economy Seat Price: </h4></label>
-			<input class="form-control" type="text" id="route_economy" name="economy" placeholder="200">
+			<input class="form-control" type="number" id="route_economy" name="economy" min="0" placeholder="200">
 			<br>
 			<input class="btn btn-primary" type="submit" value="Add Route">
         </form>
