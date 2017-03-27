@@ -82,6 +82,8 @@ class AccountController extends Controller
         if ($this->isLoggedIn()) {
             $this->context['page'] = "account";
 
+            $user = clone $this->currentUser;
+
             if(strlen($_POST['name']) === 0) {
                 $this->context['error'] = "Name can't be empty.";
                 $template = $this->twig->load('account.twig');
@@ -89,24 +91,27 @@ class AccountController extends Controller
                 return;
             }
 
-            $this->currentUser->name = $_POST['name'];
-            $this->currentUser->email = $_POST['email'];
-            $this->currentUser->username = $_POST['username'];
+            $user->name = $_POST['name'];
+            $user->email = $_POST['email'];
+            $user->username = $_POST['username'];
             if($this->isStaff()) {
-                $this->currentUser->title = $_POST['title'];
-                Database::updateStaff($this->currentUser);
-            } else if ($this->isCustomer()) {
-                $this->currentUser->travelDocument = $_POST['travel_document'];
-                $this->currentUser->billingAddress = $_POST['billing_address'];
-                $this->currentUser->phoneNumber = $_POST['phone_number'];
-                $this->currentUser->seatPreference = $_POST['seat_preference'];
-                $this->currentUser->paymentInformation = $_POST['payment_information'];
-                if(!Database::updateCustomer($this->currentUser)) {
+                $user->title = $_POST['title'];
+                if(!Database::updateStaff($user)) {
                     $this->context['error'] = 'Failed to update account';
+                } else {
+                    $this->context['currentUser'] = $user;
                 }
-                $this->context['currentUser'] = $this->currentUser;
-                $template = $this->twig->load('account.twig');
-                echo $template->render($this->context);
+            } else if ($this->isCustomer()) {
+                $user->travelDocument = $_POST['travel_document'];
+                $user->billingAddress = $_POST['billing_address'];
+                $user->phoneNumber = $_POST['phone_number'];
+                $user->seatPreference = $_POST['seat_preference'];
+                $user->paymentInformation = $_POST['payment_information'];
+                if(!Database::updateCustomer($user)) {
+                    $this->context['error'] = 'Failed to update account';
+                } else {
+                    $this->context['currentUser'] = $user;
+                }
             }
 
             $template = $this->twig->load('account.twig');
