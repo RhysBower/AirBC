@@ -31,7 +31,8 @@
           <input class="form-control" id="to" type="text" list="browsers" name="to" placeholder="YYJ" required>
 
           <label><h4>Number of Tickets </h4></label>
-          <input class="form-control" id="passengers" type="text" name="passengers" placeholder="PASSENGERS" required>
+          <input class="form-control" id="passengers" type="number" name="passengers" step="1" min="1" max="10" value="1" required>
+
           <datalist id="seatType">
             <option value="FIRST">
             <option value="BUSINESS">
@@ -40,8 +41,8 @@
 
           <label><h4>Seat Type</h4></label>
           <input class="form-control" id="seatType" type="text" list="seatType" name="seatType" placeholder="ECONOMY" required>
-          <input class="form-control" id="depart" type="text" placeholder="DEPART" required>
-          <input class="form-control" id="return" type="text" placeholder="RETURN" required>
+          <input class="form-control" id="depart" type="date" min="2017-04-01" placeholder="DEPART" required>
+          <input class="form-control" id="return" type="date" min="2017-04-01" placeholder="RETURN" required>
           
 
           <button class="btn" type="submit" id="bookingButton">Book!</button> <!-- This doesn't lead anywhere meaningful yet-->
