@@ -47,6 +47,9 @@
             <li {% if (page == 'aircrafts') %} class="active" {% endif %}><a href="/aircrafts">Aircrafts</a></li>
             <li {% if (page == 'airports') %} class="active" {% endif %}><a href="/airports">Airports</a></li>
             <li {% if (page == 'tickets') %} class="active" {% endif %}><a href="/tickets">Tickets</a></li>
+            {% if currentUser.isStaff() %}
+              <li {% if (page == 'staff') %} class="active" {% endif %}><a href="/staff">Staff</a></li>
+            {% endif %}
           </ul>
           <ul class="nav navbar-nav navbar-right">
             {% if currentUser is null %}

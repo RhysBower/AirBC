@@ -1,0 +1,29 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<div class="container">
+  <h2>Average tickets sales per flight group by route</h2>
+  {% if avgTickets|length == 0 %}
+      <div class="well">No routes were found.</div>
+  {% else %}
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <td>Arrival</td>
+        <td>Departure</td>
+        <td>Average Tickets Sold Per Flight</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in avgTickets %}
+         <tr>
+          <td>{{row.arrival}}</td>
+          <td>{{row.departure}}</td>
+          <td>{{row.avgTicketsSold}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</div>
+{% endblock %}

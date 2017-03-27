@@ -230,7 +230,7 @@ class Database extends Object
             $type = new Model\AircraftType($row->type, (int)$row->first_class_seats, (int)$row->business_seats, (int)$row->economy_seats);
             $date = new \DateTime($row->purchase_date);
             $res = $date->format('h:i A, F d, Y');
-            return new Model\Aircraft($row->id, $type, $res, $row->status); 
+            return new Model\Aircraft($row->id, $type, $res, $row->status);
         });
     }
 
@@ -317,6 +317,23 @@ class Database extends Object
     public static function removeTicket(string $id): void
     {
         self::querySingle("DELETE FROM Ticket WHERE id='$id'", function($row){} );
+    }
+
+    public static function getAvgTickets(): array
+    {
+        return self::queryMultiple("SELECT AVG(ticketsSold) AS avgTicketsSold, Route.arrival, Route.departure FROM
+                                	(SELECT flightID, Count(*) AS ticketsSold FROM Ticket GROUP BY flightId) T
+                                	RIGHT JOIN Flight ON T.flightId=Flight.id RIGHT JOIN Route ON Flight.arrival=Route.arrival
+                                                                                            AND Flight.departure=Route.departure
+                                	GROUP BY arrival, departure"
+                                    , function($row) {
+                                        if($row->avgTicketsSold == null) {
+                                            $row->avgTicketsSold = 0;
+                                        } else {
+                                            $row->avgTicketsSold = round($row->avgTicketsSold);
+                                        }
+                                        return $row;
+                                    });
     }
 
     private static function isAccount(string $query): bool {
