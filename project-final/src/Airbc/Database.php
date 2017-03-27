@@ -264,7 +264,7 @@ class Database extends Object
     }
 
     // Inserts an airport, and returns list view back TODO: return false if cannot insert ???
-    public static function addAirport(string $id, string $name, string $location): array
+    public static function addAirport(string $id, string $name, string $location): bool
     {
         Log::emergency('adding...');
         return self::queryModify("INSERT INTO Airport (id, name, location) VALUES
@@ -301,7 +301,7 @@ class Database extends Object
     /**
      * Adds a ticket
      */
-    public static function addTicket(string $flightId, string $seatType, string $customerId, string $accountId): array
+    public static function addTicket(string $flightId, string $seatType, string $customerId, string $accountId): bool
     {
         Log::emergency('adding...');
         return self::queryModify("INSERT INTO Ticket (seat_type, flightId, customerId, purchasedBy) VALUES ('$seatType', '$flightId', '$customerId', '$accountId')");
