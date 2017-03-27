@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container">
-  <h2>Average tickets sales per flight group by route</h2>
+  <h2>{{aggregation}} tickets sales per flight group by route</h2>
   {% if avgTickets|length == 0 %}
       <div class="well">No routes were found.</div>
   {% else %}
@@ -11,7 +11,7 @@
       <tr>
         <td>Arrival</td>
         <td>Departure</td>
-        <td>Average Tickets Sold Per Flight</td>
+        <td>{{aggregation}} Tickets Sold Per Flight</td>
       </tr>
     </thead>
     <tbody>

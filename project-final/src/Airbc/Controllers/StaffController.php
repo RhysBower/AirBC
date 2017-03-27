@@ -20,12 +20,13 @@ class StaffController extends Controller
         }
     }
 
-    public function avgTickets() {
+    public function ticketInfo(string $aggregation) {
         if ($this->isStaff()) {
             $this->context['page'] = "staff";
 
-            $avgTickets = Database::getAvgTickets();
+            $avgTickets = Database::getTicketsInfo($aggregation);
             $this->context['avgTickets'] = $avgTickets;
+            $this->context['aggregation'] = ucfirst($aggregation);
 
             $template = $this->twig->load('avg_tickets.twig');
             echo $template->render($this->context);

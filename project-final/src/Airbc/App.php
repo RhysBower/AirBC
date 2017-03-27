@@ -57,7 +57,7 @@ class App extends Object
         $router->post("/account/new", Controllers\AccountController::class, 'createAccount');
 
         $router->get("/staff", Controllers\StaffController::class, 'staff');
-        $router->get("/staff/avgTickets", Controllers\StaffController::class, 'avgTickets');
+        $router->get("/staff/tickets/{aggregation}", Controllers\StaffController::class, 'ticketInfo');
 
         $router->error404(function (Request $request) {
             new Controllers\Error404Controller();

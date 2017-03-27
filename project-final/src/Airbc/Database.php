@@ -319,9 +319,9 @@ class Database extends Object
         self::querySingle("DELETE FROM Ticket WHERE id='$id'", function($row){} );
     }
 
-    public static function getAvgTickets(): array
+    public static function getTicketsInfo(string $aggregation): array
     {
-        return self::queryMultiple("SELECT AVG(ticketsSold) AS avgTicketsSold, Route.arrival, Route.departure FROM
+        return self::queryMultiple("SELECT $aggregation(ticketsSold) AS avgTicketsSold, Route.arrival, Route.departure FROM
                                 	(SELECT flightID, Count(*) AS ticketsSold FROM Ticket GROUP BY flightId) T
                                 	RIGHT JOIN Flight ON T.flightId=Flight.id RIGHT JOIN Route ON Flight.arrival=Route.arrival
                                                                                             AND Flight.departure=Route.departure
