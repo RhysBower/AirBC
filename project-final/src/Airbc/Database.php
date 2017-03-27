@@ -301,7 +301,7 @@ class Database extends Object
     /**
      * Adds a ticket
      */
-    public static function addTicket(string $flightId, string $seatType, string $customerId,                             string $accountId): array
+    public static function addTicket(string $flightId, string $seatType, string $customerId, string $accountId): array
     {
         Log::emergency('adding...');
         return self::queryModify("INSERT INTO Ticket (seat_type, flightId, customerId, purchasedBy) VALUES ('$seatType', '$flightId', '$customerId', '$accountId')");
