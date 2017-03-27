@@ -3,6 +3,10 @@
 {% block content %}
 <div class="container">
   <h2>{{aggregation}} tickets sales per flight group by route</h2>
+  <a href="/staff/tickets/avg" class="btn">Average</a>
+  <a href="/staff/tickets/max" class="btn">Max</a>
+  <a href="/staff/tickets/min" class="btn">Min</a>
+  <a href="/staff/tickets/sum" class="btn">Sum</a>
   {% if avgTickets|length == 0 %}
       <div class="well">No routes were found.</div>
   {% else %}
