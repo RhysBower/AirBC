@@ -8,15 +8,15 @@ class AirportsController extends Controller
 {
     public function airports()
     {
-    	// $query = $_GET['query_airports'];
-
         $this->context['page'] = "airports";
-        // if($query){
-        	// $this->context['airports'] = $this->database->getAirportsSearch($query);
-        // } else{
-        	$this->context['airports'] = $this->database->getAirports();
-        // }
+    	$this->context['airports'] = $this->database->getAirports();
+        $template = $this->twig->load('airports.twig');
+        echo $template->render($this->context);
+    }
 
+    public function searchAirports($input){
+        $this->context['page'] = "airports";
+        $this->context['airports'] = $this->database->getAirportsSearch($input);
         $template = $this->twig->load('airports.twig');
         echo $template->render($this->context);
     }

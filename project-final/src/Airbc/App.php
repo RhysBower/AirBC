@@ -38,6 +38,7 @@ class App extends Object
 
         $router->get("/airports", Controllers\AirportsController::class, 'airports');
         $router->get("/airports/add", Controllers\AirportsController::class, 'renderAddAirportPage');
+        $router->get("/airports/search/{input}", Controllers\AirportsController::class, 'searchAirports');
         $router->post("/airports/add", Controllers\AirportsController::class, 'addAirport');
         $router->delete("/airports/{id}", Controllers\AirportsController::class, 'removeAirport');
 
