@@ -47,8 +47,13 @@ class AirportsController extends Controller
                 $id = $_POST['id'];
                 $name = $_POST['name'];
                 $location = $_POST['location'];
-                $this->database->addAirport($id, $name, $location);
-                header('Location: /airports');    
+                if(!$this->database->addAirport($id, $name, $location)){
+                    $this->context['error'] = "Could not add Airport... (may be duplicate inputs)";
+                }
+                $this->context['airports'] = $this->database->getAirports();
+                $template = $this->twig->load('airports.twig');
+                echo $template->render($this->context);
+                // header('Location: /airports');
             } else {
                 // render error
                 $this->context['error'] = "Please fill in all the fields!";
