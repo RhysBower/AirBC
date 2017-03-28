@@ -35,6 +35,7 @@ class App extends Object
         $router->post("/flights/add", Controllers\FlightsController::class, 'addFlight');
 
         $router->get("/aircrafts", Controllers\AircraftsController::class, 'aircrafts');
+        $router->get("/aircrafts/search/...", Controllers\AircraftsController::class, 'aircraftsSearch');
 
         $router->get("/airports", Controllers\AirportsController::class, 'airports');
         $router->get("/airports/add", Controllers\AirportsController::class, 'renderAddAirportPage');

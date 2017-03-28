@@ -9,7 +9,7 @@
   </h2>
 
   <form class="form-inline" id="query-airport" action="/airports" method="get"> <!-- redirects to /airports?query_airports=... which is 404 -->
-    <input class="form-control" id="query-airport-input" type="text" name="query_airports" placeholder="Search ..."><!--required pattern="[a-zA-Z]{3}" title="Airport IDs are 3 characters"-->
+    <input class="form-control" id="query-airport-input" type="text" name="query_airports" placeholder="Search (by anything)"><!--required pattern="[a-zA-Z]{3}" title="Airport IDs are 3 characters"-->
     <button class="btn" type="submit">Search</button>
   </form>
 
@@ -27,9 +27,9 @@
   <table class="table table-hover">
     <thead>
       <tr>
-        <td>ID</td>
-        <td>Name</td>
-        <td>Location</td>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Location</th>
       </tr>
     </thead>
     <tbody>

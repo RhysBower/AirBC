@@ -3,6 +3,13 @@
 {% block content %}
 <div class="container">
   <h2>Aircrafts:</h2>
+
+  <form class="form-inline" id="query-aircrafts" action="/aircrafts" method="get"> <!-- redirects to /airports?query_airports=... which is 404 -->
+    <input class="form-control" id="query-aircrafts-input" type="text" name="query_aircrafts" placeholder="Search..."><!--required pattern="[a-zA-Z]{3}" title="Airport IDs are 3 characters"-->
+    <button class="btn" type="submit">Search</button>
+  </form>
+
+  <br>
   {% if aircrafts|length == 0 %}
       <div class="well">No aircrafts were found.</div>
   {% elseif error is not null %}
@@ -15,13 +22,13 @@
   <table class="table table-hover">
     <thead>
       <tr>
-        <td>ID</td>
-        <td>Type</td>
-        <td>Purchase Date</td>
-        <td>Status</td>
-        <td>Number of First Class Seats</td>
-        <td>Number of Business Seats</td>
-        <td>Number of Economy Seats</td>
+        <th>ID</th>
+        <th>Type</th>
+        <th>Purchase Date</th>
+        <th>Status</th>
+        <th>Number of First Class Seats</th>
+        <th>Number of Business Seats</th>
+        <th>Number of Economy Seats</th>
       </tr>
     </thead>
     <tbody>
