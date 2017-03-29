@@ -8,8 +8,8 @@
     {% endif %}
   </h2>
 
-  <form class="form-inline" id="query-airport" action="/airports" method="get"> <!-- redirects to /airports?query_airports=... which is 404 -->
-    <input class="form-control" id="query-airport-input" type="text" name="query_airports" placeholder="Search (by anything)"><!--required pattern="[a-zA-Z]{3}" title="Airport IDs are 3 characters"-->
+  <form class="form-inline" id="query-airports" action="" method="get"> <!-- redirects to /airports?query_airports=... which is 404 -->
+    <input class="form-control" id="query-airports-input" type="text" name="query_airports" placeholder="Search (by anything)"><!--required pattern="[a-zA-Z]{3}" title="Airport IDs are 3 characters"-->
     <button class="btn" type="submit">Search</button>
   </form>
 
@@ -53,9 +53,9 @@
 
 <script type="text/javascript">
   $(document).ready(function($) {
-    $("#query-airport").submit(function(e) {
+    $("#query-airports").submit(function(e) {
       e.preventDefault();
-      var input = $("#query-airport-input").val();
+      var input = $("#query-airports-input").val();
       var action = "/airports/search/" + input;
       window.location = action;
     })

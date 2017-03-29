@@ -14,7 +14,8 @@ class AirportsController extends Controller
         echo $template->render($this->context);
     }
 
-    public function searchAirports($input){
+    public function searchAirports($input)
+    {
         $this->context['page'] = "airports";
         $this->context['airports'] = $this->database->getAirportsSearch($input);
         $template = $this->twig->load('airports.twig');

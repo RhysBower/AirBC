@@ -234,6 +234,23 @@ class Database extends Object
         });
     }
 
+    public static function getAircraftsSearch($input, $selected)
+    {
+        $selectedExplode = explode(',', $selected);
+        $where = '';
+        foreach($selectedExplode as $s){
+            $where .= '('.$s . '>' . $input.') AND ';
+        }
+        $where = rtrim($where, ' AND ');
+        return self::queryMultiple("SELECT id,type,purchase_date,status,".$selected." FROM fullaircraft
+            WHERE ".$where.';', function($row) {
+            $type = new Model\AircraftType($row->type, (int)$row->first_class_seats, (int)$row->business_seats, (int)$row->economy_seats);
+            $date = new \DateTime($row->purchase_date);
+            $res = $date->format('h:i A, F d, Y');
+            return new Model\Aircraft($row->id, $type, $res, $row->status);
+        });
+    }
+
     /**
      * Returns array of Airports or empty array if no Airports are found.
      */
@@ -266,7 +283,6 @@ class Database extends Object
     // Inserts an airport, and returns list view back TODO: return false if cannot insert ???
     public static function addAirport(string $id, string $name, string $location): bool
     {
-        Log::emergency('adding...');
         return self::queryModify("INSERT INTO Airport (id, name, location) VALUES
             ('$id','$name','$location')");
     }

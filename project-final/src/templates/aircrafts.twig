@@ -1,12 +1,32 @@
 {% extends "base.twig" %}
 
 {% block content %}
+<style>
+ .bloc { display:inline-block; vertical-align:top; overflow:hidden; border:solid grey 1px; height: 56px; }
+ .bloc select { padding:6px; margin:-5px -20px -5px -5px; height: 70px; }
+</style>
+
 <div class="container">
   <h2>Aircrafts:</h2>
 
-  <form class="form-inline" id="query-aircrafts" action="/aircrafts" method="get"> <!-- redirects to /airports?query_airports=... which is 404 -->
-    <input class="form-control" id="query-aircrafts-input" type="text" name="query_aircrafts" placeholder="Search..."><!--required pattern="[a-zA-Z]{3}" title="Airport IDs are 3 characters"-->
-    <button class="btn" type="submit">Search</button>
+  <form class="form-inline" id="query-aircrafts" action="" method="get">
+
+    <label>Select Columns to display:</label><br>
+    <div class="bloc">
+      <select id="columns" multiple>
+        <!-- <option value="id">ID</option>
+        <option value="type">Type</option>
+        <option value="purchase_date">Purchase Date</option>
+        <option value="status">Status</option> -->
+        <option value="first_class_seats">Number of First Class Seats</option>
+        <option value="business_seats">Number of Business Seats</option>
+        <option value="economy_seats">Number of Economy Seats</option>
+      </select>
+    </div>
+    <input class="form-control" id="query-aircrafts-input" type="text" name="query_aircrafts" placeholder="Quantity of seats (more)" required pattern="[0-9]+" title="Enter a number quantity">
+    <!-- <input class="form-control" id="query-aircrafts-input" type="text" name="query_aircrafts" placeholder="Search..."> -->
+    <!-- required pattern="[a-zA-Z]{3}" title="Airport IDs are 3 characters"> -->
+    <button class="btn" type="submit">Query</button>
   </form>
 
   <br>
@@ -21,15 +41,23 @@
   {% else %}
   <table class="table table-hover">
     <thead>
+      {% if aircrafts|length > 0 %}
       <tr>
         <th>ID</th>
         <th>Type</th>
         <th>Purchase Date</th>
         <th>Status</th>
+        {% if aircrafts[0].type.firstClassSeats != 0 %}
         <th>Number of First Class Seats</th>
-        <th>Number of Business Seats</th>
-        <th>Number of Economy Seats</th>
+        {% endif %}
+        {% if aircrafts[0].type.businessSeats != 0 %}
+          <th>Number of Business Seats</th>
+        {% endif %}
+        {% if aircrafts[0].type.economySeats != 0 %}
+          <th>Number of Economy Seats</th>
+        {% endif %}
       </tr>
+      {% endif %}
     </thead>
     <tbody>
       {% for aircrafts in aircrafts %}
@@ -38,13 +66,32 @@
           <td>{{aircrafts.type.type}}</td>
           <td>{{aircrafts.purchasedDate}}</td>
           <td>{{aircrafts.status}}</td>
-          <td>{{aircrafts.type.firstClassSeats}}</td>
-          <td>{{aircrafts.type.businessSeats}}</td>
-          <td>{{aircrafts.type.economySeats}}</td>
+          {% if aircrafts.type.firstClassSeats != 0 %}
+            <td>{{aircrafts.type.firstClassSeats}}</td>
+          {% endif %}
+          {% if aircrafts.type.businessSeats != 0 %}
+            <td>{{aircrafts.type.businessSeats}}</td>
+          {% endif %}
+          {% if aircrafts.type.economySeats != 0 %}
+            <td>{{aircrafts.type.economySeats}}</td>
+          {% endif %}
         </tr>
       {% endfor %}
     </tbody>
   </table>
   {% endif %}
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function($) {
+    $("#query-aircrafts").submit(function(e) {
+      e.preventDefault();
+      var input = $("#query-aircrafts-input").val();
+      var selected = $("#columns").val();
+      var action = "/aircrafts/search/" + input + "/" + selected;
+      window.location = action;
+    })
+  });    
+</script>
+
 {% endblock %}
