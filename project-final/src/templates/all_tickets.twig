@@ -1,0 +1,31 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<div class="container">
+  <h2>Customers who have booked all flights</h2>
+  {% if customers|length == 0 %}
+      <div class="well">No customer has booked all the flights.</div>
+  {% else %}
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Username</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in customers %}
+         <tr>
+          <td>{{row.id}}</td>
+          <td>{{row.name}}</td>
+          <td>{{row.email}}</td>
+          <td>{{row.username}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</div>
+{% endblock %}

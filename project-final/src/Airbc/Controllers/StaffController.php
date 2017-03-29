@@ -34,4 +34,22 @@ class StaffController extends Controller
             $this->renderForbidden();
         }
     }
+
+    public function customersBookedAllFlights() {
+        if ($this->isStaff()) {
+            $this->context['page'] = "staff";
+
+            $cIDs = Database::getBookedAllFlights();
+            $cAccounts = array();
+            foreach ($cIDs as $cId) {
+                array_push($cAccounts, Database::getAccount((int) $cId->id));
+            }
+            $this->context['customers'] = $cAccounts;
+
+            $template = $this->twig->load('all_tickets.twig');
+            echo $template->render($this->context);
+        } else {
+            $this->renderForbidden();
+        }
+    }
 }

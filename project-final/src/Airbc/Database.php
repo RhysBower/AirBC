@@ -348,6 +348,15 @@ class Database extends Object
                                     });
     }
 
+    public static function getBookedAllFlights(): array 
+    {
+        return self::queryMultiple("SELECT * FROM Customer WHERE NOT EXISTS 
+                                        (SELECT * FROM Flight WHERE NOT EXISTS
+                                         (SELECT * FROM Ticket WHERE Customer.id = Ticket.customerId AND Flight.id = Ticket.flightId))", function($row) {
+                                            return $row;
+                                         });
+    }
+
     private static function isAccount(string $query): bool {
         try {
             $result = self::$mysql->query($query);
