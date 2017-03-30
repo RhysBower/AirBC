@@ -156,6 +156,26 @@ class Database extends Object
         });
     }
 
+    /**
+     * Returns Routes from departure airport.
+     */
+    public static function getRoutesFrom(string $departure): array
+    {
+        return self::queryMultiple("SELECT * FROM Route WHERE departure='$departure'", function($row) {
+            return new Model\Route((string)$row->departure, (string)$row->arrival, (int)$row->first_class, (int)$row->business, (int)$row->economy);
+        });
+    }
+
+    /**
+     * Returns Routes to arrival airport.
+     */
+    public static function getRoutesTo(string $arrival): array
+    {
+        return self::queryMultiple("SELECT * FROM Route WHERE arrival='$arrival'", function($row) {
+            return new Model\Route((string)$row->departure, (string)$row->arrival, (int)$row->first_class, (int)$row->business, (int)$row->economy);
+        });
+    }
+
 
     /**
      * Returns array of Routes or empty array if no Routes are found.

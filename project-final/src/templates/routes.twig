@@ -16,6 +16,7 @@
       {{error}}
       </div>
   {% else %}
+  <div id="error"></div>
   <div>
     <form class="form-inline" id="search-form" action="" method="get">
     <datalist id="browsers">
@@ -32,24 +33,38 @@
       {% endfor %}
     </datalist>
       <label><h4>From: </h4></label>
-      <input class="form-control" id="from" type="text" list="browsers" name="from" placeholder="YVR" required pattern="[a-zA-Z]{3}" title="Airport IDs are 3 characters">
+      <input class="form-control" id="from" type="text" list="browsers" name="from" placeholder="YVR">
         
       <label><h4>To: </h4></label>
-      <input class="form-control" id="to" type="text" list="browsers" name="to" placeholder="YYJ" required pattern="[a-zA-Z]{3}" title="Airport IDs are 3 characters">
+      <input class="form-control" id="to" type="text" list="browsers" name="to" placeholder="YYJ">
       <input class="btn btn-primary" type="submit" value="Search">
     </form>
     <script type="text/javascript">
     $(document).ready(function($) {
       $("#search-form").submit(function(e) {
+        e.preventDefault();
         var from = $("#from").val();
         var to = $("#to").val();
-        var action = "/routes/search/from/" + from + "/to/" + to;
-        e.preventDefault();
-        window.location = action;
+        var action = "/routes";
+        if (/^[a-zA-Z]{3}$/.test(from) && /^[a-zA-Z]{3}$/.test(to)) {
+          action = action + "/search/from/" + from + "/to/" + to;
+          window.location = action;
+        } else if (/^[a-zA-Z]{3}$/.test(from) && !/^[a-zA-Z]{3}$/.test(to)) {
+          action = action + "/search/from/" + from;
+          window.location = action;
+        } else if (!/^[a-zA-Z]{3}$/.test(from) && /^[a-zA-Z]{3}$/.test(to)) {
+          action = action + "/search/to/" + to;
+          window.location = action;
+        } else {
+          $('#error').html("<div><p>Invalid airport ID format. Airport IDs are 3 characters.</div>");
+        }
       })
     });    
     </script>
   </div>
+  {% if search is not null %}
+  <h4>{{search}}</h4>
+  {% endif %}
   <table class="table table-hover">
     <thead>
       <tr>

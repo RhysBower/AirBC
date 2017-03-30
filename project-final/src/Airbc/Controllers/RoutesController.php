@@ -6,10 +6,8 @@ namespace Airbc\Controllers;
  */
 class RoutesController extends Controller
 {
-    public function routes()
-    {
+    public function getRoutes($routes, $search) {
         $this->context['page'] = "routes";
-        $routes = $this->database->getRoutes();
         $routeAirports = [];
         foreach ($routes as $route) {
             $departureArrival = $route->getDepartureArrival();
@@ -18,29 +16,35 @@ class RoutesController extends Controller
         }
         $this->context['routes'] = $routes;
         $this->context['routeAirports'] = $routeAirports;
+        $this->context['search'] = $search; 
         $template = $this->twig->load('routes.twig');
         echo $template->render($this->context);
     }
 
+    public function routes()
+    {
+        $routes = $this->database->getRoutes();
+        $this->getRoutes($routes, null);
+    }
+
     public function getRoute($departure, $arrival)
     {
-    	$this->context['page'] = "routes";
-        $resultRoute = [];
-        $routeAirports = [];
+        $routes = [];
         $route = $this->database->getRoute($departure, $arrival);
-        if (!is_null($route)) {
-            $departureArrival = $route->getDepartureArrival();
-            if (!is_null($departureArrival)) {
-                $resultRoute[] = $route;
-                $routeAirports[] = $departureArrival;
-            }
-        }
+        if (!is_null($route)) $routes[] = $route;
+        $this->getRoutes($routes, "From " . strtoupper($departure) . " to " . strtoupper($arrival) . ":");
+    }
 
-        $this->context['routes'] = $resultRoute;
-        $this->context['routeAirports'] = $routeAirports;
+    public function getRoutesFrom($departure)
+    {
+        $routes = $this->database->getRoutesFrom($departure);
+        $this->getRoutes($routes, "From " . strtoupper($departure) . ":");
+    }
 
-        $template = $this->twig->load('routes.twig');
-        echo $template->render($this->context);
+    public function getRoutesTo($arrival)
+    {
+        $routes = $this->database->getRoutesTo($arrival);
+        $this->getRoutes($routes, "To " . strtoupper($arrival). ":"); 
     }
 
     public function renderAddRoutePage()
