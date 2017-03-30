@@ -52,11 +52,13 @@
         } else if (/^[a-zA-Z]{3}$/.test(from) && !/^[a-zA-Z]{3}$/.test(to)) {
           action = action + "/search/from/" + from;
           window.location = action;
+          alert("Invalid arrival airport ID format. Airport IDs are 3 characters.");
         } else if (!/^[a-zA-Z]{3}$/.test(from) && /^[a-zA-Z]{3}$/.test(to)) {
           action = action + "/search/to/" + to;
           window.location = action;
+          alert("Invalid departure airport ID format. Airport IDs are 3 characters.");
         } else {
-          $('#error').html("<div><p>Invalid airport ID format. Airport IDs are 3 characters.</div>");
+          alert("Invalid airport ID format. Airport IDs are 3 characters.");
         }
       })
     });    
