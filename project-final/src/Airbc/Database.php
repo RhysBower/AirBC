@@ -302,10 +302,13 @@ class Database extends Object
         return self::queryModify("INSERT INTO Airport (id, name, location) VALUES
             ('$id','$name','$location')");
     }
-    // Removes an airport, and returns list view back
-    public static function removeAirport(string $id): void
+
+    /**
+     * Returns true if Airport is removed, false otherwise.
+     */
+    public static function removeAirport(string $id): bool
     {
-        self::queryModify("DELETE FROM Airport WHERE id='$id'");
+        return self::queryModify("DELETE FROM Airport WHERE id='$id'");
     }
 
     /**

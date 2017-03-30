@@ -16,6 +16,12 @@
   <br>
   {% if airports|length == 0 %}
       <div class="well">No airports were found.</div>
+  {% elseif error is not null %}
+    <div class="alert alert-danger" role="alert">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only">Error:</span>
+      {{error}}
+    </div>
   {% else %}
     {% if error is not null %}
       <div class="alert alert-danger" role="alert">
@@ -39,7 +45,7 @@
           <td>{{airport.name}}</td>
           <td>{{airport.location}}</td>
           {% if currentUser.isStaff() %}
-            <td><form action="/airports/{{airport.id}}" method="post">
+            <td><form id="remove" action="/airports/{{airport.id}}" method="post">
               <input type="hidden" name="_method" value="delete">
               <button class="btn btn-link" type="submit" name="button">Remove</button>
             </form></td>
@@ -58,8 +64,10 @@
       var input = $("#query-airports-input").val();
       var action = "/airports/search/" + input;
       window.location = action;
-    })
-  });    
+    });
+
+    $("#remove").click(function() { alert('Are you sure to remove airport?'); })     
+  });
 </script>
 
 <!--<div class="container">-->

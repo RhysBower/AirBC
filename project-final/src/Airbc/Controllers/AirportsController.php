@@ -71,7 +71,17 @@ class AirportsController extends Controller
 
     public function removeAirport($id)
     {
-        $this->database->removeAirport($id);
-        header('Location: /airports');
+        if($this->isStaff()) {
+            $success = $this->database->removeAirport($id);
+            if ($success) {
+                header('Location: /airports');
+            } else {
+                $this->context['error'] = "Failed to remove airport.";
+                $template = $this->twig->load('airports.twig');
+                echo $template->render($this->context);
+            }
+        } else {
+            $this->renderForbidden();
+        }
     }
 }

@@ -92,6 +92,8 @@ class TicketsController extends Controller
                 header('Location: /tickets');    
             } else {
                 $this->context['error'] = "Failed to remove ticket.";
+                $template = $this->twig->load('tickets.twig');
+                echo $template->render($this->context);
             }          
         } else {
             $this->renderForbidden();
