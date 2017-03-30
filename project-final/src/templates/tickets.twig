@@ -33,7 +33,7 @@
           <td>{{ticket.customerId}}</td>
           <td>{{ticket.purchasedBy}}</td>
           {% if currentUser.isStaff() %}
-            <td><form action="/tickets/{{ticket.id}}" method="post">
+            <td><form id="remove" action="/tickets/{{ticket.id}}" method="post">
               <input type="hidden" name="_method" value="delete">
               <button class="btn btn-link" type="submit" name="button">Remove</button>
             </form></td>
@@ -44,4 +44,11 @@
   </table>
   {% endif %}
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function($) {
+    $("#remove").click(function() { alert('Are you sure to remove ticket?'); })
+  });    
+</script>
+
 {% endblock %}

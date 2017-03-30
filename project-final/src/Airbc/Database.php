@@ -348,11 +348,11 @@ class Database extends Object
     }
 
     /**
-     * Removes a ticket, returns the list of tickets view
+     * Returns true if ticket is removed, false otherwise.
      */
-    public static function removeTicket(string $id): void
+    public static function removeTicket(string $id): bool
     {
-        self::queryModify("DELETE FROM Ticket WHERE id='$id'");
+        return self::queryModify("DELETE FROM Ticket WHERE id='$id'");
     }
 
     public static function getTicketsInfo(string $aggregation): array

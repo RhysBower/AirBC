@@ -86,8 +86,16 @@ class TicketsController extends Controller
 
     public function removeTicket($id)
     {
-        $this->database->removeTicket($id);
-        header('Location: /tickets');
+        if ($this->isStaff()) {
+            $success = $this->database->removeTicket($id);
+            if ($success) {
+                header('Location: /tickets');    
+            } else {
+                $this->context['error'] = "Failed to remove ticket.";
+            }          
+        } else {
+            $this->renderForbidden();
+        }
     }
 
 }
