@@ -177,6 +177,22 @@ class Database extends Object
     }
 
     /**
+     * Returns the max, min, and avg price of three types of seats.
+     */
+    public static function getAllRoutePrices(): array
+    {
+        return self::queryMultiple("SELECT MAX(first_class) AS max_fc, MIN(first_class) as min_fc, AVG(first_class) AS avg_fc, MAX(business) AS max_b, MIN(business) AS min_b, AVG(business) AS avg_b, MAX(economy) AS max_e, MIN(economy) AS min_e, AVG(economy) AS avg_e FROM Route", function($row) {return $row;});
+    }
+
+    /**
+     * Returns the number of flights on each route.
+     */
+    public static function getFlightCountOnRoute(): array
+    {
+        return self::queryMultiple("SELECT r.departure AS departure, r.arrival AS arrival, COUNT(*) AS count FROM Route r, Flight f WHERE r.departure=f.departure AND r.arrival=f.arrival GROUP BY r.departure, r.arrival", function($row) {return $row;});
+    }
+
+    /**
      * Returns array of Flights or empty array if no Flights are found.
      */
     public static function getFlights(): array
@@ -290,6 +306,14 @@ class Database extends Object
     public static function removeAirport(string $id): void
     {
         self::queryModify("DELETE FROM Airport WHERE id='$id'");
+    }
+
+    /**
+     * Returns the sum of prices from and to each Airport.
+     */
+    public static function getSumPrice(): array
+    {
+        return self::queryMultiple("SELECT a.id AS id, SUM(r.first_class) AS first_class, SUM(r.business) AS business, SUM(r.economy) AS economy FROM Route r, Airport a WHERE r.departure=a.id OR r.arrival=a.id GROUP BY a.id", function($row) {return $row;});
     }
 
     /**

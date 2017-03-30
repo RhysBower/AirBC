@@ -52,4 +52,56 @@ class StaffController extends Controller
             $this->renderForbidden();
         }
     }
+
+    /**
+     * Max/Average/Min Seat Price of All Routes.
+     */
+    public function routePrice() 
+    {
+        if ($this->isStaff()) {
+            $this->context['page'] = "staff";
+
+            $result = Database::getAllRoutePrices()[0];
+            $this->context['result'] = $result;
+
+            $template = $this->twig->load('routes_price.twig');
+            echo $template->render($this->context);
+        } else {
+            $this->renderForbidden();
+        }
+    }
+
+    /**
+     * Count of Flights on Every Route.
+     */
+    public function flightsOnRoute() 
+    {
+        if ($this->isStaff()) {
+            $this->context['page'] = "staff";
+            $routes = Database::getFlightCountOnRoute();
+            $this->context['routes'] = $routes;
+
+            $template = $this->twig->load('routes_count.twig');
+            echo $template->render($this->context);
+        } else {
+            $this->renderForbidden();
+        }
+    }
+
+    /**
+     * Sum of Seat Price From and To every Airport.
+     */
+    public function priceFromToAirport() 
+    {
+        if ($this->isStaff()) {
+            $this->context['page'] = "staff";
+            $airports = Database::getSumPrice();
+            $this->context['airports'] = $airports;
+
+            $template = $this->twig->load('airports_sum.twig');
+            echo $template->render($this->context);
+        } else {
+            $this->renderForbidden();
+        }
+    }
 }

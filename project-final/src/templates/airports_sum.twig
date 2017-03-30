@@ -1,0 +1,34 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<div class="container">
+  <h2>Sum of Seat Price From and To an Airport</h2>
+  <a href="/staff/routes/price" class="btn">Max/Avg/Min</a>
+  <a href="/staff/routes/count" class="btn">Count</a>
+  <a href="/staff/airports/sum" class="btn">Sum</a>
+  {% if airports|length == 0 %}
+      <div class="well">No information to show.</div>
+  {% else %}
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Airport</th>
+        <th>Sum of First Class Seat Price</th>
+        <th>Sum of Business Seat Price</th>
+        <th>Sum of Economy Seat Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for airport in airports %}
+         <tr>
+          <td>{{airport.id}}</td>
+          <td>{{airport.first_class}}</td>
+          <td>{{airport.business}}</td>
+          <td>{{airport.economy}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</div>
+{% endblock %}

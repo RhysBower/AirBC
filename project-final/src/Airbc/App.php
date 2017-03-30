@@ -61,7 +61,9 @@ class App extends Object
         $router->get("/staff", Controllers\StaffController::class, 'staff');
         $router->get("/staff/tickets/all", Controllers\StaffController::class, 'customersBookedAllFlights');
         $router->get("/staff/tickets/{aggregation}", Controllers\StaffController::class, 'ticketInfo');
-
+        $router->get("/staff/routes/price", Controllers\StaffController::class, 'routePrice');
+        $router->get("/staff/routes/count", Controllers\StaffController::class, 'flightsOnRoute');
+        $router->get("/staff/airports/sum", Controllers\StaffController::class, 'priceFromToAirport');
 
         $router->error404(function (Request $request) {
             new Controllers\Error404Controller();

@@ -1,0 +1,32 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<div class="container">
+  <h2>Count of Flights on Every Route</h2>
+  <a href="/staff/routes/price" class="btn">Max/Avg/Min</a>
+  <a href="/staff/routes/count" class="btn">Count</a>
+  <a href="/staff/airports/sum" class="btn">Sum</a>
+  {% if routes|length == 0 %}
+      <div class="well">No information to show.</div>
+  {% else %}
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Departure</th>
+        <th>Arrival</th>
+        <th># of Flights per Route</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for route in routes %}
+         <tr>
+          <td>{{route.departure}}</td>
+          <td>{{route.arrival}}</td>
+          <td>{{route.count}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</div>
+{% endblock %}
