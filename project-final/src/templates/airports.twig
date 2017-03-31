@@ -41,8 +41,10 @@
     </thead>
     <tbody>
       {% for airport in airports %}
-         <tr href="/airports/{{airport.id}}">
-          <td>{{airport.id}}</td>
+         <tr>
+          <td>
+            <a class="like" type="submit" href="/airports/{{airports.id}}">{{airport.id}}</a>
+          </td>
           <td>{{airport.name}}</td>
           <td>{{airport.location}}</td>
           {% if currentUser.isStaff() %}
