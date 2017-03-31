@@ -294,6 +294,19 @@ class Database extends Object
         });
     }
 
+    /**
+     * Returns Aircraft with given id or null if no Aircraft is found.
+     */
+    public static function getAircraft($id): ?Model\Aircraft
+    {
+        return self::querySingle("SELECT * FROM fullaircraft WHERE id='$id'", function($row) {
+            $type = new Model\AircraftType($row->type, (int)$row->first_class_seats, (int)$row->business_seats, (int)$row->economy_seats);
+            $date = new \DateTime($row->purchase_date);
+            $res = $date->format('h:i A, F d, Y');
+            return new Model\Aircraft($row->id, $type, $res, $row->status);
+        });
+    }
+
     public static function getAircraftsSearch($input, $selected)
     {
         $selectedExplode = explode(',', $selected);

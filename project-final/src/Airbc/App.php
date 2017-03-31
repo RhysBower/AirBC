@@ -39,10 +39,12 @@ class App extends Object
         $router->post("/flights/add", Controllers\FlightsController::class, 'addFlight');
 
         $router->get("/aircrafts", Controllers\AircraftsController::class, 'aircrafts');
+        $router->get("/aircrafts/{id}", Controllers\AircraftsController::class, 'getAircraft');
         $router->get("/aircrafts/search/{input}/{selected}", Controllers\AircraftsController::class, 'aircraftsSearch');
 
         $router->get("/airports", Controllers\AirportsController::class, 'airports');
         $router->get("/airports/add", Controllers\AirportsController::class, 'renderAddAirportPage');
+        $router->get("/airports/{id}", Controllers\AirportsController::class, 'getAirport');
         $router->get("/airports/search/{input}", Controllers\AirportsController::class, 'searchAirports');
         $router->post("/airports/add", Controllers\AirportsController::class, 'addAirport');
         $router->delete("/airports/{id}", Controllers\AirportsController::class, 'removeAirport');

@@ -15,6 +15,17 @@ class AircraftsController extends Controller
         echo $template->render($this->context);
     }
 
+    public function getAircraft($id)
+    {
+        $this->context['page'] = "aircrafts";
+        $aircrafts = [];
+        $aircraft = $this->database->getAircraft($id);
+        if ($aircraft !== null) $aircrafts[] = $aircraft;
+        $this->context['aircrafts'] = $aircrafts;
+        $template = $this->twig->load('aircrafts.twig');
+        echo $template->render($this->context);
+    }
+
     public function aircraftsSearch($input, $selected)
     {
     	$this->context['page'] = "aircrafts";

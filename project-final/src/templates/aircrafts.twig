@@ -60,22 +60,22 @@
       {% endif %}
     </thead>
     <tbody>
-      {% for aircrafts in aircrafts %}
+      {% for aircraft in aircrafts %}
          <tr>
           <td>
-            <a class="like" type="submit" href="/aircrafts/{{aircrafts.id}}">{{aircrafts.id}}</a>
+            <a class="like" type="submit" href="/aircrafts/{{aircraft.id}}">{{aircraft.id}}</a>
           </td>
-          <td>{{aircrafts.type.type}}</td>
-          <td>{{aircrafts.purchasedDate}}</td>
-          <td>{{aircrafts.status}}</td>
-          {% if aircrafts.type.firstClassSeats != 0 %}
-            <td>{{aircrafts.type.firstClassSeats}}</td>
+          <td>{{aircraft.type.type}}</td>
+          <td>{{aircraft.purchasedDate}}</td>
+          <td>{{aircraft.status}}</td>
+          {% if aircraft.type.firstClassSeats != 0 %}
+            <td>{{aircraft.type.firstClassSeats}}</td>
           {% endif %}
-          {% if aircrafts.type.businessSeats != 0 %}
-            <td>{{aircrafts.type.businessSeats}}</td>
+          {% if aircraft.type.businessSeats != 0 %}
+            <td>{{aircraft.type.businessSeats}}</td>
           {% endif %}
-          {% if aircrafts.type.economySeats != 0 %}
-            <td>{{aircrafts.type.economySeats}}</td>
+          {% if aircraft.type.economySeats != 0 %}
+            <td>{{aircraft.type.economySeats}}</td>
           {% endif %}
         </tr>
       {% endfor %}
