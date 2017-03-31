@@ -249,6 +249,30 @@ class Database extends Object
     }
 
     /**
+     * Returns array of Flights from departure airport or empty array if no Flights are found.
+     */
+    public function getFlightsFrom(string $departure): array
+    {
+        return $this->queryMultiple("SELECT * FROM Flight WHERE departure='$departure'", function($row) {
+            $date = new \DateTime($row->date_time);
+            $res = $date->format('h:i A, F d, Y');
+            return new Model\Flight((int)$row->id, (string)$res, (string)$row->assigned, (string)$row->arrival, (string)$row->departure);
+        });
+    }
+
+    /**
+     * Returns array of Flights to arrival airport or empty array if no Flights are found.
+     */
+    public function getFlightsTo(string $arrival): array
+    {
+        return $this->queryMultiple("SELECT * FROM Flight WHERE arrival='$arrival'", function($row) {
+            $date = new \DateTime($row->date_time);
+            $res = $date->format('h:i A, F d, Y');
+            return new Model\Flight((int)$row->id, (string)$res, (string)$row->assigned, (string)$row->arrival, (string)$row->departure);
+        });
+    }
+
+    /**
      * Returns true if Flight is added, false otherwise.
      */
     public static function addFlight(string $date_time, string $assigned, string $arrival, string $departure): bool

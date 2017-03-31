@@ -6,10 +6,9 @@ namespace Airbc\Controllers;
  */
 class FlightsController extends Controller
 {
-    public function flights()
+    public function getFlights($flights, $search)
     {
         $this->context['page'] = "flights";
-        $flights = $this->database->getFlights();
         $flightAirports = [];
         foreach ($flights as $flight) {
             $departureArrival = $flight->getDepartureArrival();
@@ -18,42 +17,41 @@ class FlightsController extends Controller
         }
         $this->context['flights'] = $flights;
         $this->context['flightAirports'] = $flightAirports;
+        $this->context['search'] = $search;
         $template = $this->twig->load('flights.twig');
         echo $template->render($this->context);
+    }
+
+    public function flights()
+    {
+        $flights = $this->database->getFlights();
+        $this->getFlights($flights, null);
     }
 
     public function getFlight($id)
     {
-        $this->context['page'] = "flights";
-        $resultFlight = [];       
+        $flights = [];       
         $flight = $this->database->getFlight(intval($id));
-        $flightAirports = [];
-        if (!is_null($flight)) {
-        	$resultFlight[] = $flight;
-            $departureArrival = $flight->getDepartureArrival();
-            if (!is_null($departureArrival))
-                $flightAirports[] = $departureArrival;
-        }
-        $this->context['flights'] = $resultFlight;
-        $this->context['flightAirports'] = $flightAirports;
-        $template = $this->twig->load('flights.twig');
-        echo $template->render($this->context);
+        if (!is_null($flight)) $flights[] = $flight;
+        $this->getFlights($flights, "Flight ID " . $id . ":");
     }
 
     public function getFlightsOnRoute($departure, $arrival)
     {
-    	$this->context['page'] = "flights";
         $flights = $this->database->getFlightsOnRoute($departure, $arrival);
-    	$flightAirports = [];
-        foreach ($flights as $flight) {
-            $departureArrival = $flight->getDepartureArrival();
-            if (!is_null($departureArrival))
-                $flightAirports[] = $departureArrival;
-        }
-        $this->context['flights'] = $flights;
-        $this->context['flightAirports'] = $flightAirports;
-    	$template = $this->twig->load('flights.twig');
-        echo $template->render($this->context);
+    	$this->getFlights($flights, "Flights from " . $departure . " to " . $arrival . ":");
+    }
+
+    public function getFlightsFrom($departure)
+    {
+        $flights = $this->database->getFlightsFrom($departure);
+        $this->getFlights($flights, "Flights from " . $departure . ":");
+    }
+
+    public function getFlightsTo($arrival)
+    {
+        $flights = $this->database->getFlightsTo($arrival);
+        $this->getFlights($flights, "Flights to " . $arrival . ":");
     }
 
     public function renderAddFlightPage()
