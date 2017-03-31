@@ -34,7 +34,9 @@
     <tbody>
       {% for ticket in tickets %}
          <tr>
-          <td>{{ticket.id}}</td>
+          <td>
+            <a class="like" type="submit" href="/tickets/{{ticket.id}}">{{ticket.id}}</a>
+          </td>
           <td>{{ticket.seat_type}}</td>
           <td>{{ticket.flightId}}</td>
           <td>{{ticket.customerId}}</td>
