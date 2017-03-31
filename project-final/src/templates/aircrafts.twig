@@ -48,13 +48,13 @@
         <th>Purchase Date</th>
         <th>Status</th>
         {% if aircrafts[0].type.firstClassSeats != 0 %}
-        <th>Number of First Class Seats</th>
+        <th># of First Class Seats</th>
         {% endif %}
         {% if aircrafts[0].type.businessSeats != 0 %}
-          <th>Number of Business Seats</th>
+          <th># of Business Seats</th>
         {% endif %}
         {% if aircrafts[0].type.economySeats != 0 %}
-          <th>Number of Economy Seats</th>
+          <th># of Economy Seats</th>
         {% endif %}
       </tr>
       {% endif %}
@@ -62,7 +62,9 @@
     <tbody>
       {% for aircrafts in aircrafts %}
          <tr>
-          <td>{{aircrafts.id}}</td>
+          <td>
+            <a class="like" type="submit" href="/aircrafts/{{aircrafts.id}}">{{aircrafts.id}}</a>
+          </td>
           <td>{{aircrafts.type.type}}</td>
           <td>{{aircrafts.purchasedDate}}</td>
           <td>{{aircrafts.status}}</td>
