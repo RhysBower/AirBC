@@ -94,7 +94,9 @@ class AccountController extends Controller
             $user->name = $_POST['name'];
             $user->email = $_POST['email'];
             $user->username = $_POST['username'];
-            if($this->isStaff()) {
+            if($user->username == "") {
+                $this->context['error'] = "Username can't be empty";
+            } else if($this->isStaff()) {
                 $user->title = $_POST['title'];
                 if(!Database::updateStaff($user)) {
                     $this->context['error'] = 'Failed to update account';
