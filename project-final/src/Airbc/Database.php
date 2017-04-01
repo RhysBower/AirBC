@@ -315,8 +315,8 @@ class Database extends Object
             $where .= '('.$s . '>' . $input.') AND ';
         }
         $where = rtrim($where, ' AND ');
-        return self::queryMultiple("SELECT id,type,purchase_date,status,".$selected." FROM fullaircraft
-            WHERE ".$where.';', function($row) {
+        return self::queryMultiple("SELECT id,type,purchase_date,status,$selected FROM fullaircraft
+            WHERE $where", function($row) {
             $type = new Model\AircraftType($row->type, (int)$row->first_class_seats, (int)$row->business_seats, (int)$row->economy_seats);
             $date = new \DateTime($row->purchase_date);
             $res = $date->format('h:i A, F d, Y');
